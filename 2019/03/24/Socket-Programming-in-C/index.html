@@ -12,8 +12,8 @@
     
         <meta name="description" content="C Socket
 
-1. 过程Sever:$$初始化DLL(Windows) \rightarrow 创建Socket \rightarrow 绑定Socket \rightarrow 进入监听状态 \rightarrow 接收客户端请求 \rightarrow 向客户端发送数据 \rightarrow 关闭Socket \rightarrow 终止DLL使用(Windows)$$
-
+1. 过程Sever:
+初始化DLL(Windows) \rightarrow 创建Socket \rightarrow 绑定Socket \rightarrow 进入监听状态 \rightarrow 接收客户端请求 \rightarrow 向客户端发送数据 \rightarrow 关闭Socket \rightarrow 终止DLL使用(Windows)
 初始化DLL1int WSAStartup(WORD wVersionRequested, LPSADATA lpWSAData);
 wVersionRequested 为 WinSock 规范的版本号，低字节为主版本号，高字节为副版本号（修正版本号）；lpWSAData 为指向 WSAData 结构体的指针。
 lpWSAData 调用后的结构体为:
@@ -142,11 +142,14 @@ lpWSAData 调用后的结构体为:
 
         <!--Title and Logo-->
         <header>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
     <div class="logo">
         <a href="/"><i class="logo-icon fa " aria-hidden="true"></i></a>
         
     </div>
 </header>
+
 
         <section class="main">
             
@@ -179,8 +182,8 @@ lpWSAData 调用后的结构体为:
         <!-- Post Content -->
         <center><h1>C Socket</h1></center>
 
-<h2 id="1-过程"><a href="#1-过程" class="headerlink" title="1. 过程"></a>1. 过程</h2><h3 id="Sever"><a href="#Sever" class="headerlink" title="Sever:"></a>Sever:</h3><p>$$<br>初始化DLL(Windows) \rightarrow 创建Socket \rightarrow 绑定Socket \rightarrow 进入监听状态 \rightarrow 接收客户端请求 \rightarrow 向客户端发送数据 \rightarrow 关闭Socket \rightarrow 终止DLL使用(Windows)<br>$$</p>
-<ul>
+<h2 id="1-过程"><a href="#1-过程" class="headerlink" title="1. 过程"></a>1. 过程</h2><h3 id="Sever"><a href="#Sever" class="headerlink" title="Sever:"></a>Sever:</h3><script type="math/tex; mode=display">
+初始化DLL(Windows) \rightarrow 创建Socket \rightarrow 绑定Socket \rightarrow 进入监听状态 \rightarrow 接收客户端请求 \rightarrow 向客户端发送数据 \rightarrow 关闭Socket \rightarrow 终止DLL使用(Windows)</script><ul>
 <li><h4 id="初始化DLL"><a href="#初始化DLL" class="headerlink" title="初始化DLL"></a>初始化DLL</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">WSAStartup</span><span class="params">(WORD wVersionRequested, LPSADATA lpWSAData)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>wVersionRequested 为 WinSock 规范的版本号，低字节为主版本号，高字节为副版本号（修正版本号）；lpWSAData 为指向 WSAData 结构体的指针。</p>
 <p>lpWSAData 调用后的结构体为:</p>
