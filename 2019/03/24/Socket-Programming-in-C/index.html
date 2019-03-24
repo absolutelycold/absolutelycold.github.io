@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="C Socket
+
+1. 过程Sever:$$初始化DLL(Windows) \rightarrow 创建Socket \rightarrow 绑定Socket \rightarrow 进入监听状态 \rightarrow 接收客户端请求 \rightarrow 向客户端发送数据 \rightarrow 关闭Socket \rightarrow 终止DLL使用(Windows)$$
+
+初始化DLL1int WSAStartup(WORD wVersionRequested, LPSADATA lpWSAData);
+wVersionRequested 为 WinSock 规范的版本号，低字节为主版本号，高字节为副版本号（修正版本号）；lpWSAData 为指向 WSAData 结构体的指针。
+lpWSAData 调用后的结构体为:
+1234567891011typedef struct WSAData &amp;#123;    WORD           wVersion;  //ws2_32.dll 建议我们使用的版本号    WORD           wHighVersion;  //ws2_32.dll 支持的最高版本号    //一个以 null 结尾的字符串，用来说明 ws2_32.dll 的实现以及厂商信息    char           szDescription[WSADESCRIPTION_LEN+1];    //一个以 null 结尾的字符串，用来说明 ws2_32.dll 的状态以及配置信息    char           szSystemStatus[WSASYS_STATUS_LEN+1];    unsigned short iMaxSockets;  //2.0以后不再使用    unsigned short iMaxUdpDg;  //2.0以后不再使用    char FAR       *lpVendorInfo;  //2.0以后不再使用&amp;#125; WSADATA, *LPWSADATA;
+对此，我们只关注前两个成员即可。">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Justice">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Socket Programming in C">
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Absolutelycold">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary">
+    
+
+    <!-- Title -->
+    
+    <title>Socket Programming in C - Absolutelycold</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa " aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2019/03/24/Socket-Programming-in-C/">
+                Socket Programming in C
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2019-03-24</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/C-Language/">C Language</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <center><h1>C Socket</h1></center>
+
+<h2 id="1-过程"><a href="#1-过程" class="headerlink" title="1. 过程"></a>1. 过程</h2><h3 id="Sever"><a href="#Sever" class="headerlink" title="Sever:"></a>Sever:</h3><p>$$<br>初始化DLL(Windows) \rightarrow 创建Socket \rightarrow 绑定Socket \rightarrow 进入监听状态 \rightarrow 接收客户端请求 \rightarrow 向客户端发送数据 \rightarrow 关闭Socket \rightarrow 终止DLL使用(Windows)<br>$$</p>
+<ul>
+<li><h4 id="初始化DLL"><a href="#初始化DLL" class="headerlink" title="初始化DLL"></a>初始化DLL</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">WSAStartup</span><span class="params">(WORD wVersionRequested, LPSADATA lpWSAData)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>wVersionRequested 为 WinSock 规范的版本号，低字节为主版本号，高字节为副版本号（修正版本号）；lpWSAData 为指向 WSAData 结构体的指针。</p>
+<p>lpWSAData 调用后的结构体为:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">WSAData</span> &#123;</span></span><br><span class="line">    WORD           wVersion;  <span class="comment">//ws2_32.dll 建议我们使用的版本号</span></span><br><span class="line">    WORD           wHighVersion;  <span class="comment">//ws2_32.dll 支持的最高版本号</span></span><br><span class="line">    <span class="comment">//一个以 null 结尾的字符串，用来说明 ws2_32.dll 的实现以及厂商信息</span></span><br><span class="line">    <span class="keyword">char</span>           szDescription[WSADESCRIPTION_LEN+<span class="number">1</span>];</span><br><span class="line">    <span class="comment">//一个以 null 结尾的字符串，用来说明 ws2_32.dll 的状态以及配置信息</span></span><br><span class="line">    <span class="keyword">char</span>           szSystemStatus[WSASYS_STATUS_LEN+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> iMaxSockets;  <span class="comment">//2.0以后不再使用</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> iMaxUdpDg;  <span class="comment">//2.0以后不再使用</span></span><br><span class="line">    <span class="keyword">char</span> FAR       *lpVendorInfo;  <span class="comment">//2.0以后不再使用</span></span><br><span class="line">&#125; WSADATA, *LPWSADATA;</span><br></pre></td></tr></table></figure>
+<p>对此，我们只关注前两个成员即可。</p>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><h4 id="创建Socket"><a href="#创建Socket" class="headerlink" title="创建Socket"></a>创建Socket</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SOCKET <span class="title">socket</span><span class="params">(<span class="keyword">int</span> af, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>af: Address Family. 表示IP地址的类型， 有 ==AF_INET==(IPV4) 和 ==AF_INET6==(IPV6)</li>
+<li>type: 数据传输方式, 通常有 ==SOCK_STREAM==(connection-oriented) 和 ==SOCK_DGRAM==(connectionless)</li>
+<li>protocol: 传输协议，有 ==IPPROTO_TCP== 和 ==IPPROTO_UDP==。 传入0表示系统自动推断使用UDP还是TCP</li>
+</ol>
+</li>
+<li><h4 id="绑定Socket"><a href="#绑定Socket" class="headerlink" title="绑定Socket"></a>绑定Socket</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> sock, struct sockaddr *addr, <span class="keyword">socklen_t</span> addrlen)</span></span>;  <span class="comment">//Linux</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(SOCKET sock, <span class="keyword">const</span> struct sockaddr *addr, <span class="keyword">int</span> addrlen)</span></span>;  <span class="comment">//Windows</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>sock: socket文件描述</li>
+<li>addr: sockaddr 结构体变量的指针</li>
+<li>addrlen: addr 变量的大小, 可以使用sizeof() 计算得出</li>
+</ol>
+<p>下面的代码, 将创建的Socket与IP 127.0.0.1， port 1234 进行绑定</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建套接字</span></span><br><span class="line"><span class="keyword">int</span> serv_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="comment">//创建sockaddr_in结构体变量</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">serv_addr</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;serv_addr, <span class="number">0</span>, <span class="keyword">sizeof</span>(serv_addr));  <span class="comment">//每个字节都用0填充</span></span><br><span class="line">serv_addr.sin_family = AF_INET;  <span class="comment">//使用IPv4地址</span></span><br><span class="line">serv_addr.sin_addr.s_addr = inet_addr(<span class="string">"127.0.0.1"</span>);  <span class="comment">//具体的IP地址</span></span><br><span class="line">serv_addr.sin_port = htons(<span class="number">1234</span>);  <span class="comment">//端口</span></span><br><span class="line"><span class="comment">//将套接字和IP、端口绑定</span></span><br><span class="line">bind(serv_sock, (struct sockaddr*)&amp;serv_addr, <span class="keyword">sizeof</span>(serv_addr));</span><br></pre></td></tr></table></figure>
+<p>首先我们需要理解一下sockaddr_in 这个结构体</p>
+<p>我们先看一下sockaddr_in 的结构体:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span>&#123;</span></span><br><span class="line">    <span class="keyword">sa_family_t</span>     sin_family;   <span class="comment">//地址族（Address Family），也就是地址类型</span></span><br><span class="line">    <span class="keyword">uint16_t</span>        sin_port;     <span class="comment">//16位的端口号</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span>  <span class="title">sin_addr</span>;</span>     <span class="comment">//32位IP地址</span></span><br><span class="line">    <span class="keyword">char</span>            sin_zero[<span class="number">8</span>];  <span class="comment">//不使用，一般用0填充</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>sin_family: 就是Address Family</li>
+<li>sin_port: 需要使用htons() 进行转换</li>
+<li>sin_addr: in_addr 的结构体，稍后解释</li>
+<li>sin_zero[8]: 没有用的8个位置</li>
+</ol>
+<p>现在让我们看一下in_addr这个结构体:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span>&#123;</span></span><br><span class="line">    <span class="keyword">in_addr_t</span>  s_addr;  <span class="comment">//32位的IP地址</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>in_addr_t 这个类型其实就是4 bytes 的 unsigned long. 就是整数. 但是我们的IP地址是str。 所以我们需要使用inet_addr()将str转换为4bytes的usinged long再赋值给sin_addr.s_addr</p>
+<p>这里的 sockaddr_in 结构体里面再嵌套了一个 in_addr 结构体 应该是 历史遗留问题</p>
+<p>另一个问题就是<strong>为什么使用sockaddr_in而不使用sockaddr呢?</strong></p>
+<p>sockaddr 的结构体为:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span>&#123;</span></span><br><span class="line">    <span class="keyword">sa_family_t</span>  sin_family;   <span class="comment">//地址族（Address Family），也就是地址类型</span></span><br><span class="line">    <span class="keyword">char</span>         sa_data[<span class="number">14</span>];  <span class="comment">//IP地址和端口号</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>下面的 sockaddr_in 与 sockaddr 的对比:</p>
+<p><img src="C:\Users\k\AppData\Roaming\Typora\typora-user-images\1553398875236.png" alt="1553398875236"></p>
+<p>如果我们直接使用sockaddr 结构体, 我们需要自己完成书写sa_data 中的所有内容，很不方便. 所以后面发明了sockaddr_in 专门服务IPV4. 以及sockaddr_in6 专门服务IPV6.</p>
+<p>以下是sockaddr_in6结构体的example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in6</span> &#123;</span> </span><br><span class="line">    <span class="keyword">sa_family_t</span> sin6_family;  <span class="comment">//(2)地址类型，取值为AF_INET6</span></span><br><span class="line">    <span class="keyword">in_port_t</span> sin6_port;  <span class="comment">//(2)16位端口号</span></span><br><span class="line">    <span class="keyword">uint32_t</span> sin6_flowinfo;  <span class="comment">//(4)IPv6流信息</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in6_addr</span> <span class="title">sin6_addr</span>;</span>  <span class="comment">//(4)具体的IPv6地址</span></span><br><span class="line">    <span class="keyword">uint32_t</span> sin6_scope_id;  <span class="comment">//(4)接口范围ID</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>connect 函数： Client端用来建立连接, 与bind 类似</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sock, struct sockaddr *serv_addr, <span class="keyword">socklen_t</span> addrlen)</span></span>;  <span class="comment">//Linux</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(SOCKET sock, <span class="keyword">const</span> struct sockaddr *serv_addr, <span class="keyword">int</span> addrlen)</span></span>;  <span class="comment">//Windows</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="进入被动监听状态"><a href="#进入被动监听状态" class="headerlink" title="进入被动监听状态"></a>进入被动监听状态</h4><p><strong>何为被动监听？</strong></p>
+<p>被动监听就是:客户端没有请求时, socket 是处于 休眠状态. 只有收到客户端请求以后，socket才会被唤醒来请求响应.</p>
+<p><strong>listen() 函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sock, <span class="keyword">int</span> backlog)</span></span>;  <span class="comment">//Linux</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(SOCKET sock, <span class="keyword">int</span> backlog)</span></span>;  <span class="comment">//Windows</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>sock: 需要进入监听状态的socket</li>
+<li>backlog: 请求队列的最大长度</li>
+</ol>
+<p><strong>请求队列(Request Queue)</strong></p>
+<p>当套接字正在处理客户端请求时，如果有新的请求进来，套接字是没法处理的，只能把它放进缓冲区，待当前请求处理完毕后，再从缓冲区中读取出来处理。如果不断有新的请求进来，它们就按照先后顺序在缓冲区中排队，直到缓冲区满。这个缓冲区，就称为请求队列（Request Queue）。</p>
+<p>缓冲区的长度（能存放多少个客户端请求）可以通过 listen() 函数的 backlog 参数指定，但究竟为多少并没有什么标准，可以根据你的需求来定，并发量小的话可以是10或者20。</p>
+<p>如果将 backlog 的值设置为 SOMAXCONN，就由系统来决定请求队列长度，这个值一般比较大，可能是几百，或者更多。</p>
+<p>当请求队列满时，就不再接收新的请求，对于 Linux，客户端会收到 ECONNREFUSED 错误，对于 Windows，客户端会收到 WSAECONNREFUSED 错误。</p>
+<p>注意：listen() 只是让套接字处于监听状态，并没有接收请求。接收请求需要使用 accept() 函数。  </p>
+<p><strong>accept() 函数</strong></p>
+<p>当socket 处于监听状态时, 可以通过accept() 函数来接收客户端的请求。其原型为:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> sock, struct sockaddr *addr, <span class="keyword">socklen_t</span> *addrlen)</span></span>;  <span class="comment">//Linux</span></span><br><span class="line"><span class="function">SOCKET <span class="title">accept</span><span class="params">(SOCKET sock, struct sockaddr *addr, <span class="keyword">int</span> *addrlen)</span></span>;  <span class="comment">//Windows</span></span><br></pre></td></tr></table></figure>
+<p>参数与listen() 和 connect() 是相同的，不多累赘</p>
+<p>==accept() 返回了一个新的socket用来和客户端通信, addr 保存了客户端的IP和端口号. 而sock是服务端的socket==</p>
+<p>最后需要说明的是：listen() 只是让套接字进入监听状态，并没有真正接收客户端请求，listen() 后面的代码会继续执行，直到遇到 accept()。accept() 会阻塞程序执行（后面代码不能被执行），直到有新的请求到来。</p>
+</li>
+<li><h4 id="数据的接收和发送"><a href="#数据的接收和发送" class="headerlink" title="数据的接收和发送"></a>数据的接收和发送</h4><p><strong>Linix 下的发送和接收</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> write(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> nbytes);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> read(<span class="keyword">int</span> fd, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> nbytes);</span><br><span class="line"><span class="comment">//fd: file description, linux系统中， 一切皆文件, socket也不例外</span></span><br><span class="line"><span class="comment">//buf: 要写入/读取数据的缓冲区地址</span></span><br><span class="line"><span class="comment">//nbytes: 写入数据的字节数</span></span><br><span class="line"><span class="comment">//成功返回读取到的字节数, 失败返回-1</span></span><br></pre></td></tr></table></figure>
+<p><strong>WIndows 下的发送和接收</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">send</span><span class="params">(SOCKET sock, <span class="keyword">const</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> len, <span class="keyword">int</span> flags)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv</span><span class="params">(SOCKET sock, <span class="keyword">char</span> *buf, <span class="keyword">int</span> len, <span class="keyword">int</span> flags)</span></span>;</span><br><span class="line"><span class="comment">//sock: 为socket</span></span><br><span class="line"><span class="comment">//buf: 要写入/读取的字节缓冲区地址</span></span><br><span class="line"><span class="comment">//len: 数据的字节数</span></span><br><span class="line"><span class="comment">//flags: 一般为0或NULL,初学者不深究</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/C/">#C</a> <a href="/tags/socket/">#socket</a> <a href="/tags/programming/">#programming</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    A University student study in UIC
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/C-Language/">C Language</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/absolutelycold">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:absolutelyold@gmail.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    Hexo
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
