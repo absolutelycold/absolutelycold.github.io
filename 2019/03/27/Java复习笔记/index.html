@@ -29,7 +29,73 @@
 <h2 id="6-多态"><a href="#6-多态" class="headerlink" title="6. 多态"></a>6. 多态</h2><ul>
 <li>父类无法使用子类独有的方法和成员。但是父类可以直接使用子类重写的方法，使其变得更强大。</li>
 </ul>
-</div><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a class="next" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Language/">C Language</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/socket/" style="font-size: 15px;">socket</a> <a href="/tags/programming/" style="font-size: 15px;">programming</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">寒.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+<h2 id="7-Abstract"><a href="#7-Abstract" class="headerlink" title="7. Abstract"></a>7. Abstract</h2><ul>
+<li>abstract 类不能创建对象</li>
+<li>有abstract方法的类一定是abstract类</li>
+<li>如果abstract类中存在abstract方法，继承其的子类必须实现抽象方法。</li>
+</ul>
+<h2 id="8-接口"><a href="#8-接口" class="headerlink" title="8. 接口"></a>8. 接口</h2><ul>
+<li>interface 创建接口, implements 实现接口</li>
+<li>只存在抽象方法</li>
+<li>变量前一定是public static final (共享的常量)</li>
+<li>接口没有构造方法</li>
+</ul>
+<h2 id="9-抽象类和接口"><a href="#9-抽象类和接口" class="headerlink" title="9. 抽象类和接口"></a>9. 抽象类和接口</h2><ul>
+<li>抽象类的子类和抽象类是is a的关系，但是实现接口的类与接口是like a的关系</li>
+<li>接口就是往某个类里面加上功能</li>
+</ul>
+<h2 id="10-extends-和-implements"><a href="#10-extends-和-implements" class="headerlink" title="10. extends 和 implements"></a>10. extends 和 implements</h2><ul>
+<li>JAVA的规则是单继承，但是可以实现多个接口</li>
+</ul>
+<h2 id="11-Package-import-class-的位置"><a href="#11-Package-import-class-的位置" class="headerlink" title="11. Package, import, class 的位置"></a>11. Package, import, class 的位置</h2><ul>
+<li>Package 在最开头, import 在package下方, class 在package 下方</li>
+</ul>
+<h2 id="12-四种修饰符"><a href="#12-四种修饰符" class="headerlink" title="12. 四种修饰符"></a>12. 四种修饰符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>访问权限</th>
+<th>类</th>
+<th>包</th>
+<th>子类</th>
+<th>其他包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>default</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>private</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>工具类的构造方法定义为private，因为工具类不需要创建对象</li>
+</ul>
+</div><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a class="next" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Language/">C Language</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/socket/" style="font-size: 15px;">socket</a> <a href="/tags/programming/" style="font-size: 15px;">programming</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">寒.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
