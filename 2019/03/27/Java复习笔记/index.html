@@ -95,6 +95,19 @@
 <ul>
 <li>工具类的构造方法定义为private，因为工具类不需要创建对象</li>
 </ul>
+<h2 id="13-内部类"><a href="#13-内部类" class="headerlink" title="13. 内部类"></a>13. 内部类</h2><p>内部类情况太多，暂时考虑匿名内部类</p>
+<ul>
+<li>匿名内部类格式: new 接口名() {实现的方法}.方法()</li>
+</ul>
+<h2 id="14-Object-类"><a href="#14-Object-类" class="headerlink" title="14. Object 类"></a>14. Object 类</h2><ul>
+<li>object类是<font color="red">所有</font>类的父类. 所有类都自动直接或间接继承了object类，只不过被隐藏了。</li>
+<li>object 类中的方法<ul>
+<li>hashCode: 得到某个对象的内存中存放地址</li>
+<li>toString: return this.getClass().getName + “@” + Intager.toHexString(this.hashCode)</li>
+<li>equal: return(this == obj) </li>
+</ul>
+</li>
+</ul>
 </div><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a class="next" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Language/">C Language</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/socket/" style="font-size: 15px;">socket</a> <a href="/tags/programming/" style="font-size: 15px;">programming</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">寒.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
