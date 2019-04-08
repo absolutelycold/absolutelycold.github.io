@@ -56,7 +56,47 @@ J(\Theta) = -\frac{1}{m}\sum^{m}_{i = i}[y^{(i)}\log{\hat{y}^{(i)}} + (1 - y^{(i
 <p>}</p>
 <p>当 $\omega$ 和 $b$ 的值几乎不变时，说明到达了最低点。</p>
 <p>此时的 $\omega$ 和 $b$ 则是我们需要的最优解。</p>
-</div><div class="tags"><a href="/tags/Deep-Learning/">Deep-Learning</a></div><div class="post-nav"><a class="next" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Language/">C Language</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Deep-Learning/" style="font-size: 15px;">Deep-Learning</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/socket/" style="font-size: 15px;">socket</a> <a href="/tags/programming/" style="font-size: 15px;">programming</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/Deep-Learning/">Deep-Learning</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">寒.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+<h4 id="3-How-to-calculate-the-gradient-descent"><a href="#3-How-to-calculate-the-gradient-descent" class="headerlink" title="3. How to calculate the gradient descent"></a>3. How to calculate the gradient descent</h4><h5 id="Calculate-the-derivation-of-L-hat-y-y"><a href="#Calculate-the-derivation-of-L-hat-y-y" class="headerlink" title="Calculate the derivation of $L(\hat{y}, y)$"></a>Calculate the derivation of $L(\hat{y}, y)$</h5><p>Firstly ,we calculate $ \frac{\partial L(\hat{y}, y)}{\partial \hat{y}} $:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L(\hat{y}, y)}{\partial \hat{y}} = -\frac{y}{\hat{y}} + \frac{1-y}{1-\hat{y}}</script><p>Then, we calculate $\frac{\partial \hat{y}}{\partial z}$:</p>
+<script type="math/tex; mode=display">
+\frac{\partial \hat{y}}{\partial z} = \hat{y} (1 - \hat{y})</script><p>Finally, we can get $ \frac{\partial L(\hat{y}, y)}{\partial z }$ :</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial L(\hat{y}, y)}{\partial z} 
+&= \frac{\partial L(\hat{y}, y)}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial z} \\
+&= (-\frac{y}{\hat{y}} + \frac{1-y}{1-\hat{y}}) \cdot (\hat{y} (1 - \hat{y})) \\
+&= \hat{y} - y
+\end{aligned}</script><p>Then, we can get $\frac{\partial L(\hat{y}, y)}{\partial w_i}$:</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial L(\hat{y}, y)}{\partial w_i} 
+&=  \frac{\partial L(\hat{y}, y)}{\partial z}\cdot \frac{\partial z}{\partial w_i}\\
+&= (\hat{y} - y)x_i
+\end{aligned}</script><h5 id="Calculate-the-derivation-of-J-w-b"><a href="#Calculate-the-derivation-of-J-w-b" class="headerlink" title="Calculate the derivation of $J(w, b)$"></a>Calculate the derivation of $J(w, b)$</h5><script type="math/tex; mode=display">
+\frac{\partial}{\partial w_i} J(w,b) = \frac{1}{m} \sum_{i = 1}^{m} \frac{\partial}{\partial w_i} L(\hat{y}^{(i)},y^{(i)})</script><p>Algorithm to calculate it:</p>
+<p>$J=0;\partial w_1 = 0; \partial w_2 = 0; …;\partial w_n = 0 $</p>
+<p>$For\ i = 0\ to\ m: $</p>
+<script type="math/tex; mode=display">
+z^{(i)} = w^T x^{(i)} + b\\
+a^{(i)} = \sigma(z^{(i)}) \\
+J+= -[y^{(i)} log{a^{(i)}} + (1 - y^{(i)})log{(1 - a^{(i)})}] \\
+\partial z^{(i)} = a^{(i)} - y^{(y)} \\
+\partial w_1 += x^{(i)}_1 \partial z^{(i)} \\
+\partial w_2 += x^{(i)}_2 \partial z^{(i)} \\
+\partial w_3 += x^{(i)}_3 \partial z^{(i)} \\
+.\\
+.\\
+.\\
+\partial w_n = x^{(i)}_n \partial z^{(i)}\\
+\partial b += \partial x^{(i)}</script><p>$J /= m; \partial w_1 /= m; \partial w_1 /= m; \partial w_2 /= m;…;\partial w_n /= m$</p>
+<p>After computing the $\frac{\partial}{\partial w_i} J(w,b)$, we can do the gradient descent</p>
+<p>Repeat {</p>
+<p>​    $\omega = \omega - \alpha\frac{\partial J(\omega, b)}{\partial \omega}$;</p>
+<p>​    $b = b - \alpha\frac{\partial J(\omega, b)}{\partial b}$;    </p>
+<p>}</p>
+<p>in each repeat, we need calculus $\frac{\partial J}{\partial w}$ and $\frac{\partial J}{\partial b}$ </p>
+</div><div class="tags"><a href="/tags/Deep-Learning/">Deep-Learning</a></div><div class="post-nav"><a class="next" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Language/">C Language</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/socket/" style="font-size: 15px;">socket</a> <a href="/tags/programming/" style="font-size: 15px;">programming</a> <a href="/tags/Deep-Learning/" style="font-size: 15px;">Deep-Learning</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/Deep-Learning/">Deep-Learning</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/27/Java复习笔记/">Java复习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">寒.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
