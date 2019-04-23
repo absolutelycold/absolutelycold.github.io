@@ -1,0 +1,1452 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Knowledge is bulletproof."><title>JAVA SE Note | 寒</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">JAVA SE Note</h1><a id="logo" href="/.">寒</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">JAVA SE Note</h1><div class="post-meta">Apr 23, 2019<span> | </span><span class="category"><a href="/categories/java/">java</a></span></div><div class="post-content"><h1 id="1-代码块的应用"><a href="#1-代码块的应用" class="headerlink" title="1.代码块的应用"></a>1.代码块的应用</h1><ul>
+<li>局部代码块: 写在方法内或者方法外,但是在类里面. 缩短局部变量的生命周期</li>
+<li>构造代码块: 写在方法外, 类内. 执行于构造函数之前</li>
+<li>Static 代码块 : 写在方法外, 类内. 但是在代码块前加上static. 类刚申明便执行, 但是只执行一次(就是类刚申明的那一次).</li>
+</ul>
+<a id="more"></a>
+<h1 id="2-static成员函数-和-static成员变量"><a href="#2-static成员函数-和-static成员变量" class="headerlink" title="2.static成员函数 和 static成员变量"></a>2.static成员函数 和 static成员变量</h1><ul>
+<li>static成员变量 相当于在对象申明前就存在的变量, 并不存在于堆中, 存在于堆和栈外. 申明一个对象时并不会把static成员变量放到堆中. 所以共同类的对象共享这个 static 成员变量. 也可以叫做 共享成员变量. 这在另一方面也节约了堆中的内存.</li>
+<li>static成员方法 唯一的用处就是可以在未创建对象前就可以使用函数. 值得注意的是静态方法 只能访问 静态变量. 并且 创建的对象 不会 传递 this 指针 给 静态函数.</li>
+</ul>
+<h1 id="3-继承的特定"><a href="#3-继承的特定" class="headerlink" title="3. 继承的特定"></a>3. 继承的特定</h1><ul>
+<li>Java中继承只能是<ul>
+<li>单继承</li>
+<li>多层继承</li>
+</ul>
+</li>
+<li>父类具有通性, 子类具有共性 </li>
+<li>父类的非私有成员 才可以 继承 给 子类(实际上私有成员变量也可以继承,只不过子类不可以直接使用, 子类可以使用父类的方法来使用父类的私有成员. 父类的私有成员方法是一定继承不了的)</li>
+<li>子类并不能访问父类的构造方法 (实际上子类的构造函数都默认 引用了父类的 无参构造函数 super() )<br>我们也可以用super(args)来访问父类的带参数public构造函数</li>
+<li>方法的重写<ul>
+<li>可以直接改写父类方法的内容, 以达到改写的目的</li>
+<li>可以用 super.父类方法(args) 先继承父类的方法, 再加上新的功能, 以达到更新加强的效果</li>
+</ul>
+</li>
+</ul>
+<h1 id="4-final-关键字"><a href="#4-final-关键字" class="headerlink" title="4. final 关键字"></a>4. final 关键字</h1><ul>
+<li>用在类前, 则类 不能被继承</li>
+<li>用在某个方法前, 则该方法不能被override</li>
+<li>用在某变量前, 则 该变量变成常量 (一般被 public static 修饰. 因为 常量是不变的, 每个对象共享就行, 没有必要申请一个对象创建一次, 浪费内存)</li>
+</ul>
+<h1 id="5-基本类型-和-引用类型"><a href="#5-基本类型-和-引用类型" class="headerlink" title="5. 基本类型 和 引用类型"></a>5. 基本类型 和 引用类型</h1><ul>
+<li>基本类型包括:byte, char, short, int, long, float, double</li>
+<li>引用类型: 类似于指针 , 可理解为 C++ 中的引用, 有 数组, 类, 接口, 枚举</li>
+</ul>
+<h1 id="6-多态"><a href="#6-多态" class="headerlink" title="6.多态"></a>6.多态</h1><ul>
+<li>多态的条件<ul>
+<li>继承</li>
+<li>方法重载</li>
+<li>父类引用 指向 子类引用</li>
+</ul>
+</li>
+<li>个人理解: 就是可以 通过父类的 类型 作为参数 可以 传入所有子类类型, 但是 只能用重载后的 方法(弊端). 而不能用子类特有的方法. 但是我们可以向下转型来实现对子类方法的访问.</li>
+</ul>
+<h1 id="7-abstract-关键字"><a href="#7-abstract-关键字" class="headerlink" title="7.abstract 关键字"></a>7.abstract 关键字</h1><ul>
+<li>创建抽象类或者抽象方法<ul>
+<li>abstract class name{}</li>
+<li>public abstract type function(args){}</li>
+</ul>
+</li>
+<li>有抽象方法的类一定是抽象类. 抽象类中不一定有抽象方法</li>
+<li>抽象类的子类有两种情况<ul>
+<li>子类是抽象类</li>
+<li>子类将所有抽象方法实例化</li>
+</ul>
+</li>
+</ul>
+<h1 id="8-接口"><a href="#8-接口" class="headerlink" title="8. 接口"></a>8. 接口</h1><ul>
+<li>用 interface 创建接口 , 用 implements 实现接口</li>
+<li>接口中只有抽象方法</li>
+<li>接口中的变量前默认 加上 public static final (说明接口中只有 共享的常量 )</li>
+<li>接口中没有构造方法</li>
+</ul>
+<h1 id="9-抽象类-is-a-接口-like-a"><a href="#9-抽象类-is-a-接口-like-a" class="headerlink" title="9. 抽象类:is a ; 接口: like a"></a>9. 抽象类:is a ; 接口: like a</h1><ul>
+<li>抽象类 只能被继承. 那么子类就是 抽象类的继承 只不过子类的表现形式不一样</li>
+<li>接口 就是增加某个类的功能. 没有共性.</li>
+</ul>
+<h1 id="10-继承和实现的区别"><a href="#10-继承和实现的区别" class="headerlink" title="10.继承和实现的区别"></a>10.继承和实现的区别</h1><ul>
+<li>继承时是单继承, 并且只能是单继承. 而 实现 接口 可以一次实现多个接口, 完成多个功能.</li>
+</ul>
+<h1 id="带包的类-Package"><a href="#带包的类-Package" class="headerlink" title="带包的类 (Package)"></a>带包的类 (Package)</h1><ul>
+<li>package 关键字必须放在第一行</li>
+<li>import 关键字在 package 下, 定义的 class上</li>
+<li>class 在import 下</li>
+</ul>
+<h1 id="11-四种权限修饰符"><a href="#11-四种权限修饰符" class="headerlink" title="11. 四种权限修饰符"></a>11. 四种权限修饰符</h1><ul>
+<li>private : 只有本类可以访问</li>
+<li>不加修饰符 : 同一个包下能访问</li>
+<li>protected : 子类 才可以访问</li>
+<li>public : 权限最大, 所有都能访问</li>
+<li>总结 : <ul>
+<li>类名前只能加 public (意味着其他包的类可以访问), 和 不加修饰符 (意味着只有自己包的能访问)</li>
+<li>成员方法和成员变量 最好都加上修饰符.<h1 id="工具类的构造方法-定义为private-意味着不允许工具实例化"><a href="#工具类的构造方法-定义为private-意味着不允许工具实例化" class="headerlink" title="工具类的构造方法 定义为private, 意味着不允许工具实例化."></a>工具类的构造方法 定义为private, 意味着不允许工具实例化.</h1></li>
+</ul>
+</li>
+</ul>
+<h1 id="12-内部类"><a href="#12-内部类" class="headerlink" title="12. 内部类"></a>12. 内部类</h1><ul>
+<li>内部类为 public 则 外部可以进行调用</li>
+<li>内部类为 private 则 只有外部类 里面的成员可以调用</li>
+<li>内部类为 static 则 允许外部申请 对象 类中的共享类 , 外部内部都可以申请对象</li>
+<li>内部类分为:<ul>
+<li>成员内部类 : 需要在外部类对象的基础上再申请一个成员内部类</li>
+<li>静态内部类 : 在成员内部类前加上 static 则 可以直接 在 外部创建一个内部类 (可以不需要创建外部类对象),引用类型为 外部类.内部类</li>
+<li>局部内部类 : 定义 在 成员方法里面的类 , 只可以在成员方法中使用</li>
+<li>匿名内部类 : 是局部内部类的一种表现形式. 必须拥有一个存在的接口 或者 类. 在外部类的成员方法中 用<br>new 接口名() { 实现的方法 }.方法()  来一句话表示 子类实现接口=&gt;接口中方法的重写=&gt;调用方法. 节省了代码.(但是此方法 实现的 接口 最好只有一个 方法, 不然更加麻烦)</li>
+</ul>
+</li>
+</ul>
+<h1 id="如果接口有多个方法要实现-则直接-内部类实现方法更加方便-而如果接口只有一个方法-用匿名内部类更加方便-匿名内部类-实际过程中-多用于-作为参数传递-与-匿名对象类似-匿名对象也多用于-当做参数传递"><a href="#如果接口有多个方法要实现-则直接-内部类实现方法更加方便-而如果接口只有一个方法-用匿名内部类更加方便-匿名内部类-实际过程中-多用于-作为参数传递-与-匿名对象类似-匿名对象也多用于-当做参数传递" class="headerlink" title="如果接口有多个方法要实现, 则直接 内部类实现方法更加方便. 而如果接口只有一个方法, 用匿名内部类更加方便. 匿名内部类 实际过程中 多用于 作为参数传递, 与 匿名对象类似, 匿名对象也多用于 当做参数传递."></a>如果接口有多个方法要实现, 则直接 内部类实现方法更加方便. 而如果接口只有一个方法, 用匿名内部类更加方便. 匿名内部类 实际过程中 多用于 作为参数传递, 与 匿名对象类似, 匿名对象也多用于 当做参数传递.</h1><h1 id="匿名内部类也会生成class文件"><a href="#匿名内部类也会生成class文件" class="headerlink" title="匿名内部类也会生成class文件"></a>匿名内部类也会生成class文件</h1><h1 id="13-Object-类"><a href="#13-Object-类" class="headerlink" title="13. Object 类"></a>13. Object 类</h1><ul>
+<li>object 类 (对象类) 是所有类的 父类. 所有类都自动直接或间接继承了object类,只不过被隐藏了.</li>
+<li>object 类中的方法:<ul>
+<li>hashCode : 得到某个对象的内存中存放地址</li>
+<li>getClass : 将某对象所对应的类的class文件信息变成Class类, 返回Class类. 进而可以调用Class类中的方法得到某个对象对应类的信息.</li>
+<li>toString : 默认的源码是 return this.getClass().getName + “@” + Integer.toHexString(this.hashCode).<br>我们要注意的是 当我们 打印 引用的时候 打印的结果是 toString 返回的值. 所以我们可以 override toString方法来达到方便打印 对象信息的方法.</li>
+<li>equals : 源码为 return (this == obj); 其中obj 为传进来的参数 object obj(相当于可以指向所有对象(多态)). 实际上是比较两个对象的地址值. 并没有意义. 我们通常改写. 改写时需要注意 object obj 需要向下转型才可以访问到特定类的成员属性. </li>
+</ul>
+</li>
+</ul>
+<h1 id="很多已存在的类-API-中-其实都override了toString-和-equals-object-arg0-这两个-object类的方法-使类的功能更加完善"><a href="#很多已存在的类-API-中-其实都override了toString-和-equals-object-arg0-这两个-object类的方法-使类的功能更加完善" class="headerlink" title="很多已存在的类(API)中 其实都override了toString() 和 equals(object arg0) 这两个 object类的方法, 使类的功能更加完善"></a>很多已存在的类(API)中 其实都override了toString() 和 equals(object arg0) 这两个 object类的方法, 使类的功能更加完善</h1><h1 id="14-Scanner类"><a href="#14-Scanner类" class="headerlink" title="14.Scanner类"></a>14.Scanner类</h1><ul>
+<li>目前只学了录入按键, 所有构造参数写成 new Scanner(System.in);</li>
+<li>常用方法:<ul>
+<li>nextXXX();  XXX代表类型, 表示读取下一次录入的特定类型</li>
+<li>hasNextXXX(); XXX代表类型, 检测这一次录入进来的是不是XXX类型,并不会读取这些数据,所以可以继续用nextXXX() 来读取</li>
+</ul>
+</li>
+</ul>
+<h1 id="Scanner在nextLine-的时候要注意上一次未读取的-r-n-会造成少读取一次"><a href="#Scanner在nextLine-的时候要注意上一次未读取的-r-n-会造成少读取一次" class="headerlink" title="Scanner在nextLine() 的时候要注意上一次未读取的 \r\n. 会造成少读取一次"></a>Scanner在nextLine() 的时候要注意上一次未读取的 \r\n. 会造成少读取一次</h1><h1 id="15-String-类"><a href="#15-String-类" class="headerlink" title="15.String 类"></a>15.String 类</h1><ul>
+<li>String类可以直接用 String str = “somthing”; 来创建常量区对象</li>
+<li>构造方法<ul>
+<li>new String(); 在堆中创建空字符串</li>
+<li>new String(byte[] arr1); 不需要编码, 直接把编码值存到内存中.</li>
+<li>new String(char[] arr1); 将字符数组串起来</li>
+<li>new String(“XXXXX”); 在堆中创建String对象</li>
+</ul>
+</li>
+<li>常用方法<ul>
+<li>public int length(); 得到字符串长度</li>
+<li>public char charAt(int index); 将索引值index的char 返回出来</li>
+<li>public int indexOf(char ch); 将第一次出现ch 的索引值返回,没有返回-1 </li>
+<li>public int indexOf(String str); 将第一次出现str的索引值返回,没有返回-1</li>
+<li>public int indexOf(char ch, int start); 从start 索引开始, 返回第一次出现ch的索引,没有返回-1</li>
+<li>public int indexOf(String str,int start); 从start 索引开始,返回第一次出现str的索引, 没有返回-1</li>
+<li>lastIndexOf : 与indexOf 方法相反方向查询</li>
+<li>public boolean equals(String str); override object类的equals 方法,判断两字符串是否完全相等</li>
+<li>public boolean equalsIgnoreCase(String str); 忽略大小写来比较两字符串</li>
+<li>public boolean startsWith(String str); 是否以 str 开头</li>
+<li>public boolean endsWith(String str); 是否以str 结尾</li>
+<li>public boolean contains(String str); 判断字符串中是否存在str</li>
+<li>public String substring(int start); 截取从start索引处开始的字符串</li>
+<li>public String substring(int start, int end); 也是截取,既规定了开头 也 规定了结尾</li>
+<li>public String toLowerCase(); 小写</li>
+<li>public String toUpperCase(); 全部大写</li>
+<li>public static String valueOf(int x); 将int数存成字符串</li>
+<li>public static String valueOf(char[] arr1); 将字符数组串起来</li>
+<li>public byte[] getBytes(); 返回字符串的编码,存到byte数组里</li>
+<li>public char[] toCharArray(); 返回字符分开的字符数组</li>
+</ul>
+</li>
+</ul>
+<p>//以上都是按照返回类型进行分类, 返回类型为别的类可以进行链式编程,直到最后返回的是基本数据类型</p>
+<h1 id="16-StringBuffer-类"><a href="#16-StringBuffer-类" class="headerlink" title="16. StringBuffer 类"></a>16. StringBuffer 类</h1><ul>
+<li><p>StringBuffer 允许我们进行对其对象的修改, 但也仅仅局限于用 里面的方法进行修改, 但是这也足够了. 我们是无法对String对象进行修改. 说以如果我们要操作 字符串 就放到StringBuffer 或者 StringBuilder里面. 避免产生过多的垃圾占用内存.</p>
+</li>
+<li><p>构造方法</p>
+<ul>
+<li>new StringBuffer(); 默认分配16个字符的空间,但空间里面没有字符</li>
+<li>new StringBuffer(int capacity); 分配capacity个 空间, 空间内 没有字符</li>
+<li>new StringBuffer(String str); 分配 16 + str长度的空间, 并且将str里面的数据放入 StringBuffer内</li>
+</ul>
+</li>
+<li><p>常用方法</p>
+<ul>
+<li>public StringBuffer append(); 可以在已有字符串后面链接别的字符串 ,参数可以为基本数据类型,自动转换为String</li>
+<li>public StringBuffer insert(int offset, String str); 在offset的索引处插入,也就是插在当前索引的字符的前面</li>
+<li>public StringBuffer deletCharAt(int offset); 将offset索引处的字符删除</li>
+<li>public StringBuffer delet(int start, int end); 删除从start索引开始 和 end之前的字符串</li>
+<li>public StringBuffer replace(int start, int end, String str); 将字符串从索引为start和索引为end之间的子字符串更改为str</li>
+<li>public StringBuffer reverse(); 倒转</li>
+<li>public String substring(int start); 获得子字符串, 需要注意这里并不是截断现有StringBuffer里面的字符串,而是获取子字符串</li>
+<li>public String substring(int start, int end); 说明和上一条相同</li>
+</ul>
+</li>
+<li><p>StringBuffer 与 String 之间的转换</p>
+<ul>
+<li><p>String 转换为 StringBuffer:<br>假设我们先定义好了一个字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;This is a test sentence.&quot;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>两种方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//第一种方法: 利用构造函数new StringBuffer(String str);</span><br><span class="line">StringBuffer sb1 = new StringBuffer(str);</span><br><span class="line">//第二种方法: 创造一个空的StringBuffer 再 append 一个String</span><br><span class="line">StringBuffer sb2 = new StringBuffer();</span><br><span class="line">sb2.append(str);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>StringBuffer 转换为 String<br>假设我们先定义好了一个StringBuffer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sb1 = new StringBuffer(&quot;This is a test StringBuffer&quot;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>三种方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//第一种: 构造方法 new String(StringBuffer sb) 创建</span><br><span class="line"> String str1 = new String(sb1);</span><br><span class="line">//第二种 直接使用StringBuffer 重写的方法 toString</span><br><span class="line">String str2 = sb1.toString();</span><br><span class="line">//第三种 利用substring(0, sb1.length()) 获取整个字符串</span><br><span class="line">String str3 = sb1.substring(0, sb1.length());</span><br></pre></td></tr></table></figure>
+<h3 id="StringBuilder-方法-和-StringBuffer-一样-但是-StringBuffer-效率更低-更慢-但安全-StringBuilder-效率高-速度快-但是不安全"><a href="#StringBuilder-方法-和-StringBuffer-一样-但是-StringBuffer-效率更低-更慢-但安全-StringBuilder-效率高-速度快-但是不安全" class="headerlink" title="StringBuilder 方法 和 StringBuffer 一样, 但是 StringBuffer 效率更低,更慢 但安全. StringBuilder 效率高,速度快,但是不安全."></a>StringBuilder 方法 和 StringBuffer 一样, 但是 StringBuffer 效率更低,更慢 但安全. StringBuilder 效率高,速度快,但是不安全.</h3></li>
+</ul>
+</li>
+</ul>
+<h1 id="17-Arrays-工具类-所有都是静态方法-不需要创建对象"><a href="#17-Arrays-工具类-所有都是静态方法-不需要创建对象" class="headerlink" title="17. Arrays 工具类(所有都是静态方法, 不需要创建对象)"></a>17. Arrays 工具类(所有都是静态方法, 不需要创建对象)</h1><h2 id="掌握Array类之前先要理解Array类中方法的原理-数组变成String-冒泡排序-选择排序-二分查找…可以自行百度或google来查找练习"><a href="#掌握Array类之前先要理解Array类中方法的原理-数组变成String-冒泡排序-选择排序-二分查找…可以自行百度或google来查找练习" class="headerlink" title="掌握Array类之前先要理解Array类中方法的原理 : 数组变成String,冒泡排序, 选择排序, 二分查找…可以自行百度或google来查找练习"></a>掌握Array类之前先要理解Array类中方法的原理 : 数组变成String,冒泡排序, 选择排序, 二分查找…可以自行百度或google来查找练习</h2><ul>
+<li>public static String toString(); 数组变成String</li>
+<li>public static void sort(); quick排序, 并不是冒泡排序和选择排序, 效率更高,从小到大排序</li>
+<li>public static int binarySearch(int[] arr, int key); 在arr中查找key 的序列</li>
+</ul>
+<h1 id="18-基本数据类型的-包装类"><a href="#18-基本数据类型的-包装类" class="headerlink" title="18. 基本数据类型的 包装类"></a>18. 基本数据类型的 包装类</h1><h3 id="只写integer类-其他类类似"><a href="#只写integer类-其他类类似" class="headerlink" title="只写integer类,其他类类似"></a>只写integer类,其他类类似</h3><ul>
+<li>构造方法:<ul>
+<li>new Integer(int x);</li>
+<li>new Integer(String str); //String里面必须是整数的字符串<h4 id="JDK9文档中说现在这两个构造方法都极少使用-可以用静态方法-public-static-Integer-valueOf-来进行对象的创建"><a href="#JDK9文档中说现在这两个构造方法都极少使用-可以用静态方法-public-static-Integer-valueOf-来进行对象的创建" class="headerlink" title="JDK9文档中说现在这两个构造方法都极少使用, 可以用静态方法 public static Integer valueOf() 来进行对象的创建."></a>JDK9文档中说现在这两个构造方法都极少使用, 可以用静态方法 public static Integer valueOf() 来进行对象的创建.</h4></li>
+</ul>
+</li>
+<li>常用成员<ul>
+<li>public static final int MAX_VALUE</li>
+<li>public static final int MIN_VALUE</li>
+</ul>
+</li>
+<li>常用方法<ul>
+<li>public static int parseInt(String str);</li>
+<li>public String toString(); //override object类的方法, 说明可以直接打印</li>
+<li>public int intValue(); // 将Integer 类型转换回 int类型</li>
+</ul>
+</li>
+</ul>
+<h1 id="18-1-String-类型-与-int-之间的转换"><a href="#18-1-String-类型-与-int-之间的转换" class="headerlink" title="18.1 String 类型 与 int 之间的转换"></a>18.1 String 类型 与 int 之间的转换</h1><ul>
+<li><p>String -&gt; int<br>假设我们已经定义了一个String</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str1 = &quot;1234&quot;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//第一种方法, 利用 Integer 的 public static int parseInt() 方法来转换</span><br><span class="line">int a = Integer.parseInt(str1);</span><br><span class="line">//第二种, 先将String 转换为 Integer类型, 再 用intValue() 转换为int;</span><br><span class="line">int b = Integer.valueOf(str1).intValue(); //其实也可以写成 int b = new Integer(str1).intValue(); 来实现,但此方法已经过时</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>int -&gt; String<br>假设我们已经声明了一个int</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int a = 1234;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//方法一: 利用 + &quot;&quot; 直接变成String</span><br><span class="line">String str1 = a + &quot;&quot;;</span><br><span class="line">//方法二: 利用 String 的valueOf 方法创建对象</span><br><span class="line">String str2 = String.valueOf(a); //也可以用 String str2 = new String(a); 达到一样的效果</span><br><span class="line">//方法三: 先将int 转换为 Integer , 再用 toString方法 变成String</span><br><span class="line">String str3 = Integer.valueOf(a).toString();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="18-2-在新版本JDK中-有自动装箱和自动拆箱功能-可以省去-基本数据类型和基本数据类型的包装之间的转换"><a href="#18-2-在新版本JDK中-有自动装箱和自动拆箱功能-可以省去-基本数据类型和基本数据类型的包装之间的转换" class="headerlink" title="18.2 在新版本JDK中, 有自动装箱和自动拆箱功能, 可以省去 基本数据类型和基本数据类型的包装之间的转换"></a>18.2 在新版本JDK中, 有自动装箱和自动拆箱功能, 可以省去 基本数据类型和基本数据类型的包装之间的转换</h1><h1 id="19-正则表达式"><a href="#19-正则表达式" class="headerlink" title="19. 正则表达式"></a>19. 正则表达式</h1><ul>
+<li>String 类中 有 public boolean matches(String regex) 来判断 字符串是否匹配 regular expression.<h1 id="19-1-Character-classes"><a href="#19-1-Character-classes" class="headerlink" title="19.1 Character classes"></a>19.1 Character classes</h1><ul>
+<li>以下是我从文档里面copy过来的<br><img src="http://upload-images.jianshu.io/upload_images/4060512-e68eadcb8782f036.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="character classes"></li>
+<li>解释<ul>
+<li>[ ]方括号代表一个字符</li>
+<li>[abc] : 代表 abc三个字符任意一个字符都是匹配这个 regular expression的 (simple class 最简单的样式)</li>
+<li><sup><a href="#fn_abc" id="reffn_abc">abc</a></sup> : ^在这里代表之外(补集),除abc外所有字符都匹配 (negation: 相反)</li>
+<li>[a-zA-z] : a字符到z字符 和 A字符到Z字符的并集 字符都匹配 (range : 范围)</li>
+<li>[a-d[m-p]] : 代表 a-d 与 m-p 的并集 中的字符都匹配 也可以写成 [a-dm-p] (union : 结合(并集))</li>
+<li>[a-z&amp;&amp;[def]] : 其中 &amp;&amp; 代表交集, 取的是 a-z 和 def 的交集 (intersection : 交集)</li>
+<li>[a-z&amp;&amp;<sup><a href="#fn_bc]" id="reffn_bc]">bc]</a></sup> : a-z 与 ^bc 的交集 其实就是 a-z范围内除了bc的部分 (subtraction : 子集)</li>
+<li>[a-z&amp;&amp;<sup><a href="#fn_m-p]" id="reffn_m-p]">m-p]</a></sup> : 与上面那个例子一样, 取的是a-z范围内除了 m-p的部分 (substraction : 子集)</li>
+</ul>
+</li>
+<li><h2 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h2><ul>
+<li>‘ - ‘ 代表 范围 例如 [a-z]</li>
+<li>两个相连的范围不加任何修饰则是并集</li>
+<li>&amp;&amp;代表取 交集</li>
+<li>‘ ^ ‘ 代表补集</li>
+<li>掌握交集, 并集,补集 并通过交并补算出 子集</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="19-2-predefined-character-classes"><a href="#19-2-predefined-character-classes" class="headerlink" title="19.2 predefined character classes"></a>19.2 predefined character classes</h2><p>  <img src="http://upload-images.jianshu.io/upload_images/4060512-4550568d2e385998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="predefined_character_classes"></p>
+<ul>
+<li>从字面就能理解 这个是别人帮我们提前定义好的一些符号</li>
+<li>解释<ul>
+<li>‘.’ : 一个点就代表 匹配任意字符 / / 那如果我就是想正则一个点怎么办呢? 我们可以用 \ . 转义 .来表示点. </li>
+<li>\d : 代表[0-9], 匹配0-9的数字</li>
+<li>\D : 相当于 ^[0-9], 匹配除了数字的其他字符</li>
+<li>\s : 代表空格 或者 制表符</li>
+<li>\S : 代表除了空格之类的其他字符</li>
+<li>\w : 相当于[a-zA-z_0-9], 所有与英语有关的,字母大小写,下划线,0-9数字 都包括在里面</li>
+<li>\W : 相当于 ^[a-zA-Z_0-9], 除了那些代表英语的所有字符</li>
+</ul>
+</li>
+<li><h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>小写就是匹配, 大写就是相反</li>
+<li><h2 id="要特别注意String里面-要用-代表一个-如果只写一个就相当于转义了"><a href="#要特别注意String里面-要用-代表一个-如果只写一个就相当于转义了" class="headerlink" title="要特别注意String里面 要用\ \代表一个\ , 如果只写一个就相当于转义了."></a>要特别注意String里面 要用\ \代表一个\ , 如果只写一个就相当于转义了.</h2></li>
+</ul>
+</li>
+</ul>
+<h2 id="19-3-Greedy-quantifier-贪婪的-定数器"><a href="#19-3-Greedy-quantifier-贪婪的-定数器" class="headerlink" title="19.3 Greedy quantifier (贪婪的 定数器)"></a>19.3 Greedy quantifier (贪婪的 定数器)</h2><p>  <img src="http://upload-images.jianshu.io/upload_images/4060512-d67c4e683182572e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="greedy_quantifier"></p>
+<ul>
+<li>解释<ul>
+<li>X? : X代表的字符出现一次或压根不存在, 就匹配</li>
+<li>X* : X代表的字符出现大于等于0次, 就匹配</li>
+<li>X+ : X代表的字符出现一次及以上, 就匹配</li>
+<li>X{n} : X代表的字符连续出现n次, 就匹配</li>
+<li>X{n,} : X代表的字符连续最少出现n次, 就匹配</li>
+<li>X{n,m} : X代表的字符连续最少出现n次,最多出现m次,就匹配</li>
+</ul>
+</li>
+</ul>
+<h2 id="19-4-String类中关于正则的方法"><a href="#19-4-String类中关于正则的方法" class="headerlink" title="19.4 String类中关于正则的方法"></a>19.4 String类中关于正则的方法</h2><ul>
+<li>public String[] split(String regex) 使用正则表达式来实现切割功能的.</li>
+<li>public String replaceAll(String regex, String replacement) 正则表达式进行替换</li>
+<li>public boolean matches(String regex); 判断是否匹配正则表达式</li>
+</ul>
+<h2 id="19-5-Groups-and-capturing"><a href="#19-5-Groups-and-capturing" class="headerlink" title="19.5 Groups and capturing"></a>19.5 Groups and capturing</h2><p><img src="http://upload-images.jianshu.io/upload_images/4060512-e2469c0ece6333ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="group"></p>
+<ul>
+<li>解释</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">其实一个左括号代表一个组, 在正则表达式中用 \ \ 数字  来代表第几组的字符. $符号可以将正则里面的组当做replacement 这个参数, 作为替代的参数.</span><br><span class="line"> * Example:</span><br></pre></td></tr></table></figure>
+<p>  //写一个正则表示AABB形式的字符串<br>  String regex = “(.)\1(.)\2”;<br>  //写一个正则表示ABAB的字符串<br>  String regex1 = “(.)(.)\1\2”;<br>  //写一个正则表示 连续的 一个字符串 例如 AAAA.., BBBB…<br>  String regex = “(.)\1+”<br>  //将连续出现的一个字符 替换为只有一个这个字符, 例如 AAAAAA 变成A<br>  String str1  = “AAAAAAABBBBCCCCCCCCCCCCC”;<br>  String str2  = str1.replaceAll(“(.)\1+”, “$1”);<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h2 id="19-6-String类-中-matches-的实现方法"><a href="#19-6-String类-中-matches-的实现方法" class="headerlink" title="19.6 String类 中 matches 的实现方法"></a>19.6 String类 中 matches 的实现方法</h2><p>源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean matches(String regex) &#123;</span><br><span class="line">    return Pattern.matches(regex, this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到是利用了Pattern 类中的 静态方法</p>
+<ul>
+<li><p>另一种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Pattern p = Pattern.compile(&quot;(.)\\1(.)\\2&quot;);</span><br><span class="line">Matcher m = p.matcher(&quot;AABB&quot;);</span><br><span class="line">boolean a = m.matches();</span><br><span class="line">System.out.println(a);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>那这一种方式这么复杂, 到底有什么用呢? 这就要了解 Matcher 类的强大了. 也是爬虫的基础吧</p>
+<h2 id="19-7-Matcher-类"><a href="#19-7-Matcher-类" class="headerlink" title="19.7 Matcher 类"></a>19.7 Matcher 类</h2></li>
+<li><p>String 类中的matches 方法太有局限性, 只可以判断 字符串是否 与 正则表达式匹配. 如果我们想在一堆字符串中获取我们需要的信息. 我们就要学习 Matcher这个类了</p>
+</li>
+<li><p>public boolean find(); 查找字符串中是否 匹配 了 正则表达式中的内容. 这个find 找到一个会 将指针往后移,所以多次find() 就可以找到所以匹配的字符串.</p>
+</li>
+<li><p>public String group(); 返回上一次 匹配到的 字符串. 用这个方法 就可以将我们匹配到的信息 获取.</p>
+</li>
+<li><p>例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//先假设我们要在一堆数据里找到qq号.</span><br><span class="line">String str1 = &quot;我的qq号是: 88888, 但是我以前还用过 666666, 现在我的QQ 号是10位的 1234567890.&quot;;</span><br><span class="line">//QQ号的正则表达式</span><br><span class="line">String regex = &quot;[1-9]\\d&#123;4,9&#125;&quot;;</span><br><span class="line">Pattern p = Pattern.compile(regex);</span><br><span class="line">Matcher m = p.matcher(str1);</span><br><span class="line">while(m.find())&#123;</span><br><span class="line">  System.out.println(m.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="20-Math-类"><a href="#20-Math-类" class="headerlink" title="20. Math 类"></a>20. Math 类</h2><ul>
+<li>Math 类比较简单, 就写一下常用的方法, 看看文档就会了 (工具类, 构造函数private, 无法创建对象)<ul>
+<li>常用的常量 Math.PI 和 Math.E , 一个是圆周率, 一个是自然底数</li>
+<li>常用的方法:<ul>
+<li>public static int abs(int a); 绝对值</li>
+<li>public static double ceil(double a); 向上取整 ceil 是天花板的意思</li>
+<li>public static double floor(double a); 向下取整 floor 是地板的意思</li>
+<li>public static max(int a, int b) ; 返回a 与 b中较大的值</li>
+<li>public static min(int a, int b) ; 返回 a 与 b 中较小的值</li>
+<li>public static double pow(double a, double b) ; power 求次方, 相当于 a ^ b;</li>
+<li>public static double random() ; 取 [0,1) 的随机数</li>
+<li>public static int round(double a) ; 四舍五入 round 就是球嘛</li>
+<li>public static double sqrt(double a) ; 求 a 的算术平方根</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="21-Random-类"><a href="#21-Random-类" class="headerlink" title="21. Random 类"></a>21. Random 类</h2><ul>
+<li><p>虽说Math 里面有个方法是random(). 但是还是有一定局限,只能取 [0,1) 的数. 这是我们就要用到更强大的Random类了</p>
+</li>
+<li><p>需要注意Random类生成的是假随机数,根据算法算出来的,所以一个seed数代表一串随机数. 我们要设置seed数.</p>
+</li>
+<li><p>构造方法</p>
+<ul>
+<li>Random(); //实际上会根据实际自动设定seed数</li>
+<li>Random(long seed); // 自定义seed数</li>
+</ul>
+</li>
+<li><p>方法<br><img src="http://upload-images.jianshu.io/upload_images/4060512-b90671d69fdf564c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Random_method"></p>
+</li>
+<li><p>方法都是类似的, 这里将 nextInt() 作为例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Random r = new Random();</span><br><span class="line">for(int i=0; i&lt;10; i++)&#123;</span><br><span class="line">  System.out.println(r.nextInt()); // 输出10次整数</span><br><span class="line">&#125;</span><br><span class="line">for(int i=-; i&lt;10; i++)&#123;</span><br><span class="line">  System.out.println(r,nextInt(100)); // 输出范围在[0,100) 之间的数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="22-System-类"><a href="#22-System-类" class="headerlink" title="22. System 类"></a>22. System 类</h2><ul>
+<li>构造方法被 private 无法创建对象</li>
+<li>常用 field :<ul>
+<li>in : 标准输入流 , 指向 输入的内存</li>
+<li>out : 标准输出流 , 指向 输出的内存</li>
+</ul>
+</li>
+<li>常用方法:<ul>
+<li>public static void gc(); garbage collector 垃圾收集器 , 可以手动调用这个方法来处理垃圾</li>
+<li>public static void exit(int status); 退出JVM, 状态码为0 正常退出, 状态码为 0以外, 则表示异常退出</li>
+<li>public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length); 表示从src的 srcPos位置开始复制length 个 对象 到dest的desPos位置.</li>
+<li>public static long currentTimeMillis(); 获取当前系统世界 与 1970 年 1 月 1 日相差的毫秒值</li>
+</ul>
+</li>
+</ul>
+<h1 id="23-关于时间的类-Date类-和-SimpleDateFormat-类-Calender类"><a href="#23-关于时间的类-Date类-和-SimpleDateFormat-类-Calender类" class="headerlink" title="23. 关于时间的类 : Date类 和 SimpleDateFormat 类 , Calender类"></a>23. 关于时间的类 : Date类 和 SimpleDateFormat 类 , Calender类</h1><ul>
+<li><h4 id="Date类"><a href="#Date类" class="headerlink" title="Date类"></a>Date类</h4><ul>
+<li>掌握一个构造方法 获取当前的时间 就行了 new Date();</li>
+<li>还有有参构造, 和对应方法, 有兴趣可以自己查文档</li>
+<li>方法(写一个吧,很多都过时了)<ul>
+<li>public long getTime(); 获取 距离 1970 年 1 月 1 日 的毫秒数.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="SimpleDateFormat-类"><a href="#SimpleDateFormat-类" class="headerlink" title="SimpleDateFormat 类"></a>SimpleDateFormat 类</h4><ul>
+<li><p>这个类就是对 Date进行格式化的类<br><img src="http://upload-images.jianshu.io/upload_images/4060512-386b2ff9059a909d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="simpleDateFormat"></p>
+</li>
+<li><p>我们常用的格式化有 y:代表年; M:代表月; d:代表日; H:代表时; m: 代表分; s 代表秒</p>
+</li>
+<li><p>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Date d = new Date();</span><br><span class="line">SimpleDateFormat sdf1 = new SimpleDateFormat(&quot;现在是yyyy年MM月dd日HH时mm分ss秒&quot;);</span><br><span class="line">System.out.println(sdf1.format(d));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法</p>
+<ul>
+<li>public static String format(Date date);  继承自父类的方法, 将 Date 格式化 成 String</li>
+<li>public static Date parse(String str); 根据格式化来解析 String 变成 Date 对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="Calender类"><a href="#Calender类" class="headerlink" title="Calender类"></a>Calender类</h4><ul>
+<li><p>Calender 是抽象类 ,不能创建对象, 必须创建实现抽象的子类对象才可以 使用 Calender 类中的抽象方法.</p>
+</li>
+<li><p>文档告诉我们 Calendar 的创建方法为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Calendar c = Calendar.getInstance(); // 我们知道Calender不能创建对象,所以在getInstance()方法中返回的一定是Calender 的子类, 源码中也确实如此. 返回的是 GregorianCalendar 类 的对象</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我们常用的Field 有 YEAR, MONTH(这个月是以 0 开始的), DAY_OF_MONTH, HOUR_OF_DAY, MINUTE, SECOND</p>
+</li>
+<li><p>方法</p>
+<ul>
+<li><p>get(int field); 可以返回field 内的对应信息, 例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Calender c = Calender.getInstance();</span><br><span class="line">//获取当前时间</span><br><span class="line">System.out.println(c.get(c.YEAR) + &quot;年&quot; + (c.get(c.MONTH)+1) + &quot;月&quot; + c.get(c.DAY_OF_MONTH) + &quot;日&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>public abstract void add(int field, int num); 子类实现了此方法, 修改某字段通过传入参数num. 若num为正数,则是加法,若num 为负数则为减法. </p>
+</li>
+<li><p>public void set(); Calendar类中有很多歌重载的set函数, 看文档,set 方法就是设置的意思</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="24-集合框架"><a href="#24-集合框架" class="headerlink" title="24. 集合框架"></a>24. 集合框架</h1><ul>
+<li><p>Array 和 集合 的区别:</p>
+<ul>
+<li>Array: 数组长度是固定的, 不可修改. 数组既可以存基本数据类型 , 也可以存储引用数据类型 (对象地址值)</li>
+<li>集合 : 长度可以随着内容的增加而增加,不是固定的. 只能存储引用数据类型 (对象)， 如果存储基本数据类型,会自动装箱转换为对应的对象.</li>
+</ul>
+</li>
+<li><h3 id="Collection-集合"><a href="#Collection-集合" class="headerlink" title="Collection 集合"></a>Collection 集合</h3><ul>
+<li>Collection 集合框架, 由上而下学习<br><img src="http://upload-images.jianshu.io/upload_images/4060512-5490419d8a8ff4e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Collection"></li>
+</ul>
+</li>
+<li><h2 id="Collection-接口方法"><a href="#Collection-接口方法" class="headerlink" title="Collection 接口方法"></a>Collection 接口方法</h2><p><img src="http://upload-images.jianshu.io/upload_images/4060512-1aa9e5604c190cd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="collection_method.png"></p>
+</li>
+<li><h3 id="根接口还是比较重要-最好全部掌握"><a href="#根接口还是比较重要-最好全部掌握" class="headerlink" title="根接口还是比较重要, 最好全部掌握"></a>根接口还是比较重要, 最好全部掌握</h3><ul>
+<li><p>boolean add(); 返回类型为boolean 是因为考虑到 子类可能 有Set, 需要判断重复, 但是在List 接口中 add() 方法是只返回 true 的. 作用为添加元素. 还要注意基本类型的自动装箱</p>
+</li>
+<li><p>boolean remove(Object o); 删除元素, List 下的实现 和 Set 下的实现略有不同, 子类不仅实现了此方法,并且重载了此方法. List 重载了可以按照 index 删除元素的方法</p>
+</li>
+<li><p>void clear(); 清除所有元素</p>
+</li>
+<li><p>boolean contains(Object o); 判断 collection 里面的元素是否包含 o</p>
+</li>
+<li><p>boolean isEmpty(); 判断是否为空</p>
+</li>
+<li><p>int size(); 返回Collection中 元素的个数</p>
+</li>
+<li><p>Object[] toArray(); 将List或者 Set 转换为 数组, 进行遍历等操作 . 这里要注意的是 集合里面的对象都是父类的引用指向子类对象. 我们不能用子类特有的方法.</p>
+</li>
+<li><p>boolean addAll(Collection c); 将 另一个 Collection对象中的元素逐个加在 此对象后面</p>
+</li>
+<li><p>boolean containAll(Collection c); 此 集合 中的元素是否含有 c中的元素</p>
+</li>
+<li><p>boolean removeAll(Collection c); 删除 所有 使用此方法对象中 与 c 有相同元素的元素</p>
+</li>
+<li><p>boolean retainAll(Collection c); 保留 此集合与 c 的交集的元素. 若 此对象元素未改变返回false, 改变则返回true.</p>
+</li>
+<li><p>Iterator itrator(); 返回一个迭代器, 所以我们查看一下iterator 接口 的方法:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-383680a1572b10d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Iterator_Method"><br>我们可以使用迭代器进行对Collection的遍历:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Collection c = new ArrayList(); //我们现在使用的方法都是ArrayList实现的, 其他集合会有差别.但是最终的功能是类似的</span><br><span class="line">c.add(1); //自动装箱 , 封装为Integer类</span><br><span class="line">c.add(&quot;Test&quot;);</span><br><span class="line">c.add(true); //自动装箱</span><br><span class="line">Iterator it = c.iterator();</span><br><span class="line">while(it.hasNext())&#123;</span><br><span class="line">System.out.println(it.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h2 id="Iterator-只是向上抽取出来的一个接口-这些方法-必须在子类中进行实现-每个类型的集合都有每个类型自己的迭代方式-因为存的方式是不一样的-但是iterator功能却是一样的-实现的方法不同"><a href="#Iterator-只是向上抽取出来的一个接口-这些方法-必须在子类中进行实现-每个类型的集合都有每个类型自己的迭代方式-因为存的方式是不一样的-但是iterator功能却是一样的-实现的方法不同" class="headerlink" title="Iterator 只是向上抽取出来的一个接口, 这些方法 必须在子类中进行实现. 每个类型的集合都有每个类型自己的迭代方式, 因为存的方式是不一样的. 但是iterator功能却是一样的(实现的方法不同)."></a>Iterator 只是向上抽取出来的一个接口, 这些方法 必须在子类中进行实现. 每个类型的集合都有每个类型自己的迭代方式, 因为存的方式是不一样的. 但是iterator功能却是一样的(实现的方法不同).</h2></li>
+</ul>
+</li>
+<li><h1 id="List-接口-Collection的子接口"><a href="#List-接口-Collection的子接口" class="headerlink" title="List 接口 (Collection的子接口)"></a>List 接口 (Collection的子接口)</h1><ul>
+<li>List 接口继承了父类所有接口, 并且新加了List独有的 方法. 因为List 具有 有序的性质, 可以按照索引进行 元素的操作, 如 添加, 修改, 获取, 删除. 所以 重载了一部分方法并新加了一部分方法</li>
+<li>新的方法有:<ul>
+<li>void add(int index, E element); 在指定索引处添加元素, 注意不可超过集合的界限,但是可加在最后</li>
+<li>E remove(int index); 删除指定索引的元素, 这里需要注意: 如果传入 int 型的数不会自动装箱封装为类, 只会当作索引, 如果要删除集合中的整数需要传入Integer类型. 返回的是删除的元素</li>
+<li>E get(int index); 通过索引获取元素</li>
+<li>E set(int index, E element); 将索引处的元素替换, 返回被替换的元素.</li>
+<li>ListIterator listIterator(); //也是类似于iterator, 在 外部类对象中 申请了一个 内部类对象. 但是 listIterator 更强大, 可以在遍历过程中改变 集合的长度 避免了并发修改异常错误. listIterator 还包括很多 iterator 不包含的方法. // ListIterator 是 List 接口特有的方法.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h2 id="ArrayList-LinkedList-Vector-三种集合的区别"><a href="#ArrayList-LinkedList-Vector-三种集合的区别" class="headerlink" title="ArrayList, LinkedList, Vector 三种集合的区别"></a>ArrayList, LinkedList, Vector 三种集合的区别</h2><ul>
+<li>首先我们需要了解 数组实现 和 链表 实现 的优劣是什么:  <ul>
+<li>Array : 查询快(修改快), 但是增加或删除慢 (因为如果增加或删除要移动一大串元素)</li>
+<li>链表 : 查询慢(修改慢), 因为需要一个接一个查, 不是地址直接查. 但是增删快, 因为 只要修改 一个节点就可以了</li>
+</ul>
+</li>
+<li>了解完 数组 和 链表 的区别后 就可以理解 ArrayList, LinkedList 和 Vector 的区别了:<ul>
+<li>ArrayList : 修改快,查询快, 增删慢, 线程不安全(查询效率高)</li>
+<li>Vector: 修改快, 查询快, 增删慢, 线程安全(查询效率低)</li>
+<li>LinkedList : 修改慢, 查询慢, 增删快, 线程不安全 效率高</li>
+</ul>
+</li>
+<li>可以大概总结为:<ul>
+<li>如果需要存大量数据, 并且对查询速度要求高, 选择 ArrayList</li>
+<li>如果 对增加或删除速度要求高, 选择 LinkedList</li>
+<li>开发中常用 ArrayList. Vector 已经过时了, 极少用到.</li>
+</ul>
+</li>
+</ul>
+<h3 id="所有类中的-contains-方法-底层都是用-equals-比较的-如果要在集合中判断是否存在自己的类的对象-则要重写-equals方法"><a href="#所有类中的-contains-方法-底层都是用-equals-比较的-如果要在集合中判断是否存在自己的类的对象-则要重写-equals方法" class="headerlink" title="所有类中的 contains 方法 底层都是用 equals 比较的, 如果要在集合中判断是否存在自己的类的对象, 则要重写 equals方法."></a>所有类中的 contains 方法 底层都是用 equals 比较的, 如果要在集合中判断是否存在自己的类的对象, 则要重写 equals方法.</h3></li>
+<li><h2 id="ArrayList-类-基本上只是实现了-Collection-和-List-接口的方法-并没有自己的新方法-可以查文档"><a href="#ArrayList-类-基本上只是实现了-Collection-和-List-接口的方法-并没有自己的新方法-可以查文档" class="headerlink" title="ArrayList 类 : 基本上只是实现了 Collection 和 List 接口的方法, 并没有自己的新方法, 可以查文档"></a>ArrayList 类 : 基本上只是实现了 Collection 和 List 接口的方法, 并没有自己的新方法, 可以查文档</h2></li>
+<li><h2 id="LinkedList-类-不仅实现了接口-而且有自己的方法-因为是用链表实现的-所以头-和-尾-都很重要"><a href="#LinkedList-类-不仅实现了接口-而且有自己的方法-因为是用链表实现的-所以头-和-尾-都很重要" class="headerlink" title="LinkedList 类 : 不仅实现了接口, 而且有自己的方法(因为是用链表实现的, 所以头 和 尾 都很重要)."></a>LinkedList 类 : 不仅实现了接口, 而且有自己的方法(因为是用链表实现的, 所以头 和 尾 都很重要).</h2><ul>
+<li>所以有了 头 和 尾 的方法:<ul>
+<li>public void addFirst(Object o)/ addLast(Object o); </li>
+<li>public E removeFirst()/ removeLast();</li>
+<li>public E getFirst()/ getLast(); </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="栈和队列的特点"><a href="#栈和队列的特点" class="headerlink" title="栈和队列的特点:"></a>栈和队列的特点:</h1><ul>
+<li>栈 可以想象成弹夹, 先进后出</li>
+<li>队列可以想象成管子, 先进先出<h5 id="可以用-使用LinkedList-封装-成一个新方法-实现-栈和队列"><a href="#可以用-使用LinkedList-封装-成一个新方法-实现-栈和队列" class="headerlink" title="可以用 使用LinkedList 封装 成一个新方法, 实现 栈和队列"></a>可以用 使用LinkedList 封装 成一个新方法, 实现 栈和队列</h5><img src="http://upload-images.jianshu.io/upload_images/4060512-6a73cb6c373c6e86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="栈的实现"><br><img src="http://upload-images.jianshu.io/upload_images/4060512-ddc299c9f8bd49ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="队列的实现"></li>
+</ul>
+<h6 id="以上是栈和队列的实现方法"><a href="#以上是栈和队列的实现方法" class="headerlink" title="以上是栈和队列的实现方法"></a>以上是栈和队列的实现方法</h6></li>
+<li><h1 id="25-泛型"><a href="#25-泛型" class="headerlink" title="25. 泛型"></a>25. 泛型</h1><ul>
+<li><p>泛型的好处:</p>
+<ul>
+<li><ol>
+<li>可以使代码更安全, 因为只能传入指定类型的 对象, 不会那么混乱</li>
+</ol>
+</li>
+<li><ol>
+<li>取出的对象也 不是 object类了, 不需要自己向下转型.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>泛型的使用:</p>
+<ul>
+<li>类的泛型: <ul>
+<li>在定义的类名后加上&lt;&gt;,中间加任意字母用来代表指定的类. 在成员中 可以使用此字母代表不确定的类型</li>
+<li>在使用类时, 需要在类名后面加上<type> (Type 就是你想要传的类型). 例如 ArrayList<string> al = new ArrayList<string>() .</string></string></type></li>
+</ul>
+</li>
+<li>方法的泛型:<ul>
+<li>方法也可以拥有自己的泛型, 不过需要在 方法中 定义泛型</li>
+<li>&lt;&gt;放在 方法中类型的前面, 比如说: <img src="http://upload-images.jianshu.io/upload_images/4060512-f69400f65e84aa62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></li>
+<li><h6 id="需要注意-静态方法不可以用-类的泛型-因为-类的泛型需要创建对象才会有-但是静态方法是先于-对象的创建的-但是-static-方法可以有自己的泛型-如"><a href="#需要注意-静态方法不可以用-类的泛型-因为-类的泛型需要创建对象才会有-但是静态方法是先于-对象的创建的-但是-static-方法可以有自己的泛型-如" class="headerlink" title="需要注意 静态方法不可以用 类的泛型, 因为 类的泛型需要创建对象才会有, 但是静态方法是先于 对象的创建的. 但是 static 方法可以有自己的泛型, 如 : "></a>需要注意 静态方法不可以用 类的泛型, 因为 类的泛型需要创建对象才会有, 但是静态方法是先于 对象的创建的. 但是 static 方法可以有自己的泛型, 如 : <img src="http://upload-images.jianshu.io/upload_images/4060512-9b4887b58582a16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></h6></li>
+</ul>
+</li>
+<li>接口的泛型<ul>
+<li>写法:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-11be7db5841d658d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="interface_generic"></li>
+</ul>
+</li>
+<li>泛型通配符 ?<ul>
+<li>? 代表任意类型, 在不确定类型是什么的时候可以用通配符?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="增强For循环-foreach循环"><a href="#增强For循环-foreach循环" class="headerlink" title="增强For循环(foreach循环)"></a>增强For循环(foreach循环)</h1><ul>
+<li>作用 : 更加方便地遍历数组或集合</li>
+<li>写法 :<br><img src="http://upload-images.jianshu.io/upload_images/4060512-4df8618ccf3678b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="foreach"></li>
+</ul>
+</li>
+<li><p>三种迭代方式 删除方法:</p>
+<ul>
+<li>1   普通for循环遍历, 例子<br><img src="http://upload-images.jianshu.io/upload_images/4060512-757b97d7121f5e93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="for_遍历"></li>
+<li>2 迭代器遍历<br><img src="http://upload-images.jianshu.io/upload_images/4060512-c4073bfe9c16dfb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="iterator_遍历"></li>
+<li>3 增强for遍历<br><img src="http://upload-images.jianshu.io/upload_images/4060512-65d876e1395c6012.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="增强for_遍历"></li>
+<li>1 普通for 遍历时删除的方式:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-b4ca97539b28e63d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="for_遍历时删除"></li>
+<li>2 迭代器 遍历 删除 方式<br><img src="http://upload-images.jianshu.io/upload_images/4060512-158ccf2d57dbac84.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="迭代器遍历删除"></li>
+<li>3 增强 for 循环 遍历 无法删除, 因为增强for循环底层是由迭代器实现, 在增强for循环无法使用迭代器方法, 所以我们无法再遍历时删除.</li>
+</ul>
+</li>
+<li><h1 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h1><ul>
+<li>参数写法 Type … args(类型 …参数名)</li>
+<li>作用, 可以传多个 参数 (有一点像数组)</li>
+<li>举个栗子:<br>方法例子 :<br><img src="http://upload-images.jianshu.io/upload_images/4060512-a793d516edf0f371.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="可变参数"><br> 使用的例子:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-a0e6efb94c4afa5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="可变参数函数的使用"></li>
+</ul>
+</li>
+<li><h1 id="集合中嵌套集合的方法以及遍历-二维-集合"><a href="#集合中嵌套集合的方法以及遍历-二维-集合" class="headerlink" title="集合中嵌套集合的方法以及遍历 (二维 集合)"></a>集合中嵌套集合的方法以及遍历 (二维 集合)</h1><ul>
+<li>例子: 用二维集合模拟图书馆的书架(书架的索引 : 书的名字)<br>定义书的类<br><img src="http://upload-images.jianshu.io/upload_images/4060512-88bae60d817ee4ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Book"><br>再创建书架集合<br><img src="http://upload-images.jianshu.io/upload_images/4060512-7e948af3249331e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="BookShelf"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="Set-接口"><a href="#Set-接口" class="headerlink" title="Set 接口"></a>Set 接口</h1><ul>
+<li>Set 接口完全继承了 Collection接口,  并没有添加新的Set特有的方法.</li>
+<li>学习 Set 主要学习 HashSet 和 TreeSet 底层是如何实现的.</li>
+</ul>
+</li>
+<li><h1 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h1><ul>
+<li>HashSet 的 add 方法是通过 判断 hashCode 是否相同来判断. HashCode 如果相等, 则会自动调用equals方法来判断两个对象是否相等. 相等则舍弃, 不相等则加到set里. 但是为了效率, HashSet 底层是通过Hash算法来获得HashCode的(如下). Hash算法通过成员变量计算出 HashCode, 这样相同的对象就会有相同的地址值. 不同的对象有不同的地址. 这样不同的地址不会进行equals判断,程序更加有效率. 所以如果想让自己定义的类 放到Set里,我们需要重写 equals方法 和 hashCode方法<br><img src="http://upload-images.jianshu.io/upload_images/4060512-989ae25e9e0240f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重写hashCode"></li>
+</ul>
+</li>
+<li><h1 id="linkedHashSet"><a href="#linkedHashSet" class="headerlink" title="linkedHashSet"></a>linkedHashSet</h1><ul>
+<li>既有list特点, 也有 set特点. Set本来是无序的, 但是 使用 LinkedHashSet类(HashSet的子类) 的 add方法可以有序的存放, 但是元素不可以重复.</li>
+</ul>
+</li>
+<li><h1 id="HashSet-练习"><a href="#HashSet-练习" class="headerlink" title="HashSet 练习:"></a>HashSet 练习:</h1><ul>
+<li>1.找出一串字符串中出现的所有的字符(不重复)<br><img src="http://upload-images.jianshu.io/upload_images/4060512-4a25b2a3eb3b7d1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Hashset_practice1"></li>
+<li>2.去除List 里面的重复元素<br><img src="http://upload-images.jianshu.io/upload_images/4060512-8ab046475a9f5eed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="hashSet_practice2"></li>
+</ul>
+</li>
+<li><h1 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h1><ul>
+<li>特点 : 也是不可以重复, 但是会自动排序 </li>
+<li>因为TreeSet底层用二叉树实现, 需要调用类中的 Comparable 方法. 所以我们定义的类需要实现 Comparable 接口才可以放入TreeSet中. 并且 在 TreeSet中时从小到大排序.</li>
+<li>compareTo 方法如何实现:</li>
+<li>首先要确定一个主要的比较 成员</li>
+<li>写出判定的具体实现方法, 大于返回整数, 相等返回0, 小于返回负数</li>
+<li>如果主要成员的比较 返回为 0(就相当于相等)</li>
+<li>继续判断其他 成员</li>
+<li>直到最后一个成员判断完成</li>
+<li><h6 id="如果-我们对系统-的类-中的-compareTo-方法不满意-想用自己的主要比较方式-我们就可以用TreeSet的的构造方法-new-TreeSet-Comparator-lt-super-E-gt-c-我们需要实现-Comparator-接口来让TreeSet使用我们自己的比较方式-例如-对String-类的比较方式-我们以长度为首要比较方式"><a href="#如果-我们对系统-的类-中的-compareTo-方法不满意-想用自己的主要比较方式-我们就可以用TreeSet的的构造方法-new-TreeSet-Comparator-lt-super-E-gt-c-我们需要实现-Comparator-接口来让TreeSet使用我们自己的比较方式-例如-对String-类的比较方式-我们以长度为首要比较方式" class="headerlink" title="如果 我们对系统 的类 中的 compareTo 方法不满意, 想用自己的主要比较方式. 我们就可以用TreeSet的的构造方法 new TreeSet(Comparator&lt;? super E&gt; c). 我们需要实现 Comparator 接口来让TreeSet使用我们自己的比较方式. 例如, 对String 类的比较方式 我们以长度为首要比较方式."></a>如果 我们对系统 的类 中的 compareTo 方法不满意, 想用自己的主要比较方式. 我们就可以用TreeSet的的构造方法 new TreeSet(Comparator&lt;? super E&gt; c). 我们需要实现 Comparator 接口来让TreeSet使用我们自己的比较方式. 例如, 对String 类的比较方式 我们以长度为首要比较方式.</h6><img src="http://upload-images.jianshu.io/upload_images/4060512-7e2c9f038671dd61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="comparator"></li>
+</ul>
+</li>
+<li><h5 id="TreeSet练习一-对LinkedList-中的字符串对象进行排序-重复的不可以清除"><a href="#TreeSet练习一-对LinkedList-中的字符串对象进行排序-重复的不可以清除" class="headerlink" title="TreeSet练习一 : 对LinkedList 中的字符串对象进行排序, 重复的不可以清除"></a>TreeSet练习一 : 对LinkedList 中的字符串对象进行排序, 重复的不可以清除</h5><ul>
+<li>思路 : TreeSet是通过比较返回0 来避免重复性的. 所以我们不让TreeSet返回0 就实现了只排序的功能. 所以这时我们就要使用 Comparator 来写自己的比较方法.<ul>
+<li>首先, 我们需要自己定义比较方法, 实现Comparator 接口:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-2065b0a7f748774c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice1_1"></li>
+<li>构造TreeSet时传入 Comparator 对象, 优先用我们自己的比较方法比较<br><img src="http://upload-images.jianshu.io/upload_images/4060512-f12a28d0334e9799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice1_2"></li>
+<li>调用我们写的方法便可实现对List的排序<br><img src="http://upload-images.jianshu.io/upload_images/4060512-6dda8bb3ab9e4651.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice1_3"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="练习2-对字符串中的字符进行排序-重复不清除"><a href="#练习2-对字符串中的字符进行排序-重复不清除" class="headerlink" title="练习2 : 对字符串中的字符进行排序, 重复不清除"></a>练习2 : 对字符串中的字符进行排序, 重复不清除</h5><ul>
+<li>首先我们需要将 String转换为 char[] 数组.</li>
+<li>接着我们要定义自己的比较方法</li>
+<li>将 字符数组的字符 存到 TreeSet中(存的过程中就自动排序好了)</li>
+<li>再将 TreeSet 中的字符取出来, 最后变成String即可</li>
+<li><h6 id="对应的比较方法-排序方法-和-调用方式列出如下"><a href="#对应的比较方法-排序方法-和-调用方式列出如下" class="headerlink" title="对应的比较方法, 排序方法, 和 调用方式列出如下:"></a>对应的比较方法, 排序方法, 和 调用方式列出如下:</h6><img src="http://upload-images.jianshu.io/upload_images/4060512-a0defa235b9d5984.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice2_比较方法实现"></li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/4060512-fc31f126970a9574.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice2_方法的实现"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4060512-c0a50c9f34bc47ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice2_方法调用"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4060512-0741bbdae657b46f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="treeSet_practice2_输出结果"></p>
+<ul>
+<li><h1 id="Map集合-双列集合的根接口"><a href="#Map集合-双列集合的根接口" class="headerlink" title="Map集合(双列集合的根接口)"></a>Map集合(双列集合的根接口)</h1><ul>
+<li><p>相当于函数中的映射关系, 特点 是一一对应的关系</p>
+<ul>
+<li><p>键值不可以重复</p>
+</li>
+<li><p>一个键只能对应一个值<br><img src="http://upload-images.jianshu.io/upload_images/4060512-a990d577567bd761.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Map"></p>
+</li>
+<li><h5 id="HashSet底层其实是由HashMap实现的-只不过-HashSet-中的值都默认-传了-new-Object-只有键的部分对我们有用-HashSet-的-add方法源码如下"><a href="#HashSet底层其实是由HashMap实现的-只不过-HashSet-中的值都默认-传了-new-Object-只有键的部分对我们有用-HashSet-的-add方法源码如下" class="headerlink" title="HashSet底层其实是由HashMap实现的, 只不过 HashSet 中的值都默认 传了 new Object(). 只有键的部分对我们有用. HashSet 的 add方法源码如下:"></a>HashSet底层其实是由HashMap实现的, 只不过 HashSet 中的值都默认 传了 new Object(). 只有键的部分对我们有用. HashSet 的 add方法源码如下:</h5><p><img src="http://upload-images.jianshu.io/upload_images/4060512-250dcb32065c1ab8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HashSet_Source"></p>
+</li>
+<li><p>Map 待实现的方法: 类似于 Collection集合, 看看文档就会了<br><img src="http://upload-images.jianshu.io/upload_images/4060512-26efbd0f14fc97bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Map_Method"></p>
+</li>
+<li><p>Map 方法的解释:</p>
+<ul>
+<li>V put(K key, V value); 添加 key:value 键值对. 如果没有覆盖返回Null, 覆盖了则返回覆盖的Value值</li>
+<li>void putAll(Map m); 在尾部添加一个Map</li>
+<li>V remove(Object key); 通过Key 删除 键值对, 返回删除的 Value</li>
+<li>void clear(); 清空Map</li>
+<li>V get(Object key); 通过Key 来获取 Value</li>
+<li>boolean containsKey(Object key); 判断是否含有某个键</li>
+<li>boolean containsValue(Object Value); 判断是否存在Value</li>
+<li>boolean isEmpty(); 判断是否为空Map</li>
+<li>Collection<v> values(); 将集合中所有的Value都存到一个Collection 集合中</v></li>
+<li>Set<k> keySet(); 把集合中所有的键都保存到一个Set集合中</k></li>
+<li>Set<map.entry<k,v>&gt; entrySet(); 将键值对看成对象 储存在一个Set 集合中.</map.entry<k,v></li>
+</ul>
+</li>
+<li><h5 id="entrySet-方法的解释"><a href="#entrySet-方法的解释" class="headerlink" title="entrySet() 方法的解释:"></a>entrySet() 方法的解释:</h5><ul>
+<li>可以看到entrySet 返回的类型是Set<map.entry<k,v>&gt; 这样的Set 集合. 说明返回的Set集合中存的都是Map.Entry<k,v> 类型对象或者 它的子类对象, 那么实际上到底是什么呢? 在这里分析一下</k,v></map.entry<k,v></li>
+<li>我们先到 Map接口中找到Entry, 发现也是个接口,是个内部接口. 我们看看源码:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-d92754ad96674644.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Entry_Interface"><br>Map.Entry文档如下:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-5ef6c48fb28eafad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Entry_document"></li>
+<li><h6 id="我们知道Map-Entry-是一个接口以后-那是谁实现了这个接口呢-我们由HashMap中的-entrySet-方法得到Map-Entry-的Set集合-那么这个Map-Entry接口肯定是在HashMap中实现了-我查到是HashMap中的内部类-Node-实现了-Map-Entry-接口-源码如下-JDK9"><a href="#我们知道Map-Entry-是一个接口以后-那是谁实现了这个接口呢-我们由HashMap中的-entrySet-方法得到Map-Entry-的Set集合-那么这个Map-Entry接口肯定是在HashMap中实现了-我查到是HashMap中的内部类-Node-实现了-Map-Entry-接口-源码如下-JDK9" class="headerlink" title="我们知道Map.Entry 是一个接口以后, 那是谁实现了这个接口呢? 我们由HashMap中的 entrySet()方法得到Map.Entry 的Set集合. 那么这个Map.Entry接口肯定是在HashMap中实现了, 我查到是HashMap中的内部类 Node 实现了 Map.Entry 接口, 源码如下(JDK9):"></a>我们知道Map.Entry 是一个接口以后, 那是谁实现了这个接口呢? 我们由HashMap中的 entrySet()方法得到Map.Entry<k,v> 的Set集合. 那么这个Map.Entry接口肯定是在HashMap中实现了, 我查到是HashMap中的内部类 Node 实现了 Map.Entry 接口, 源码如下(JDK9):</k,v></h6><img src="http://upload-images.jianshu.io/upload_images/4060512-d0696b83077fbc4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Entry_implement"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="那么我们肯定-HashSet中的-entrySet方法肯定使用了Node-这个类来创建对象-我们可以猜想entrySet里存的都是-内部类Node-的对象-用-Map-Entry-指向子类对象-Node对象-也可以使用方法-因为Node类中没有添加新的方法-是多态的体现-我们看看-entrySet的源码"><a href="#那么我们肯定-HashSet中的-entrySet方法肯定使用了Node-这个类来创建对象-我们可以猜想entrySet里存的都是-内部类Node-的对象-用-Map-Entry-指向子类对象-Node对象-也可以使用方法-因为Node类中没有添加新的方法-是多态的体现-我们看看-entrySet的源码" class="headerlink" title="那么我们肯定, HashSet中的 entrySet方法肯定使用了Node 这个类来创建对象. 我们可以猜想entrySet里存的都是 内部类Node 的对象. 用 Map.Entry 指向子类对象 Node对象, 也可以使用方法(因为Node类中没有添加新的方法). 是多态的体现. 我们看看 entrySet的源码:"></a>那么我们肯定, HashSet中的 entrySet方法肯定使用了Node 这个类来创建对象. 我们可以猜想entrySet里存的都是 内部类Node 的对象. 用 Map.Entry<k,v> 指向子类对象 Node对象, 也可以使用方法(因为Node类中没有添加新的方法). 是多态的体现. 我们看看 entrySet的源码:</k,v></h5><p><img src="http://upload-images.jianshu.io/upload_images/4060512-2493780349a432b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="entrySet_Source"></p>
+</li>
+<li><p>Map的遍历方法 :</p>
+<ul>
+<li>用 keySet() 和 get(Objdect Key) 遍历 Map, 例子:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-9b1b33957a270038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Map_遍历"></li>
+<li><p>使用 entrySet() 获取 Map.Entry<k,v> 的Set集合 遍历Map, 例子:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-8bfae7177ae82129.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Map_遍历2">  </k,v></p>
+<h5 id="在HashMap中存放自定义类-到Key中需要像-HashSet一样重写-HashCode-和-equals-方法"><a href="#在HashMap中存放自定义类-到Key中需要像-HashSet一样重写-HashCode-和-equals-方法" class="headerlink" title="在HashMap中存放自定义类 到Key中需要像 HashSet一样重写 HashCode() 和 equals() 方法."></a>在HashMap中存放自定义类 到Key中需要像 HashSet一样重写 HashCode() 和 equals() 方法.</h5><h5 id="在TreeMap中存放自定义类-到Key中需要像-TreeSet一样实现Comparable-方法-或者-实现Comparator-接口"><a href="#在TreeMap中存放自定义类-到Key中需要像-TreeSet一样实现Comparable-方法-或者-实现Comparator-接口" class="headerlink" title="在TreeMap中存放自定义类 到Key中需要像 TreeSet一样实现Comparable 方法 或者 实现Comparator 接口."></a>在TreeMap中存放自定义类 到Key中需要像 TreeSet一样实现Comparable 方法 或者 实现Comparator 接口.</h5></li>
+</ul>
+<h5 id="Set底层就是由Map实现的"><a href="#Set底层就是由Map实现的" class="headerlink" title="Set底层就是由Map实现的."></a>Set底层就是由Map实现的.</h5><ul>
+<li>Map 嵌套 Map <ul>
+<li>例子 : 假设用Map 嵌套存储班级以及班级里面的同学<br>Map<string(这个存放班级名),map<integer(学号), string(学生名)>&gt;<ul>
+<li>我的做法如下:</li>
+</ul>
+</string(这个存放班级名),map<integer(学号),></li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/4060512-9eb4393fd1dc13b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="嵌套Map"></p>
+<pre><code>    结果为:
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4060512-d3661f08ebe860b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="嵌套Map结果"></p>
+</li>
+<li><h1 id="Collections-工具类"><a href="#Collections-工具类" class="headerlink" title="Collections 工具类"></a>Collections 工具类</h1><ul>
+<li>类似于Arrays 工具类. Collections 工具类是对 Collection 集合的一系列操作</li>
+<li>文档 (文档解释很清楚, 不累赘)</li>
+<li>常用方法:<ul>
+<li>max()</li>
+<li>min()</li>
+<li>sort()</li>
+<li>reverse()</li>
+<li>binarySearch()</li>
+<li>shuffle()</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="集合框架的练习-模拟斗地主发牌-要求发到手上的牌是像-斗地主游戏中一样排好序的"><a href="#集合框架的练习-模拟斗地主发牌-要求发到手上的牌是像-斗地主游戏中一样排好序的" class="headerlink" title="集合框架的练习 : 模拟斗地主发牌, 要求发到手上的牌是像 斗地主游戏中一样排好序的."></a>集合框架的练习 : 模拟斗地主发牌, 要求发到手上的牌是像 斗地主游戏中一样排好序的.</h5><ul>
+<li><p>思路 :</p>
+<ul>
+<li>创建一个Map, 键 序号从小到大排列, 值是对应的牌(也是从小到大排列). 因为Map是一一对应, 我们只需要取出keySet 进行操作即可.</li>
+<li>每个人拿到的牌需要排序, 所以应该 创建一个 TreeSet 容器</li>
+<li>当序号分配到每个人的 TreeSet 容器中后, 自动排序</li>
+<li>最后将 每个人手中的序号 转换 成对应的 牌的名字即可</li>
+</ul>
+</li>
+<li><h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><ul>
+<li><p>异常的最顶级的类是 : Throwable, 他的直接子类有Error 和 Exception . 我们主要学习 Exception 的子类 RunTimeException. 因为 我们主要关心的是 运行时的异常.</p>
+</li>
+<li><p>出现错误时, 实际上会 创建一个 异常的对象, 然后抛出异常对象 , JVM 终止运行程序. 所以 异常处理的作用就是 我们自己处理异常, 不会导致程序突然中止导致 后面代码无法执行. </p>
+</li>
+<li><h6 id="异常处理的两种方式"><a href="#异常处理的两种方式" class="headerlink" title="异常处理的两种方式 :"></a>异常处理的两种方式 :</h6><ul>
+<li>try…catch…finally<ul>
+<li>try : 检查是否存在异常</li>
+<li>catch : 抓住异常</li>
+<li>finally : 释放资源 </li>
+</ul>
+</li>
+<li>throws</li>
+</ul>
+</li>
+<li><h6 id="try…catch…finally-的搭配方式"><a href="#try…catch…finally-的搭配方式" class="headerlink" title="try…catch…finally 的搭配方式"></a>try…catch…finally 的搭配方式</h6><ul>
+<li>try…catch…(catch…catch..) 单个catch 或者多个 catch<ul>
+<li>单个catch<br><img src="http://upload-images.jianshu.io/upload_images/4060512-13fb9fdef2ba220a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="try_catch_single"><h5 id="我们也可以在catch中创建-Exception对象来接收所有的异常-多态-父类的引用可以指向所有的子类对象"><a href="#我们也可以在catch中创建-Exception对象来接收所有的异常-多态-父类的引用可以指向所有的子类对象" class="headerlink" title="我们也可以在catch中创建 Exception对象来接收所有的异常(多态 : 父类的引用可以指向所有的子类对象"></a>我们也可以在catch中创建 Exception对象来接收所有的异常(多态 : 父类的引用可以指向所有的子类对象</h5></li>
+<li>多个catch (需要注意: 我们要把大的接收对象放在后面, 小的接收对象放在前面) (多个catch 可以处理多个异常)<br><img src="http://upload-images.jianshu.io/upload_images/4060512-93a8333a2338d309.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="try_catch_many"></li>
+<li><h5 id="finally-后面的代码是无论如何都要执行的代码-但是如果在finally-之前-System-exit-0-退出了虚拟机-那么肯定不能执行"><a href="#finally-后面的代码是无论如何都要执行的代码-但是如果在finally-之前-System-exit-0-退出了虚拟机-那么肯定不能执行" class="headerlink" title="finally 后面的代码是无论如何都要执行的代码 . 但是如果在finally 之前 System.exit(0) 退出了虚拟机, 那么肯定不能执行."></a>finally 后面的代码是无论如何都要执行的代码 . 但是如果在finally 之前 System.exit(0) 退出了虚拟机, 那么肯定不能执行.</h5></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>运行时异常 (RuntimeException)和 编译时异常 (Exception 中除了 RuntimeException 都是编译时异常)</p>
+<ul>
+<li>运行异常（继承RuntimeException）可以不捕获，向上抛，如果一直没有处理，则jvm会自动处理（停止线程，打印异常）</li>
+<li>非运行期异常，必须捕获或者在方法声明。</li>
+</ul>
+</li>
+<li><h5 id="thorw"><a href="#thorw" class="headerlink" title="thorw"></a>thorw</h5><ul>
+<li>try…catch… 多用于对系统异常的处理, 以免系统本身的异常影响到我们自己的代码. 而 throws 是抛出异常, 多用于 自己定义的方法 如果 遇到错误则 抛出 我们定义的异常对象 , 在编译时 或 运行时 提出警告.</li>
+</ul>
+</li>
+<li><h5 id="throw-和-throws-的区别"><a href="#throw-和-throws-的区别" class="headerlink" title="throw 和 throws 的区别 :"></a>throw 和 throws 的区别 :</h5><ul>
+<li>throw 是申明在方法中的 , 表示自己抛出了这个异常, 如果没有throws 表示自己要处理 . </li>
+<li>throws 是申明在方法名后面的, 表示这个类知道有这个 异常, 我不处理, 交给上一级处理(上一级调用者).</li>
+</ul>
+</li>
+<li><p>如何自定义异常</p>
+<ul>
+<li>1自己写一个类, 继承Exception (自己的类名会出现在控制台上)</li>
+<li>2 重载父类构造方法</li>
+<li>3 抛出自己定义的异常</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="File类"><a href="#File类" class="headerlink" title="File类"></a>File类</h1><ul>
+<li>构造方法:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-7a9bc35e3b5c8509.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="File_Constructor"></li>
+<li>Method 解释:<ul>
+<li>创建功能的方法<ul>
+<li>boolean createNewFile(); 如果不存在, 则创建新的文件, 返回true. 存在不创建,返回false</li>
+<li>boolean mkdir(); 创建新的文件夹</li>
+<li>boolean mkdirs(); 创建多层文件夹</li>
+</ul>
+</li>
+<li>删除文件 的方法<ul>
+<li>boolean delet(); 删除文件, 如果是删除文件夹, 必须删除空文件夹 </li>
+</ul>
+</li>
+<li>重命名或者 移动的方法<ul>
+<li>boolean renameTo(File dest);<ul>
+<li>如果目标路径和当前路径一样,只是修改文件名,则只是重命名</li>
+<li>如果目标路径和当前路径不一样, 但是名字没有变, 则是移动</li>
+<li>如果目标路径和当前路径不同,而且名字改变, 则是又改变名字, 又移动</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>判断的方法<ul>
+<li>boolean exists(); 判断 路径下是否存在文件或文件夹</li>
+<li>boolean canExecute(); 判断是否是可执行文件</li>
+<li>boolean canRead(); 是否可读. 在Windows 系统一切文件都可读</li>
+<li>boolean canWrite(); 是否可写.</li>
+<li>boolean isDirectory(); 是否是文件夹</li>
+<li>boolean isFile(); 是否是文件 (除了文件夹都是文件)</li>
+<li>boolean isHiden(); 是否隐藏了</li>
+</ul>
+</li>
+<li>获取的方法<ul>
+<li>String getAbsolutePath(). 获取到绝对路径</li>
+<li>String getPath(); 获取你在创建时写的路径</li>
+<li>String getName(); 获取名字, 无论是绝对路径还是相对路径, 只获取最后一个目标的名字</li>
+<li>long lastModified(); 获取距离 1970年1月1日的毫秒值. 可以放到Date对象中获取具体时间</li>
+<li>String[] list(); 获取文件夹下所有的文件名.</li>
+<li>String[] list(FileNameFilter filter); 通过自定义的过滤器来获取文件名.</li>
+<li>File[] listFiles(); 获取文件夹下所有文件, 并转为File对象</li>
+<li>File[] listFiles(FileNameFilter filter); 通过过滤器获取对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="关于用FileNameFilter-过滤器来-使用-list-或-listFiles-方法"><a href="#关于用FileNameFilter-过滤器来-使用-list-或-listFiles-方法" class="headerlink" title="关于用FileNameFilter 过滤器来 使用 list() 或 listFiles() 方法:"></a>关于用FileNameFilter 过滤器来 使用 list() 或 listFiles() 方法:</h5><ul>
+<li>首先看一下FileNameFileter 接口:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-f0afa816eae209f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FileNameFilter"><br>  只有一个 方法, 所以可以采取匿名 创建子类对象来传参.</li>
+<li>我们再看一下 list(FileNameFilter filter) 源码 :<br><img src="http://upload-images.jianshu.io/upload_images/4060512-ba18ca0b8d04acfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="list_filter_source.png"><br>在传入filter 对象时, 我们发现在 list方法内会调用 FileNameFilter 类中的 accept方法. 第一个参数为 this, 也就是自己这个对象(我们自己创建的对象), 第二个参数为 在我们创建对象中遍历出来的文件. 所以我们就知道应该如果实现accept 这个方法了. </li>
+<li>例子(在某个文件夹中获取以 exe 结尾的文件):<br><img src="http://upload-images.jianshu.io/upload_images/4060512-4820e53f3eb7cc6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="list_fileter_example"></li>
+</ul>
+</li>
+<li><h5 id="我们可以通过递归来遍历一个文件夹或者-一个盘的所有文件-下面是例子-在某个文件夹中获取所有-后缀是ini的文件"><a href="#我们可以通过递归来遍历一个文件夹或者-一个盘的所有文件-下面是例子-在某个文件夹中获取所有-后缀是ini的文件" class="headerlink" title="我们可以通过递归来遍历一个文件夹或者 一个盘的所有文件, 下面是例子: 在某个文件夹中获取所有 后缀是ini的文件."></a>我们可以通过递归来遍历一个文件夹或者 一个盘的所有文件, 下面是例子: 在某个文件夹中获取所有 后缀是ini的文件.</h5><img src="http://upload-images.jianshu.io/upload_images/4060512-7e862b6b7ab3c724.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="file_递归"></li>
+</ul>
+</li>
+<li><h1 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h1><ul>
+<li>流按流的方向, 分为 输出流 和 输入流</li>
+<li>流按传输类型 分为 字节流 和 字符流</li>
+<li>字节流的抽象父类:<ul>
+<li>InputStream : 输入流, 从外部 流向 程序的 流</li>
+<li>OutputStream : 输出流, 从程序流向外部的 流</li>
+</ul>
+</li>
+<li>字符流的抽象父类<ul>
+<li>Read : 输入流</li>
+<li>Write : 输出流</li>
+</ul>
+</li>
+<li><h5 id="IO-程序书写时要注意-close-释放资源"><a href="#IO-程序书写时要注意-close-释放资源" class="headerlink" title="IO 程序书写时要注意 close, 释放资源"></a>IO 程序书写时要注意 close, 释放资源</h5></li>
+<li><h1 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h1></li>
+<li>因为InputStream 和 OutputStream 是抽象类, 不可以创建对象. 我们用他们的子类FileInputBuffer 和 FileOutputBuffer 类来学习.<ul>
+<li>FileInputStream 和 FileOutputStream 的构造方法:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-c4e5ada261571611.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FileInputStream_Constructor"><br> <img src="http://upload-images.jianshu.io/upload_images/4060512-c5d50b7f929276ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FileOutputStream_Constructor.png"></li>
+<li>我们主要要注意一下 FileOutputStream 的 带append 参数的构造方法.<ul>
+<li>append 参数如果传true, 我们就不会将 OutputStream 连接的文件清空再去往里面写,而是在文件末尾附加</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>FileInputStream 和 FileOutputStream 的方法:</p>
+<ul>
+<li>FileInputStream 的方法:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-19f3536b5b605fdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FileInputStream_Mehod"><ul>
+<li>int available(); 返回输入流中有多少个字节</li>
+<li>void close(); 关闭输入流</li>
+<li>int read(); 读取一个字节, 指针后移. 到结尾返回-1</li>
+<li>int read(byte[] b); 从输入流获取b 数组长度的字节放到b 数组中, 指针会后移, 读到末尾返回-1</li>
+<li>int read(byte[] b, int offset, int len); 在b 数组的offset 开始, offset+len 结束, 将输入流存放在里面,指针后移,读到末尾返回-1</li>
+</ul>
+</li>
+<li>FileOutputStream 类 的方法:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-ee65e16ce2773de3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FileOutputStream_method"><br>方法类似于FileInputStream 不做过多的解释</li>
+</ul>
+</li>
+<li><h5 id="为什么FileInputStream-的-read-方法-返回-int-类型和-FileOutputStream-的write-int-b-传入int-类型"><a href="#为什么FileInputStream-的-read-方法-返回-int-类型和-FileOutputStream-的write-int-b-传入int-类型" class="headerlink" title="为什么FileInputStream 的 read() 方法 返回 int 类型和 FileOutputStream 的write(int b)  传入int 类型"></a>为什么FileInputStream 的 read() 方法 返回 int 类型和 FileOutputStream 的write(int b)  传入int 类型</h5><ul>
+<li>因为read() 时 -1 表示 文件末尾, 但是如果 返回 一个字节,则 FF 也可以表示为-1, 导致判断错误. 但是int 接收FF 表示是255, 可以避免这种情况发生. 在FileOutputStream 的write(int b) 方法中 会自动忽略前面3个字节写入文件中 </li>
+</ul>
+</li>
+<li><p>拷贝的四种方式:</p>
+<ul>
+<li>第一种 : 逐个字节进行拷贝<br><img src="http://upload-images.jianshu.io/upload_images/4060512-0165059e70384723.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="copy_1"><h5 id="问题-一个一个字节进行从硬盘到内存的传输-太慢了"><a href="#问题-一个一个字节进行从硬盘到内存的传输-太慢了" class="headerlink" title="问题: 一个一个字节进行从硬盘到内存的传输, 太慢了."></a>问题: 一个一个字节进行从硬盘到内存的传输, 太慢了.</h5></li>
+<li>第二种 : 一次性读取所有字节进行拷贝<br><img src="http://upload-images.jianshu.io/upload_images/4060512-3ae306e92f289e1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="copy_2"><h5 id="问题-如果文件过大-则会在内存中申请一个很大的空间来存放byte-数组-这会造成内存溢出-有危险"><a href="#问题-如果文件过大-则会在内存中申请一个很大的空间来存放byte-数组-这会造成内存溢出-有危险" class="headerlink" title="问题: 如果文件过大, 则会在内存中申请一个很大的空间来存放byte[] 数组. 这会造成内存溢出, 有危险."></a>问题: 如果文件过大, 则会在内存中申请一个很大的空间来存放byte[] 数组. 这会造成内存溢出, 有危险.</h5></li>
+<li>第三种 : 分多次读取字节进行拷贝<br><img src="http://upload-images.jianshu.io/upload_images/4060512-bff614020c8aa24e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="copy_3"></li>
+<li>第四种 : 利用 BufferedInputStream 和 BufferedOutputStream 来读取文件和写入文件<br><img src="http://upload-images.jianshu.io/upload_images/4060512-f965b6b172d586ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="copy_4"></li>
+</ul>
+</li>
+<li><h5 id="为什么-BufferedInputStream-和-BufferedOutputStream-读写速度会更快"><a href="#为什么-BufferedInputStream-和-BufferedOutputStream-读写速度会更快" class="headerlink" title="为什么 BufferedInputStream 和 BufferedOutputStream 读写速度会更快?"></a>为什么 BufferedInputStream 和 BufferedOutputStream 读写速度会更快?</h5><p><img src="http://upload-images.jianshu.io/upload_images/4060512-b49b66b0081d74e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="BufferedStream_explaination"></p>
+</li>
+<li><h5 id="练习-1-对文件进行异或加密解密-2-对输入路径的文件进行拷贝-3-对输入到控制台上的文字记录到txt文本中-字节流-实现"><a href="#练习-1-对文件进行异或加密解密-2-对输入路径的文件进行拷贝-3-对输入到控制台上的文字记录到txt文本中-字节流-实现" class="headerlink" title="练习 : 1. 对文件进行异或加密解密. 2. 对输入路径的文件进行拷贝 3. 对输入到控制台上的文字记录到txt文本中(字节流 实现)."></a>练习 : 1. 对文件进行异或加密解密. 2. 对输入路径的文件进行拷贝 3. 对输入到控制台上的文字记录到txt文本中(字节流 实现).</h5></li>
+<li><h1 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h1><ul>
+<li>基类 : reader(输入流) 和 writer(输出流), 都是抽象类, 需要用子类创建对象</li>
+<li>方法 : 类似于 InputStream 和 OutputStream, 可以自行查文档</li>
+<li>重点学习子类 : FileReader (文件字符输入流)和 FileWriter (文件字符输出流)</li>
+<li>原理 : 在字节流的输入流和输出流流动时, 自动进行了对码表的查询并 编码(输入) 或 解码(输出).</li>
+<li><h5 id="Writer类-默认有一块-2048Bytes-2K-的小缓冲区-可看Writer-类源码"><a href="#Writer类-默认有一块-2048Bytes-2K-的小缓冲区-可看Writer-类源码" class="headerlink" title="Writer类 默认有一块 2048Bytes(2K) 的小缓冲区. 可看Writer 类源码"></a>Writer类 默认有一块 2048Bytes(2K) 的小缓冲区. 可看Writer 类源码</h5></li>
+<li>什么情况下使用字符流:<ul>
+<li>从文件中读取字符</li>
+<li>想在文件中写入字符</li>
+<li>总的来说, 只读或只写用字符流</li>
+<li><h6 id="若要拷贝-则一律都用字节流-因为字符流多了查表的步骤-更慢"><a href="#若要拷贝-则一律都用字节流-因为字符流多了查表的步骤-更慢" class="headerlink" title="若要拷贝, 则一律都用字节流. 因为字符流多了查表的步骤, 更慢."></a>若要拷贝, 则一律都用字节流. 因为字符流多了查表的步骤, 更慢.</h6></li>
+</ul>
+</li>
+<li>字符流可以拷贝非文本文件吗?<ul>
+<li>不可以, 因为很有可能 在输入流中的字节查表无法查到对应字符, 在输出流查表时无法解码为正确字节,导致文件损坏.</li>
+</ul>
+</li>
+<li>BufferedReader 和 BufferedWriter 中的新方法:<ul>
+<li>BufferedReader 中的String readLine() 方法, 遇到\r或\n 则停止读取, \r和\n 不会读入字符串中. 返回null表示到达文件末尾.</li>
+<li>BufferedWriter 中的 void newLine() 方法, 添加一个换行符(支持所有系统)<ul>
+<li>各系统的换行符区别:<ul>
+<li>首先看一看阮一峰老师写的回车与换行的区别<br><a href="http://www.ruanyifeng.com/blog/2006/04/post_213.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2006/04/post_213.html</a></li>
+<li>在Windows 中, 换行是\r\n</li>
+<li>在Unix 或者 Linux 中, 换行是\n</li>
+<li>在老版本的 Mac OS 中换行符是\r, 在新版本是 \n</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>LineNumberReader 类(BufferedReader 的子类), 可以在readLine() 的同时用getLineNumber() 获取行数. 同时也可以使用 setLineNumber() 方法将指针移到指定的行数, readLine() 会读到下一行</li>
+</ul>
+</li>
+<li><h1 id="装饰设计模式"><a href="#装饰设计模式" class="headerlink" title="装饰设计模式:"></a>装饰设计模式:</h1><ul>
+<li>我们经常可以看到构造方法中传入某个对象, 这其实就是对这个对象的某种装饰. 使这个对象更加强大.</li>
+<li>例子 : 假如我们构造一个 Student类, 里面添加Skill 方法. 输出数学和英语. 同时我们创建另一个类SuperStudent 类, 在构造时传入Student 对象. 我们就可以在Student 对象原有的技能上 进行修饰,使其具备更强大的技能.<br><img src="http://upload-images.jianshu.io/upload_images/4060512-4215b602cd2ba778.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="装饰设计模式"><h6 id="这样superStudent-不仅会数学和英语-还会Java-python-和C了-是不是很牛逼啊"><a href="#这样superStudent-不仅会数学和英语-还会Java-python-和C了-是不是很牛逼啊" class="headerlink" title="这样superStudent 不仅会数学和英语, 还会Java,python,和C了. 是不是很牛逼啊"></a>这样superStudent 不仅会数学和英语, 还会Java,python,和C了. 是不是很牛逼啊</h6></li>
+<li>装饰设计模式 与 继承 的区别<ul>
+<li>其实继承也可以达到和装饰设计模式一样的效果, 但是装饰设计模式更加灵活, 可以装饰各种各样的对象, 而且耦合性相对于继承来说也低得多.</li>
+</ul>
+</li>
+<li><h1 id="编码问题"><a href="#编码问题" class="headerlink" title="编码问题"></a>编码问题</h1><ul>
+<li>如果没有在意编码问题, 那么JAVA 中所有 字符与字节间的转换都是默认使用系统的码表进行转换(如 String 类中的 toBytes(), Reader 类中的 read() 方法). 但是如果我们拿到一个不是系统编码的文本, 我们并没有在意编码问题, 那么我们用字符输入流进行解码时使用系统的默认码表解码, 在码表中查不到对应的字符 或者 匹配到另外的字符, 很有可能会出现乱码的现象. 所以要重视编码问题</li>
+<li>现在, 我将txt文本 编辑为 utf-8编码, 而系统默认码表是GBK. 我们使用 FileReader 来获取字符并打印:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-6b96e4e0c9bc8108.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="编码问题1"><br> 我们发现英文并没有乱码, 中文出现了乱码(英文所有码表的最前面都是ASCII码表, ASCII 码表中的字母都可以查到, 但是后面的中文因为码表未匹配而出现了乱码).</li>
+<li>解决方法 : 使用InputStreamReader 对字节进行解码<br><img src="http://upload-images.jianshu.io/upload_images/4060512-3c7c0877354dedc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="编码问题解决"></li>
+<li>原理解释图:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-3286e0e6bacb7401.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="java编码原理"></li>
+<li><h5 id="练习-计算文本中出现字符的个数"><a href="#练习-计算文本中出现字符的个数" class="headerlink" title="练习: 计算文本中出现字符的个数"></a>练习: 计算文本中出现字符的个数</h5><img src="http://upload-images.jianshu.io/upload_images/4060512-f91f96264af4e298.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="count_char_num_in_file"></li>
+<li><h4 id="补充"><a href="#补充" class="headerlink" title="补充:"></a>补充:</h4><ul>
+<li>FileReader 和 FileWriter 是 InputStreamReader 和 OutputStreamWriter 的子类, 其实FileReader 自动进行了InputStreamReader 对 InputStream 的修饰 , 使用的是默认的码表 解码. FileWriter 自动进行了 OutputStreamWriter 对 OutputStream 的封装, 使用默认码表进行 编码.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="乱入一个递归的原理"><a href="#乱入一个递归的原理" class="headerlink" title="乱入一个递归的原理"></a>乱入一个递归的原理</h1><ul>
+<li><h5 id="原理-递归的原理就是不停return自己-不停提升栈-直到-最后-一个栈-达到条件-弹栈-return-了-会导致之前的栈进行连锁弹栈-直到所有函数的栈空间都被弹出-就得到了最后的结果"><a href="#原理-递归的原理就是不停return自己-不停提升栈-直到-最后-一个栈-达到条件-弹栈-return-了-会导致之前的栈进行连锁弹栈-直到所有函数的栈空间都被弹出-就得到了最后的结果" class="headerlink" title="原理 : 递归的原理就是不停return自己, 不停提升栈, 直到 最后 一个栈 达到条件 弹栈(return 了). 会导致之前的栈进行连锁弹栈, 直到所有函数的栈空间都被弹出, 就得到了最后的结果."></a>原理 : 递归的原理就是不停return自己, 不停提升栈, 直到 最后 一个栈 达到条件 弹栈(return 了). 会导致之前的栈进行连锁弹栈, 直到所有函数的栈空间都被弹出, 就得到了最后的结果.</h5></li>
+<li>由上面的原理可知, 递归的最大特点就是占用栈的空间. 但是节约代码. 而且有时候可以完成普通循环完成不了的任务.</li>
+<li>递归的必要的元素 :<ul>
+<li><h5 id="1-必须要有一个停止的条件-最终弹栈的条件"><a href="#1-必须要有一个停止的条件-最终弹栈的条件" class="headerlink" title="1. 必须要有一个停止的条件(最终弹栈的条件)."></a>1. 必须要有一个停止的条件(最终弹栈的条件).</h5></li>
+<li><h5 id="2-递归函数必须在函数中调用-自己"><a href="#2-递归函数必须在函数中调用-自己" class="headerlink" title="2. 递归函数必须在函数中调用 自己."></a>2. 递归函数必须在函数中调用 自己.</h5></li>
+<li>只有达到以上两个条件才可以能连锁弹栈.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="IO流还未结束-除了文件输入输出流的字节流和字符流-还有其他流需要了解"><a href="#IO流还未结束-除了文件输入输出流的字节流和字符流-还有其他流需要了解" class="headerlink" title="IO流还未结束 : 除了文件输入输出流的字节流和字符流, 还有其他流需要了解"></a>IO流还未结束 : 除了文件输入输出流的字节流和字符流, 还有其他流需要了解</h1><ul>
+<li>将两个字节流变成一个的 : SequenceInputSteam.   <ul>
+<li>第一件事: 看构造<br><img src="http://upload-images.jianshu.io/upload_images/4060512-0d7b9b72aef23af0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SequenceInputStream"></li>
+<li>演示一下, 以后看时清楚一点:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-6f4ebcbd10018afa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SequenceInputStream_Example"></li>
+</ul>
+</li>
+<li><h5 id="内存缓冲区的输出流-ByteArrayOutputStream"><a href="#内存缓冲区的输出流-ByteArrayOutputStream" class="headerlink" title="内存缓冲区的输出流: ByteArrayOutputStream :"></a>内存缓冲区的输出流: ByteArrayOutputStream :</h5><ul>
+<li>输出流并不是输出到文件中, 而是将 输出流与内存中用Byte数组创建的缓冲区连接, 这个缓冲区长度可变, 类似于 ArrayList. 其实用ArrayList<byte> 也可以实现, 不过用ByteArrayOutputStream 更加方便, 因为有更多关于IO的方法.</byte></li>
+<li>方法看文档: 主要的方法是 toByteArray 和 toString(Charsetname c);</li>
+<li>演示: <img src="http://upload-images.jianshu.io/upload_images/4060512-8633a5448540899f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ByteArrayOutputStream_example"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>对象的输入流和输出流 : ObjectInputStream 和 ObjectOutputStream</p>
+<ul>
+<li>实际上是对InputStream和 OutputStream的一次装饰. ObjectInputStream可以把字节流读进来的数据按照某种算法进行翻译, 翻译成对象放入内存中. ObjectOutputStream可以把内存中的对象按照某种算法 翻译成字节放入与输出流连接的容器.</li>
+<li><h6 id="需要注意的是-进行ObjectOutputStream的对象需要-实现-Serializable-接口-Serializable-的作用是记录类的版本号-若版本号定义了-那么在源码中改变了类的成员-则会在输入流读取对象时报错-报错时会显示文件的版本号与源码中的版本号-方便管理"><a href="#需要注意的是-进行ObjectOutputStream的对象需要-实现-Serializable-接口-Serializable-的作用是记录类的版本号-若版本号定义了-那么在源码中改变了类的成员-则会在输入流读取对象时报错-报错时会显示文件的版本号与源码中的版本号-方便管理" class="headerlink" title="需要注意的是, 进行ObjectOutputStream的对象需要 实现 Serializable 接口. Serializable 的作用是记录类的版本号. 若版本号定义了 ,那么在源码中改变了类的成员 则会在输入流读取对象时报错, 报错时会显示文件的版本号与源码中的版本号. 方便管理."></a>需要注意的是, 进行ObjectOutputStream的对象需要 实现 Serializable 接口. Serializable 的作用是记录类的版本号. 若版本号定义了 ,那么在源码中改变了类的成员 则会在输入流读取对象时报错, 报错时会显示文件的版本号与源码中的版本号. 方便管理.</h6></li>
+<li><h6 id="这里的对象包括所有对象-所有的对象都可以翻译成字节-包括集合"><a href="#这里的对象包括所有对象-所有的对象都可以翻译成字节-包括集合" class="headerlink" title="这里的对象包括所有对象. 所有的对象都可以翻译成字节(包括集合)."></a>这里的对象包括所有对象. 所有的对象都可以翻译成字节(包括集合).</h6></li>
+</ul>
+</li>
+<li><h5 id="字节输出流-和-字符输出流的-子类-打印输出流-也包括字节流和字符流-PrintStream-和-PrintWriter"><a href="#字节输出流-和-字符输出流的-子类-打印输出流-也包括字节流和字符流-PrintStream-和-PrintWriter" class="headerlink" title="字节输出流 和 字符输出流的 子类 : 打印输出流(也包括字节流和字符流) PrintStream 和 PrintWriter"></a>字节输出流 和 字符输出流的 子类 : 打印输出流(也包括字节流和字符流) PrintStream 和 PrintWriter</h5><ul>
+<li>总得来说, PrintStream 拥有 InputStream的所有方法. PrintWriter 拥有 OutputStream的所有方法. 区别就在InputStream 和 OutputStream 方法中, 一个是对字节码的操作, 一个是对字符的操作. 但是其他的打印方法完全一样.</li>
+<li><h5 id="PrintStream-和-PrintWriter-实际上是-FileWriter-或者OutputStreamWriter-的加强版-其实最终都是对OutputStream的一次封装"><a href="#PrintStream-和-PrintWriter-实际上是-FileWriter-或者OutputStreamWriter-的加强版-其实最终都是对OutputStream的一次封装" class="headerlink" title="PrintStream 和 PrintWriter 实际上是 FileWriter(或者OutputStreamWriter)的加强版, 其实最终都是对OutputStream的一次封装."></a>PrintStream 和 PrintWriter 实际上是 FileWriter(或者OutputStreamWriter)的加强版, 其实最终都是对OutputStream的一次封装.</h5></li>
+<li>实际上 Writer 都存在一块缓冲区, PrintWriter 和 PrintStream 也一样.</li>
+<li><h3 id="所以在开发中推荐使用-PrintStream-和-PrintWriter"><a href="#所以在开发中推荐使用-PrintStream-和-PrintWriter" class="headerlink" title="所以在开发中推荐使用 PrintStream 和 PrintWriter"></a>所以在开发中推荐使用 PrintStream 和 PrintWriter</h3></li>
+</ul>
+</li>
+<li><h1 id="标准输入流和-标准输出流"><a href="#标准输入流和-标准输出流" class="headerlink" title="标准输入流和 标准输出流"></a>标准输入流和 标准输出流</h1><ul>
+<li>原理 : 其实在计算机中, 每个系统都有自己的API来 分配一段内存专门存储键盘录入的数据(一个键代表一个字节), 也有一块内存专门存放将要打印在显示器上的数据. 标准输入流和标准输出流就是指向那两块内存区域</li>
+<li>标准输入流 默认是指向 键盘录入所在的那一块内存</li>
+<li>标准输出流 默认指向 控制台出现数据的 那一块内存</li>
+<li>不过我们可以使用setIn 和 setOut方法更改, 但是更改没有卵用. 十分鸡肋的两个方法.</li>
+<li>标准输入流 使用 Read() 方法需要键盘录入, 回车表示键盘录入结束.</li>
+</ul>
+</li>
+<li><h1 id="RandomAcessFile-类"><a href="#RandomAcessFile-类" class="headerlink" title="RandomAcessFile 类."></a>RandomAcessFile 类.</h1><ul>
+<li>特点 : 不包含在IO流中, 但是有自己的特点, 既可以用来读,也可以用来写. </li>
+<li><h5 id="最牛B的是-这个类拥有seek功能-可以将指针指到特定位置-可实现多线程下载"><a href="#最牛B的是-这个类拥有seek功能-可以将指针指到特定位置-可实现多线程下载" class="headerlink" title="最牛B的是,这个类拥有seek功能, 可以将指针指到特定位置, 可实现多线程下载"></a>最牛B的是,这个类拥有seek功能, 可以将指针指到特定位置, 可实现多线程下载</h5></li>
+</ul>
+</li>
+<li><h1 id="Properties-类"><a href="#Properties-类" class="headerlink" title="Properties 类"></a>Properties 类</h1><ul>
+<li>Properties 其实是Map的一个子类. 但是里面的load() 和 store() 方法使其与文件扯上关系.</li>
+<li>方法</li>
+<li>setProperties(String arg0, String arg1)</li>
+<li>Enumeration&lt;?&gt; PropertyNames(). 将Properties 里面的键返回到一个枚举中</li>
+<li>getProperties(String key)</li>
+<li>load(InputStream file);</li>
+<li>store(Writer file)</li>
+</ul>
+</li>
+<li><h1 id="终于学习线程啦"><a href="#终于学习线程啦" class="headerlink" title="终于学习线程啦"></a>终于学习线程啦</h1><ul>
+<li><p>多线程就是除了主进程运行, 还可以创建另外的线程 共同执行代码, 而不是按照单线程那样按顺序执行代码.</p>
+</li>
+<li><p>并发和并行的区别</p>
+<ul>
+<li>并发: 线程是共同出发的, 但是CPU只有一个, CPU不断处理多个线程, 在多个线程中快速转换. 类似于一个大脑来单独解决各个计算题,但是可能某个计算题算一半就计算别的计算题,来提高效率.</li>
+<li>并行 : 线程一起行走, 相当于 每个线程都有一个CPU执行. 类似于一个人有多个大脑, 可以同时计算多个计算题.</li>
+</ul>
+</li>
+<li><p>实现多线程的 两种方式:</p>
+<ul>
+<li><ol>
+<li>继承Thread<br><img src="http://upload-images.jianshu.io/upload_images/4060512-71e9b655f18ed3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Thread_create"></li>
+</ol>
+</li>
+<li><ol>
+<li>实现 runnable 接口<br><img src="http://upload-images.jianshu.io/upload_images/4060512-901f926669dce827.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Runnable_create"></li>
+</ol>
+<h5 id="第二种方法实际上是-Thread-对runnable-的一种装饰-其实Thread中的run-方法里面-调用了-runnable的run方法"><a href="#第二种方法实际上是-Thread-对runnable-的一种装饰-其实Thread中的run-方法里面-调用了-runnable的run方法" class="headerlink" title="第二种方法实际上是 Thread 对runnable 的一种装饰. 其实Thread中的run 方法里面 调用了 runnable的run方法."></a>第二种方法实际上是 Thread 对runnable 的一种装饰. 其实Thread中的run 方法里面 调用了 runnable的run方法.</h5></li>
+</ul>
+</li>
+<li><p>两种方式的优劣:</p>
+<ul>
+<li><p>继承Thread</p>
+<ul>
+<li>优点 : 代码简洁, 书写方便</li>
+<li>缺点 : 如果需要继承其他的类, 就无法继承Thread 来创建多线程(因为java不支持多继承)</li>
+</ul>
+</li>
+<li><p>实现Runnable 接口:</p>
+<ul>
+<li>优点 : 可以在继承了其他类的情况下, 实现runnable方法,实现多线程</li>
+<li>缺点 : 需要传递给Thread类的对象创建新线程. 代码更加复杂.<h5 id="自己的理解-继承Thread改写run-方法-那么创建线程时每个线程中都会有一份run-中的代码-但是如果传递-Runnable的子类给-Thread-那么创建的线程时共享一份-Runnable-中-run-的方法"><a href="#自己的理解-继承Thread改写run-方法-那么创建线程时每个线程中都会有一份run-中的代码-但是如果传递-Runnable的子类给-Thread-那么创建的线程时共享一份-Runnable-中-run-的方法" class="headerlink" title="自己的理解 : 继承Thread改写run() 方法 那么创建线程时每个线程中都会有一份run()中的代码. 但是如果传递 Runnable的子类给 Thread, 那么创建的线程时共享一份 Runnable 中 run()的方法."></a>自己的理解 : 继承Thread改写run() 方法 那么创建线程时每个线程中都会有一份run()中的代码. 但是如果传递 Runnable的子类给 Thread, 那么创建的线程时共享一份 Runnable 中 run()的方法.</h5></li>
+</ul>
+</li>
+<li><p>匿名内部类创建对象 来开启多线程</p>
+<ul>
+<li>前言 : 有时候我们在新的线程里面不需要实现很复杂的代码, 和复用性高的代码. 就可以使用匿名内部类来创建对象开启新线程. 给代码进行修身.</li>
+<li>演示:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-33e30212f6cbfc27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Thread_匿名内部类"></li>
+</ul>
+</li>
+<li><p>Thread 类的 方法</p>
+<ul>
+<li>String getName() 获取线程对象的线程名</li>
+<li>void setName() 设置线程对象的线程名</li>
+<li>static Thread currentThread() 获取当前代码所在的线程对象.</li>
+<li>static void sleep(long millis) 休眠线程. 使用该方法的线程睡个觉, 时间是millis毫秒</li>
+<li>static void setDaemon(boolean) 守护线程. 将使用此方法的线程设置为守卫进程. 如果 主进程结束了, 守卫线程也会跟着结束, 不管守卫线程运行在哪.</li>
+<li>void join(long millis)/ void join() 插入线程. 在另一个线程中使用插入线程, 会使得调用这个方法的线程 给插入的线程用(相当于插入的程序是双线程了). </li>
+<li>static void yield(); 礼让线程. 使用该方法的线程会礼让自己的线程给别的程序用, 而自己在礼让的时候不运行</li>
+<li>void setPriority(int newPriority) 设置优先级, 最小为1, 最大为10. 优先级越大, CPU 更关心那个线程.</li>
+</ul>
+</li>
+<li><h5 id="同步代码块-synchronized"><a href="#同步代码块-synchronized" class="headerlink" title="同步代码块 synchronized:"></a>同步代码块 synchronized:</h5><ul>
+<li>在多线程时候, 我们有时候希望一个代码块在执行时别的线程不要干扰我. 我们就需要加上同步代码块.</li>
+<li>用法: synchronized(Object b)<ul>
+<li>其中b 可以看做锁, 其可以是任何对象. 在多线程时, 用同一把锁的代码块不会同时执行, 只有一个代码块结束(也就是锁解开了), 别的带相同锁的代码块才可以运行.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="同步方法-synchronized-同步就是带锁的-只能执行一个-相当于有一道门挡住了-锁解开别的线程才能进去"><a href="#同步方法-synchronized-同步就是带锁的-只能执行一个-相当于有一道门挡住了-锁解开别的线程才能进去" class="headerlink" title="同步方法 synchronized(同步就是带锁的 只能执行一个, 相当于有一道门挡住了, 锁解开别的线程才能进去)"></a>同步方法 synchronized(同步就是带锁的 只能执行一个, 相当于有一道门挡住了, 锁解开别的线程才能进去)</h5><ul>
+<li>同步方法是为了在多线程的时候, 使得方法是同步的, 是互不影响的. 当有一个方法在线程运行时, 相同锁的另一个方法要等一个方法结束才会运行.</li>
+<li>同步方法(包括静态方法) 需要在同一个类中. 在不同类的话, 锁是不可能是一样的.<ul>
+<li>如果是非静态的方法, 锁的类就是 this</li>
+<li>如果是静态方法, 因为不会传this 进入函数, 其锁为 类名.class</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h6 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h6></li>
+<li><h6 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h6></li>
+<li><p>学过类的线程安全和不安全分类</p>
+<ul>
+<li>StringBuffer 线程安全, StringBuilder 线程不安全</li>
+<li>Vector 线程安全, ArrayList 线程不安全</li>
+<li>HashTable 线程安全, HashMap 线程不安全</li>
+<li>Collections.synchronizedCollection() 可以将集合框架中的类转换为线程安全</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="单列设计模式"><a href="#单列设计模式" class="headerlink" title="单列设计模式"></a>单列设计模式</h1><ul>
+<li>一个类只能创建一个对象</li>
+<li>分为饿汉式(直接在类的内部创建对象,不判断) 和 懒汉式 (判断内部没有对象才创建), 还有final式.</li>
+</ul>
+</li>
+<li><h1 id="用单例模式设计的一些类"><a href="#用单例模式设计的一些类" class="headerlink" title="用单例模式设计的一些类"></a>用单例模式设计的一些类</h1><ul>
+<li>RunTime 类<ul>
+<li>一个JVM 进程对应一个Runtime 对象. 通过Runtime类可以</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="Timer类"><a href="#Timer类" class="headerlink" title="Timer类"></a>Timer类</h1><ul>
+<li>一个Timer对象时一个线程. 相当于一个Thread.sleep()的Thread. 到指定时间才会在它的线程中启动<ul>
+<li>方法<ul>
+<li>最重要的是 schedual 方法 , 里面需要传递的 TimerTask 抽象类 相当于 Runnable 接口</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="两个线程之间的通信"><a href="#两个线程之间的通信" class="headerlink" title="两个线程之间的通信 :"></a>两个线程之间的通信 :</h1><ul>
+<li>使用Object类中的 等待 唤醒 方法 : wait() 和 notify(), 方法放到同步代码中才可以使用. 可以确保同一把锁的不同线程按照我们自己指定的顺序来执行. 用什么锁, 就要用什么锁的wait() 和 notify() 方法使代码等待.</li>
+</ul>
+</li>
+<li><h1 id="多线程的通信还有-互斥锁以后再弄-晕死了"><a href="#多线程的通信还有-互斥锁以后再弄-晕死了" class="headerlink" title="多线程的通信还有 互斥锁以后再弄, 晕死了."></a>多线程的通信还有 互斥锁以后再弄, 晕死了.</h1></li>
+<li><h1 id="线程组-ThreadGroup-类"><a href="#线程组-ThreadGroup-类" class="headerlink" title="线程组, ThreadGroup 类"></a>线程组, ThreadGroup 类</h1><ul>
+<li>线程组的存在是为了线程得更方便的管理. 我们可以一个组一个组来设置权限, 设置守卫线程等一系列操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ThreadGroup tg = new ThreadGroup(&quot;我是一个新的线程组&quot;); //创建一个新的线程组</span><br><span class="line">Thread th1 = new Thread(tg, new runnable(),&quot;我是一个在新线程组里的线程&quot;);  //这里假设我创建了一个类 实现了Runnable 接口</span><br><span class="line">Thread th2 = new Thread(tg, new runnable(), &quot;我也是一个在新线程组里的线程&quot;);</span><br><span class="line">//现在th1, 和 th2 这两个线程都在我们自己创建的 线程组里</span><br></pre></td></tr></table></figure>
+</li>
+<li><h1 id="线程的五种状态"><a href="#线程的五种状态" class="headerlink" title="线程的五种状态:"></a>线程的五种状态:</h1><p><img src="http://upload-images.jianshu.io/upload_images/4060512-41436e62ea2b0175.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="线程状态图"></p>
+</li>
+<li><h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><ul>
+<li>很多时候我们线程的周期很短, 但是我们却要一直使用线程里面的代码. 一直新建线程很浪费资源. 所以线程池可以让线程的生命周期不死亡, 而是重生. 这样我们就不用一直创建新的线程, 而是一直反复使用一个线程. 达到节约资源, 提高效率的作用. </li>
+</ul>
+</li>
+<li><h1 id="工厂设计模式"><a href="#工厂设计模式" class="headerlink" title="工厂设计模式"></a>工厂设计模式</h1><ul>
+<li>就是一个工厂类, 可以创建工厂. 然后用工厂对象创建出 工厂内存在的对象.</li>
+</ul>
+</li>
+<li><h1 id="简单学习一下GUI"><a href="#简单学习一下GUI" class="headerlink" title="简单学习一下GUI"></a>简单学习一下GUI</h1></li>
+<li><h1 id="适配器设计模式"><a href="#适配器设计模式" class="headerlink" title="适配器设计模式"></a>适配器设计模式</h1><ul>
+<li>有时候我们不想实现接口的所有方法, 但是实现一个方法也要讲别的待实现方法也写上去, 代码太冗长了.<br>这个时候我们创建一个抽象类来实现(这里虽然说实现, 但是我们并没有添加代码到方法中) 接口所有方法(方法不抽象). 那么这个抽象类就是适配器. 通过多态的原理. 我们创建 这个抽象类的子类就可以 实现某个接口, 而不是所有方法都要写到代码中去.</li>
+</ul>
+</li>
+<li><h1 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程:"></a>网络编程:</h1><ul>
+<li>网络三要素 :<ul>
+<li>IP</li>
+<li>端口</li>
+<li>协议</li>
+</ul>
+</li>
+<li><h5 id="Socket-通信原理图"><a href="#Socket-通信原理图" class="headerlink" title="Socket 通信原理图"></a>Socket 通信原理图</h5><img src="http://upload-images.jianshu.io/upload_images/4060512-46ccb96cc8e1cdb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Socket"></li>
+<li>UDP<br><img src="http://upload-images.jianshu.io/upload_images/4060512-ba177720148d09a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="UDP.png"></li>
+<li>TCP<br><img src="http://upload-images.jianshu.io/upload_images/4060512-c59fe85fd7359a15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TCP.png"></li>
+</ul>
+</li>
+<li><h1 id="反射-Reflection"><a href="#反射-Reflection" class="headerlink" title="反射 Reflection"></a>反射 Reflection</h1><ul>
+<li><p>在JAVA中, 一切的对象都是裸露的. 所有都可以属性都可以显现出来. 其中最重要的机制 就是反射机制. 通过反射机制. 我们可以通过 源文件, 类 或者 对象 获取到类的字节码 (Class 文件中的字节码). 通过Class中的字节码, 我们可以获得所有 类中存在的属性. 我们将 从源文件 一直到 生成对象的过程叫做反射.</p>
+</li>
+<li><p>反射的三个阶段<br><img src="http://upload-images.jianshu.io/upload_images/4060512-19faedc99dae69cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="反射的三个阶段"></p>
+</li>
+<li><p>如何获取字节码文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//1. 从字节码文件中获取Class对象</span><br><span class="line">Class clazz1 = Class.forName(com.xxxxx.bean.Person);  //假设我们存在Person类</span><br><span class="line">//2. 从类中获取Class对象</span><br><span class="line">Class clazz2 = Person.class;</span><br><span class="line">//3.从对象中获取 Class对象</span><br><span class="line">Person p = new Person(&quot;Justice&quot;, 20);</span><br><span class="line">Class clazz3 = p.getClass();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取到Class对象, 我们就可以获取类中的所有信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//1. 从Class对象中获取构造函数</span><br><span class="line">//a.获取无参构造</span><br><span class="line">Constructor c1 = clazz.getConstructor();</span><br><span class="line">//b. 获取有参构造</span><br><span class="line">Constructor c2 = clazz.getConstructor(String.class, int.class);</span><br><span class="line">//2. 我们可以用&apos;构造对象&apos;来构造一个对象</span><br><span class="line">Person p = c2.newInstance(&quot;Alex&quot;, 33);</span><br><span class="line">//3. 我们也可以用Class对象 获取类中成员(Field)</span><br><span class="line">//a. 非暴力获取, 只可以获取public 的成员</span><br><span class="line">Field f1 = clazz.getField(&quot;name&quot;);</span><br><span class="line">//b. 暴力获取, 可以获取到 不是 public 的成员</span><br><span class="line">Field f2 = clazz.getDeclaredField(&quot;name&quot;);</span><br><span class="line">//4. 通过Field 对象, 我们可以改变某个对象的属性</span><br><span class="line">//a.</span><br><span class="line">f1.set(p,&quot;Justice&quot;);</span><br><span class="line">//b</span><br><span class="line">f2.setAccessible(true);</span><br><span class="line">f2.set(p, &quot;Jack&quot;);</span><br><span class="line">//5. 获取Method 成员方法时也有暴力获取和非暴力获取. 我们拿非暴力获取演示吧. 一般方法都是public的</span><br><span class="line">Method m1 = clazz.getMethod(&quot;setName&quot;, String.class);</span><br><span class="line">m1.invoke(p, &quot;Rose&quot;);        //利用Method也可以进行名字的修改</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下面我们演示一个案例 : 在不导入包的情况下 创建对象并且 使用类中的方法. (实际上,我们拿到Class对象后, 可以对这个类为所欲为)<br><img src="http://upload-images.jianshu.io/upload_images/4060512-415b045e2f5bd010.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Reflection_example"></p>
+</li>
+</ul>
+</li>
+<li><h1 id="动态代理-代理的原理就是通过反射改变-存在类的某种方法-再把改造后的类返回"><a href="#动态代理-代理的原理就是通过反射改变-存在类的某种方法-再把改造后的类返回" class="headerlink" title="动态代理(代理的原理就是通过反射改变 存在类的某种方法, 再把改造后的类返回)"></a>动态代理(代理的原理就是通过反射改变 存在类的某种方法, 再把改造后的类返回)</h1><ul>
+<li>代理就是可以自动帮我们做一些事. 比如说我们有时候要在某些方法执行完后要记录一次. 如果自己手动写会很累赘, 这时候我们就需要代理. 使得每次只要我们调用某个方法就自动帮我们记录一下.</li>
+<li>Reflect包下就有一个Proxy 类用来做代理<br><img src="http://upload-images.jianshu.io/upload_images/4060512-0c4e550ef930857a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Reflect_Proxy"><br>  可以发现是个工具类</li>
+<li>最重要的是newProxyInstance 方法里面的最后一个参数. 是一个 InvocationHandler(调用处理器) 接口. 我们点进去看一下<br><img src="http://upload-images.jianshu.io/upload_images/4060512-a25273e4f4bb858a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="InvocationHandler"><br>其实上三个参数只有这个参数最有用, 我们队这个接口里面的invoke 的参数解释一下<ul>
+<li>Object proxy, 这个就是需要被代理的对象</li>
+<li>Method method, 对象中需要被代理的方法</li>
+<li>Object… args, 被代理方法的参数<h6 id="代理必须代理的是一个接口"><a href="#代理必须代理的是一个接口" class="headerlink" title="代理必须代理的是一个接口!!!!!"></a>代理必须代理的是一个接口!!!!!</h6></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="模板-Template-设计模式"><a href="#模板-Template-设计模式" class="headerlink" title="模板(Template)设计模式"></a>模板(Template)设计模式</h1><ul>
+<li>相当于别人写了一个模子, 中间空了一段代码, 设置成抽象方法, 由子类来实现. 那么父类就是一个模板. 子类就是往模板里面丢材料.</li>
+<li>回忆学习过得设计模式:<ul>
+<li>1 . 装饰设计模式 : 将对象当作参数传入, 使得对象更强大</li>
+<li>2 . 工厂设计模式 :<ul>
+<li>简单工厂 : 一个工厂 生成所有的 对象</li>
+<li>工厂方法 : 有一个大工厂. 需要很多分工厂来实现对应的方法. 这时就用到了多态的原理. 将大工厂设置成一个抽象类. 小工厂就是这个抽象类的子类来实现大工厂类中的方法. 那么大工厂里面的方法就有多种实现方式, 就达到了一个函数, 多种功能.</li>
+</ul>
+</li>
+<li><ol>
+<li>适配器模式 : 有时候我们不想实现接口中所有方法. 我们就可以用适配器</li>
+</ol>
+</li>
+<li>4 .单例设计模式:<ul>
+<li>懒汉式 : 在类中定义好了一个private static 对象, 外部不需要创建, 外部调用方法获取我这个类中的这个对象</li>
+<li>饿汉式 : 一开始没有定义好对象, 只有一个成员 private static. 当调用方法时进行判断,如果为null 就创建对象, 如果不为null 就返回这个静态对象.</li>
+<li>final 式 :将成员定义成 public static final , 直接创建对象, 则可以不调用方法直接获取.</li>
+</ul>
+</li>
+<li>5.今天谈到的模板设计模式: 模板设计模式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="枚举-就是单例模式变成了多例模式-是对单例模式的补充-底层是这么做的"><a href="#枚举-就是单例模式变成了多例模式-是对单例模式的补充-底层是这么做的" class="headerlink" title="枚举 : 就是单例模式变成了多例模式, 是对单例模式的补充.(底层是这么做的)"></a>枚举 : 就是单例模式变成了多例模式, 是对单例模式的补充.(底层是这么做的)</h1><ul>
+<li>首先演示一个自己用final 类型的 单例模式来实现枚举<br><img src="http://upload-images.jianshu.io/upload_images/4060512-27f2ba824ffe15fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Enumeration_My"><br>  现在我们可以在主方法中自己使用枚举出来的WEEK了<br>  <img src="http://upload-images.jianshu.io/upload_images/4060512-145f36b861dc22cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Enumeration_My_Using"></li>
+<li>下面我们使用系统的关键字 enum, 来创建枚举类<br><img src="http://upload-images.jianshu.io/upload_images/4060512-2149a8574b7c78e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Enum"><pre><code>枚举类(Enum)中的每个枚举的东西都是对象, 称枚举对象. 这个对象就是自己的一个对象. 所以我们可以在枚举类中添加成员变量和方法.
+</code></pre></li>
+<li>enum 定义的类局部的默认方法 (上面说了我们可以自己添加方法)<br><img src="http://upload-images.jianshu.io/upload_images/4060512-386ff7e3c3750991.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Enum_Method"><ul>
+<li>int compareTo(E o), 比较这个枚举对象和传进的枚举对象的序号, 返回相减的值</li>
+<li>String name(); 得到这个枚举对象的名字;</li>
+<li>String toString(); 也是得到名字, 可以改写</li>
+<li>int irdinal() 返回枚举对象在类中的序号</li>
+<li>valueOf(Class<t> enumType, String name) 传入enum类的Class对象 和在枚举类中枚举对象名名字来获取枚举对象</t></li>
+<li>values(), 获取枚举类中的所有枚举对象.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><ul>
+<li>常用数据库<ul>
+<li>MySQL</li>
+<li>Oracle</li>
+<li>SQLserver</li>
+<li>SQLite</li>
+</ul>
+</li>
+<li>数据库概述:<ul>
+<li>Mysql数据库 包含了 数据库 和 数据管理系统 : 其中 数据库管理系统 就像一个仓库管理员, 而Mysql数据库相当于一个大仓库, 在Mysql数据库中 我们可以自己开小仓库.</li>
+<li>在Mysql数据库中 自己的数据库中 会有一个一个表. 相当于对我们小仓库中东西进行分类</li>
+</ul>
+</li>
+<li>数据库中表 和 JAVA中的类的对应关系<ul>
+<li>表 ———-&gt; JAVA中的类</li>
+<li>列(就是每一列代表什么) ————-&gt; JAVA中的字段(成员变量)</li>
+<li>行 ———-&gt; 每一行代表JAVA中这个类的实例对象.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数据类型, 主要掌握4中</p>
+<ul>
+<li>int : 整型</li>
+<li>double : 浮点型</li>
+<li>varchar : 可变字符集, 可对应JAVA中的 String</li>
+<li>date : 只表示 yyyy-MM-dd , 与 JAVA中new date(), 有一点区别</li>
+</ul>
+</li>
+<li><h5 id="如何在Mysql数据库中创建数据库-查询数据库-删除数据库"><a href="#如何在Mysql数据库中创建数据库-查询数据库-删除数据库" class="headerlink" title="如何在Mysql数据库中创建数据库, 查询数据库, 删除数据库"></a>如何在Mysql数据库中创建数据库, 查询数据库, 删除数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//1. 创建数据库</span><br><span class="line">CREATE DATABASE mydatabase;    //创建一个叫Mydatabase的数据库,使用默认字符集</span><br><span class="line">CREATE DATABASE mydatabase CHARACTER SET utf8; //表中的字符以utf8的格式来编码</span><br><span class="line">//2. 查询Mysql数据库中存在的数据库</span><br><span class="line">SHOW DATABASES;</span><br><span class="line">//3. 删除</span><br><span class="line">DROP DATABSE mydatabase;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="如何在数据库中创建表"><a href="#如何在数据库中创建表" class="headerlink" title="如何在数据库中创建表"></a>如何在数据库中创建表</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> 在SQL语句中, 添加表的语句如下</span><br><span class="line">CREATE TABLE 表名( </span><br><span class="line">   列名1 数据类型 约束,</span><br><span class="line">   列名2 数据类型 约束,</span><br><span class="line">   列名3 数据类型 约束</span><br><span class="line">);</span><br><span class="line">*/</span><br><span class="line">CREATE TABLE mytabe ( </span><br><span class="line">   uid INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">   brand VARCHAR(20),</span><br><span class="line">   price INT</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>主键约束 和 自动填充数字并且递增</p>
+<ul>
+<li>主键约束就是让这一列的数据 不为空 而且 不重复, 关键字为 PRIMARY KEY</li>
+<li>AUTO_INCREMENT 就是让这一列的数据自动递增</li>
+</ul>
+</li>
+<li><p>如何修改表的结构</p>
+<ul>
+<li>我们用 ALERT TABLE 表面 ….. 后面加操作来修改表结构</li>
+<li>我们演示一下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE mytable MODIFY price INT;</span><br><span class="line">//MODIFY 操作用来改列的数据类型</span><br><span class="line">ALERT TABLE mytable CHANGE brand newbrand VARCHAR(20); </span><br><span class="line">//CHANGE 用来改列名</span><br><span class="line">ALERT TABLE ADD tel INT;</span><br><span class="line">//ADD用来加一行</span><br><span class="line">ALERT TABLE DROP tel;</span><br><span class="line">//DROP用来删除列</span><br><span class="line">RENAME TABLE mytable TO newtable;</span><br><span class="line">//这一行是改名</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="如何在表中插入数据"><a href="#如何在表中插入数据" class="headerlink" title="如何在表中插入数据"></a>如何在表中插入数据</h5><ul>
+<li>用INSERT INTO mytable(列名1, 列名2, 列名3) values(值1, 值2, 值3)</li>
+<li>演示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> INSERT INTO mytable(uid, brand, price) VALUES(0, &apos;NIKE&apos;, 9999);</span><br><span class="line"> -- 这里要注意 SQL语句中的VARCHAR 类型要用单引号括起来. 不能像JAVA用双引号</span><br><span class="line"> INSERT INTO mytable(uid, brand, price) VALUES(1, &apos;ADIDAS&apos;, 1000000);</span><br><span class="line">  </span><br><span class="line">-- 第二种写法, 因为我们设置第一列为AUTO_INCREMENT ,所以我们可以直接写后两列</span><br><span class="line"> INSERT INTO mytable(brand, price) VALUES(&apos;三叶草&apos;, 999);</span><br><span class="line">-- 第三种写法, 我们可以将全部键都写入, 我们就可以省略列名的书写</span><br><span class="line"> INSERT INTO mytable VALUES(3, &apos;安踏&apos;, 800);</span><br><span class="line"></span><br><span class="line">--有的时候我们想写多行怎么办呢?</span><br><span class="line"> INSERT INTO mytable(brand, price) values</span><br><span class="line"> (&apos;特步&apos;, 500),</span><br><span class="line"> (&apos;鸿星尔克&apos;, 250),</span><br><span class="line"> (&apos;飞翔&apos;, 999);</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="更新表中数据"><a href="#更新表中数据" class="headerlink" title="更新表中数据"></a>更新表中数据</h5><ul>
+<li><p>利用UPDATE mytable SET brand = ‘NIMA’, price = 100 WHERE uid = 3; 这种格式来Update</p>
+</li>
+<li><p>演示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  -- 改变一行</span><br><span class="line"> UPDATE mytable SET brand = &apos;NAna&apos;, price = 987 where uid = 2;</span><br><span class="line">  /*</span><br><span class="line">  where 中的条件语句</span><br><span class="line">  id = 1 , 相等</span><br><span class="line">  id &lt;&gt; 1 , 不相等</span><br><span class="line">  AND</span><br><span class="line">  OR</span><br><span class="line">  NOT</span><br><span class="line">  */</span><br><span class="line"></span><br><span class="line">-- 改变两行</span><br><span class="line"> UPDATE mytable SET price = 998 where uid = 1 OR uid = 3;</span><br><span class="line"></span><br><span class="line"> -- 我们还可以用 id in (2,6,4) 这样的条件进行多行修改</span><br><span class="line"> UPDATE mytable SET price = 999 where uid in (1,4,2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除表中的一行或多行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--删除一行</span><br><span class="line">DELETE FROM mytable where uid = 1;</span><br><span class="line">-- 删除多行</span><br><span class="line">-- a</span><br><span class="line"> DELETE FROM mytable where uid = 1 OR uid = 3;</span><br><span class="line">-- b</span><br><span class="line"> DELETE FROM mytable where uid in (1,3);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h1 id="强大的查询语句-SELECT"><a href="#强大的查询语句-SELECT" class="headerlink" title="强大的查询语句 SELECT"></a>强大的查询语句 SELECT</h1><ul>
+<li><p>查询语句一般都用 SELECT 列1, 列2,…(AS 重命名列名) FROM 表名 (AS 重命名表名)</p>
+</li>
+<li><p>演示 :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT price FROM accounting;</span><br><span class="line">SELECT * FROM accounting; </span><br><span class="line">-- * 通配符表示所有列</span><br><span class="line">SELECT aname, price + 1000 AS sum FROM accounting;</span><br><span class="line">-- AS 可以在显示的时候重命名列</span><br><span class="line">SELECT DISTINCT aname FROM accounting;</span><br><span class="line">-- 显示一个列不重复的数据</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SELECT查询语句还可以增加条件</p>
+<ul>
+<li>语句为 SELECT 要查询的列 FROM 表 WHERE 条件</li>
+<li>演示 :</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT aname, profit FROM accounting WHERE profit = 1000;</span><br><span class="line">-- 在accounting 表中 profit 列中查 是 1000的值并显示</span><br><span class="line">SELECT aname, profit FROM accounting WHERE profit &gt;200 AND profit &lt; 1000;</span><br><span class="line">--上面这一句等价于</span><br><span class="line">SELECT aname, profit FROM accounting WHERE profit BETWEEN 200 AND 1000;</span><br><span class="line">-- 多个条件进行查询</span><br><span class="line">SELECT aname, profit FROM accounting WHERE profit = 200 OR profit = 300 OR profit = 400;</span><br><span class="line">-- 上面这一句等价于</span><br><span class="line">SELECT aname, profit FROM accounting WHERE profit IN (200, 300, 400)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SELECT 模糊查询, 关键字 是 LIKE</p>
+<ul>
+<li>通配符有 :<ul>
+<li>% : 代表 0 到 多个字符</li>
+<li>_ : 只代表一个字符</li>
+</ul>
+</li>
+<li>例子</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT aname, profit FROM accounting WHERE aname LIKE &apos;%e%&apos;;</span><br><span class="line">-- 查询 aname 中存在e 这个字符的所有行</span><br><span class="line">SELECT aname, profit FROM accounting WHERE aname LIKE &apos;_____&apos;;</span><br><span class="line">-- 查询aname 长度为5 的 所有行</span><br><span class="line">SELECT aname, profit FROM accounting WHERE aname IS NOT NULL;</span><br><span class="line">-- 存在NULL 的查询必须要用 IS, 不可以用 =;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SELECT 查询之 对数据进行排序</p>
+<ul>
+<li><p>关键字 ORDER BY 列名 [ASC/DESC] ,ascending 升序, descending 降序</p>
+</li>
+<li><p>演示 :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM accounting WHERE aname LIKE &apos;E%&apos; ORDER BY profit DESC;</span><br><span class="line">-- 从 accounting 表中 选出名字以 E 开头的所有行 并以 profit为标准进行降序排序.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>SELECT 聚合函数</p>
+<ul>
+<li>常用函数:<ul>
+<li>count(列) : 计算这个列有多少行(有多少数据)</li>
+<li>sum(列) : 将一个列的所有值加起来</li>
+<li>max(列) : 获取列中的最大值</li>
+<li>min(列) : 获取列中的最小值</li>
+<li>avg(列) : 获取列的平均数 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SELECT 分组查询</p>
+<ul>
+<li>分组查询的目的是为了 将指定列中相同的 值进行聚合 并且 显示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT aname, SUM(profit) AS psum FROM accounting GROUP BY aname ORDER BY psum DESC;</span><br></pre></td></tr></table></figure>
+<h5 id="所以如果有-GROUP-BY-则聚合函数会以-相同为一组来进行聚合"><a href="#所以如果有-GROUP-BY-则聚合函数会以-相同为一组来进行聚合" class="headerlink" title="所以如果有 GROUP BY, 则聚合函数会以 相同为一组来进行聚合"></a>所以如果有 GROUP BY, 则聚合函数会以 相同为一组来进行聚合</h5><h5 id="如果想在分组查询完后-再次使用条件-就必须在GROUP-BY-后面紧接着加-HAVING进行-分组后的过滤"><a href="#如果想在分组查询完后-再次使用条件-就必须在GROUP-BY-后面紧接着加-HAVING进行-分组后的过滤" class="headerlink" title="如果想在分组查询完后 再次使用条件, 就必须在GROUP BY 后面紧接着加 HAVING进行 分组后的过滤"></a>如果想在分组查询完后 再次使用条件, 就必须在GROUP BY 后面紧接着加 HAVING进行 分组后的过滤</h5><ul>
+<li><h5 id="当我们需要-计算分组的时候-就用分组查询-分组应该与聚合配合起来一起使用"><a href="#当我们需要-计算分组的时候-就用分组查询-分组应该与聚合配合起来一起使用" class="headerlink" title="当我们需要 计算分组的时候, 就用分组查询.  分组应该与聚合配合起来一起使用."></a>当我们需要 计算分组的时候, 就用分组查询.  分组应该与聚合配合起来一起使用.</h5></li>
+</ul>
+</li>
+<li><h1 id="JDBC-规范"><a href="#JDBC-规范" class="headerlink" title="JDBC 规范"></a>JDBC 规范</h1><ul>
+<li>因为数据库公司有很多, 而且SUN 公司也不可能知道每个数据库是如何运作的, 所以SUN 公司为了 JAVA 连接各种数据库的统一, 创建了 JDBC 规范. JDBC 规范其实就是一堆没有实现的接口. 这些接口都需要各个数据库公司进行实现. 那么虽然各个公司实现接口的方法不同. 但是在JAVA 中是同一个接口, 通过多态的原理, 一套接口就可以进行 所有数据库的连接, 而不会出现 一家公司 一套接口的情况. 那样程序员也太辛苦了, 连接一个数据库 就要学习一套接口. 这一个规范其实就是为了开发者的方便. 所以我们需要使用这些接口, 还必须从数据库提供商那里 得到 这些接口的实现类. 接口的实现端 就叫做驱动. 可以使接口 运作起来.</li>
+</ul>
+</li>
+<li><h1 id="如何使用-JAVA-驱动-我用Mysql-驱动演示"><a href="#如何使用-JAVA-驱动-我用Mysql-驱动演示" class="headerlink" title="如何使用 JAVA 驱动 (我用Mysql 驱动演示)"></a>如何使用 JAVA 驱动 (我用Mysql 驱动演示)</h1><ul>
+<li><p>第零步, 提前步 , 先导入驱动(导入对应数据库官网下载的jar包)</p>
+</li>
+<li><h4 id="第一步-注册驱动"><a href="#第一步-注册驱动" class="headerlink" title="第一步, 注册驱动"></a>第一步, 注册驱动</h4><ul>
+<li><p>从 Mysql 的Driver 类源码注释上有这么一段话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* When a Driver class is loaded, it should create an instance of itself and register it with the DriverManager. This means that a user can load and register a</span><br><span class="line">* driver by doing Class.forName(&quot;foo.bah.Driver&quot;)</span><br></pre></td></tr></table></figure>
+<h5 id="上面告诉我们-随着-Driver-这个类的加载到内存-会用JAVA-提供的DriverManager类来自动注册驱动-所以我们直接用-Class-forName-“foo-bah-Driver”-反射Driver-文件到内存中-则自动注册了驱动-我们看一看代码是为什么"><a href="#上面告诉我们-随着-Driver-这个类的加载到内存-会用JAVA-提供的DriverManager类来自动注册驱动-所以我们直接用-Class-forName-“foo-bah-Driver”-反射Driver-文件到内存中-则自动注册了驱动-我们看一看代码是为什么" class="headerlink" title="上面告诉我们 随着 Driver 这个类的加载到内存, 会用JAVA 提供的DriverManager类来自动注册驱动, 所以我们直接用 Class.forName(“foo.bah.Driver”) 反射Driver 文件到内存中, 则自动注册了驱动,我们看一看代码是为什么?"></a>上面告诉我们 随着 Driver 这个类的加载到内存, 会用JAVA 提供的DriverManager类来自动注册驱动, 所以我们直接用 Class.forName(“foo.bah.Driver”) 反射Driver 文件到内存中, 则自动注册了驱动,我们看一看代码是为什么?</h5><p><img src="http://upload-images.jianshu.io/upload_images/4060512-ccc69e4d6057b706.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Driver_Source"><br>静态代码块中有 DriverManager.registerDriver(new Driver()); 自动帮我们注册了驱动</p>
+<h6 id="因为一个静态代码块-使得里面的注册驱动代码随着类的加载而加载到了内存中"><a href="#因为一个静态代码块-使得里面的注册驱动代码随着类的加载而加载到了内存中" class="headerlink" title="因为一个静态代码块, 使得里面的注册驱动代码随着类的加载而加载到了内存中"></a>因为一个静态代码块, 使得里面的注册驱动代码随着类的加载而加载到了内存中</h6></li>
+<li><p>所以我们直接用 Class.forName(“com.mysql.jdbc.Driver”) 来注册驱动</p>
+</li>
+</ul>
+</li>
+<li><h4 id="第二步-数据库连接-获得Connection-实现类对象"><a href="#第二步-数据库连接-获得Connection-实现类对象" class="headerlink" title="第二步, 数据库连接, 获得Connection 实现类对象"></a>第二步, 数据库连接, 获得Connection 实现类对象</h4><ul>
+<li>利用 DriverManager.getConnection(String url, String name, String password) 获取 Connection 对象</li>
+<li>name 的格式为 jdbc:mysql://数据库地址/数据库:端口号, 例如 jdbc:mysql://localhost:3306</li>
+<li>示范:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String url = &quot;jdbc:mysql://localhost:3306&quot;;</span><br><span class="line">String name = &quot;root&quot;;</span><br><span class="line">String password = &quot;123&quot;;</span><br><span class="line">Connection connection = DriverManager.getConnection(url, name, password);</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="第三步-从连接对象中创建-Statement-对象-SQL-语句执行者对象"><a href="#第三步-从连接对象中创建-Statement-对象-SQL-语句执行者对象" class="headerlink" title="第三步, 从连接对象中创建 Statement 对象 (SQL 语句执行者对象)"></a>第三步, 从连接对象中创建 Statement 对象 (SQL 语句执行者对象)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Statement statement = connection.createStatement();</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="第四步-利用Statement对象-执行-SQL-语句"><a href="#第四步-利用Statement对象-执行-SQL-语句" class="headerlink" title="第四步, 利用Statement对象 执行 SQL 语句"></a>第四步, 利用Statement对象 执行 SQL 语句</h4><ul>
+<li>int executUpdate(String sql); 这个方法因为返回int, 所以只可以执行 返回操作成功行数的SQL语句<br>例如 : CREATE, DROP, INSERT, UPDATE, DELET… 之类除了查询的. 但是不可以执行查询语句</li>
+<li>ResultSet executeQuery(String sql); 这个方法可以执行查询语句, 返回ResultSet对象</li>
+</ul>
+</li>
+<li><h4 id="第五步-处理得到的数据"><a href="#第五步-处理得到的数据" class="headerlink" title="第五步, 处理得到的数据"></a>第五步, 处理得到的数据</h4><ul>
+<li>其实主要是处理 executeQuery() 查询返回的ResultSet 实现类对象;</li>
+<li>ResultSet 方法<ul>
+<li>next(), next 方法使得指针移到下一行, 有下一行返回true, 并跳到下一行, 没有下一行返回false</li>
+<li>getXXX(参数可以是列数, 也可以是列名) ;  XXX是类型, 就是以什么样的形式来获取当前指针指向的行数的数据.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="第六步-关闭所有资源"><a href="#第六步-关闭所有资源" class="headerlink" title="第六步, 关闭所有资源;"></a>第六步, 关闭所有资源;</h4></li>
+<li><h4 id="下面来一个演示"><a href="#下面来一个演示" class="headerlink" title="下面来一个演示"></a>下面来一个演示</h4><p><img src="http://upload-images.jianshu.io/upload_images/4060512-12d5ecc55f1a9d09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="jdbc_query_example"></p>
+</li>
+</ul>
+</li>
+<li><h1 id="关于SQL语句的注入攻击"><a href="#关于SQL语句的注入攻击" class="headerlink" title="关于SQL语句的注入攻击"></a>关于SQL语句的注入攻击</h1><ul>
+<li>可以自己去百度一下, SQL 攻击就是SQL语句的缺陷, 用户在输入的时候可以自己封闭需要查找的变量然后再加上自己的SQL语句进行攻击. 解决SQL注入攻击的方法就是 将用户输入的数据无法自己闭合, 用户输了什么数据, 我们开发者自动将用户输入的转换为 字符(用单引号括起), 输入整数那么我们将用户输入的非数字转换为数字, 那么用户无法进行对语句的闭合, 就不可以采取SQL语句的攻击. </li>
+<li>使用 Statement 接口时, 执行的SQL语句用户可以自己闭合, 所以导致了数据库不安全. 这时,我们就要使用Statement的子接口 PrepareSatement 接口(当然, 这些接口都被驱动实现了). 可以用占位符进行占位, 之后我们将占位符转换为对应的类型 ,即用户输入的数据,这时我们就可以对用户传入的数据进行了类型的强转过滤. </li>
+<li><h5 id="综上所述-SQL执行对象使用PreparStatement-毕竟他是Statement的子接口-肯定比他爸爸强"><a href="#综上所述-SQL执行对象使用PreparStatement-毕竟他是Statement的子接口-肯定比他爸爸强" class="headerlink" title="综上所述, SQL执行对象使用PreparStatement (毕竟他是Statement的子接口, 肯定比他爸爸强)"></a>综上所述, SQL执行对象使用PreparStatement (毕竟他是Statement的子接口, 肯定比他爸爸强)</h5></li>
+</ul>
+</li>
+<li><h1 id="利用类加载器加载-根目录下的文件-获得输入流"><a href="#利用类加载器加载-根目录下的文件-获得输入流" class="headerlink" title="利用类加载器加载 根目录下的文件, 获得输入流"></a>利用类加载器加载 根目录下的文件, 获得输入流</h1><ul>
+<li>在做JDBC 工具类时需要获得一个配置文件, 可是配置文件是放在我的电脑上的, 如果把程序给别人用就无法加载了, 所以这个时候 就要使用 类加载器中的 getResourceAsStream() 方法来获取更目录下的配置文件.下面附上我的代码:<br><img src="http://upload-images.jianshu.io/upload_images/4060512-f84aaac27c9acad3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Class_Loader_getFileStream"></li>
+</ul>
+</li>
+<li><h1 id="APACHE-下的-DBUtils-工具类-JDBC-的一个工具类"><a href="#APACHE-下的-DBUtils-工具类-JDBC-的一个工具类" class="headerlink" title="APACHE 下的 DBUtils 工具类 (JDBC 的一个工具类)"></a>APACHE 下的 DBUtils 工具类 (JDBC 的一个工具类)</h1><ul>
+<li><p>DBUtils 工具类封装了很多 JDBC 重复的代码, 使JDBC 代码更加优雅.</p>
+</li>
+<li><p>DBUtils 的三个核心功能</p>
+<ul>
+<li><ol>
+<li>QueryRunner : 这个类里面封装了Statement, 所以我们可以不用创建Statement. 在这个类里面会自动执行三个步骤. 1. 创建Statement对象 2. 处理SQL语句 3. Close() Statement 对象. 本来要三个步骤的. 这里一步搞定, 你说牛逼不牛逼</li>
+</ol>
+</li>
+<li><ol>
+<li>ResultSetHandler接口 : 相当于 ResultSet 的一个工具, 用QueryRunner 的Query方法 查询后会将结果放到RsultSetHandler 处理的容器里面并返回容器. </li>
+</ol>
+</li>
+<li><ol>
+<li>DBUtil : 主要用于资源的关闭. 可以自动处理异常. 比JDBC 自带的close() 不知道强多少倍.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>主要讲ResultSetHandler, DbUtils帮我们实现的实现类, 这些实现类实际上是 在ResultHandler 接口中放了不同的容器达到 将ResultSet 结果集封装到容器中 的效果. 不同容器会有不同的作用. </p>
+<ul>
+<li><ol>
+<li>ArrayHandler 会将结果集中的第一行数据并放入(封装到)一个数组中并返回这个数组</li>
+</ol>
+</li>
+<li><ol>
+<li>ArrayListHandler 会将结果集的每一行都封装到不同的Object数组中, 再将这些数组按顺序放到一个集合中并返回这个集合.</li>
+</ol>
+</li>
+<li><ol>
+<li>BeanHandler</li>
+</ol>
+<ul>
+<li>首先要谈一下什么是JAVABean类, 就像之前说的, Mysql的的表相当于一个类, 那么JAVABean类中就是放每个对象的数据的一个类. 但是不同的表数据会有不同, 所以我们要自己创建自己的JAVABean类.</li>
+<li>JAVABean类的要求<ul>
+<li><ol>
+<li>必须有空参构造</li>
+</ol>
+</li>
+<li><ol>
+<li>成员变量的顺序必须按照表中列名的顺序来定义.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>BeanHandler 的构造函数中需要传递JAVABean类的Class对象. 将结果集中的第一行数据封装到JAVABean类, 通过反射, 得到对象, 并返回这个对象.</li>
+</ul>
+</li>
+<li><ol>
+<li>BeanListHandler 与 BeanHandler 类似, 不过将每一行的对象 都获取 并且按顺序放到List集合中并返回.</li>
+</ol>
+</li>
+<li><ol>
+<li>ColumnListHandler : 可以将结果集中的某列封装到一个List中并返回一个List</li>
+</ol>
+</li>
+<li><ol>
+<li>ScalarHandler : 只有一个结果的结果集 放到一个对象并返回. 常用于聚合函数的SELECT语句</li>
+</ol>
+</li>
+<li><ol>
+<li>MapHandler : 将结果集第一行封装到一个LinkedHashMap中去, 并返回这个Map<string, object></string,></li>
+</ol>
+</li>
+<li><ol>
+<li>MapListHandler : 将结果集中的每一行 都放到 一个Map中, 并将这些Map按顺序存到一个List中去, 并返回这个List</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h1 id="连接池"><a href="#连接池" class="headerlink" title="连接池"></a>连接池</h1><ul>
+<li>连接池的存在是为了解决用户多次连接的关闭资源造成的资源浪费, 连接池的存在就是用户需要连接, 则直接到连接池去拿, 而不是直接创建, 然后用完了还得还给连接池, 不用关闭, 这样大大的节约了内存.</li>
+<li>制作连接池方法API的公司也有很多家, 他们的方法名也可能不同. 所以JAVA 又定义了一套接口来规范连接池, 这套接口在javax包下.</li>
+<li>现在学习的是使用的是DBCP连接池</li>
+<li>连接池和DriverManager 类似, 都需要最基本的四个参数<ul>
+<li>驱动类Class包名.类名, 用来加载驱动</li>
+<li>URL : 数据库地址, 我现在用Mysql数据库驱动那么地址就是 “jdbc:/mysql://127.0.0.1:3306/数据库名”</li>
+<li>UserName : 数据库账号</li>
+<li>Password : 数据库密码</li>
+</ul>
+</li>
+<li>连接池提供了以下方法来设置这些参数<ul>
+<li>setDriverClassName();</li>
+<li>setUrl();</li>
+<li>setUsername();</li>
+<li>setPassword();</li>
+</ul>
+</li>
+<li>当然, 连接池的功能不止连接. 它可以设置池中Connection 连接器对象的个数. 主要方法如下:<ul>
+<li>setMaxActive() : 设置最大连接数</li>
+<li>setMaxIdle() : 设置最大空闲个数</li>
+<li>setMinIdle() : 设置最小空闲个数</li>
+<li>SetInitialSize() : 设置初始化连接数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/java/">java</a></div><div class="post-nav"><a class="next" href="/2019/04/02/Deep-Learning/">Deep-Learning</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Language/">C Language</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Deep-Learning/" style="font-size: 15px;">Deep-Learning</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/socket/" style="font-size: 15px;">socket</a> <a href="/tags/programming/" style="font-size: 15px;">programming</a> <a href="/tags/java/" style="font-size: 15px;">java</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/23/JAVA-Learning/">JAVA SE Note</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/02/Deep-Learning/">Deep-Learning</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Socket-Programming-in-C/">Socket Programming in C</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">寒.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
