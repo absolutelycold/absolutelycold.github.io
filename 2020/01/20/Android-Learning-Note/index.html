@@ -107,6 +107,68 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -136,15 +198,59 @@
         </header>
 
         <div class="post-content">
-            <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <div class="hbe-input-container">
-  <input type="password" id="hbePass" placeholder>
-    <label for="hbePass">Please input password</label>
-    <div class="bottom-line"></div>
-  </div>
-  <script id="hbeData" type="hbeData" data-hmacdigest="579948de31b14dbe8cf56d33a0872d208a8010dc211b859ca34396ce92cb0919">88ef0f572dfe2c62dd5fce27c7fc101514db0702894bf87054ade4f32d49d3a23cf6e25bba604780810e2a62948f6e9a72c27baf6a18783a844c8cbf85d106948e06cb77d4024e6074aa23ba0bf21cd7f3200f89a066e274315d3279608836037d08afa548541c10c2fcb4685808cc2aa758c7b230c9a5d8bd1ea266b783eda3edaa887e2585d82f1e9a39aca347904d3da874bc784e30a3e3944139508a7fd9d43e46b931170f39f0550ff59d969d8570a19c0667d5234cb2c88ecd2a6791c929db7f7f0745be09af15fd081b88036bbb5b9018618015d5d62e8c02e94aa13635cf845723e8e9f1a07a40f9bc05bd2e5a72a7ee420f1460be45b31a467e7e9edaa645ea7e325eabed01dadbefc75e9dcfb8a88dc8c850de415b40a53a3246f1f3a5960b4ad376887d0de2d7f89c7335c6ec7e10e5e51d27d61a85fcade1c0a844bb1f12330c5928c9796f87c22884d9fbc4542039efcad4fb02feafc1f605251148d74b8f77266312bd175d66c65bf3810379282d592bc2ba015714246610d4ac57cdb5b0d70a6c5d8e916dbc7ed1f3a457b77bde4af9dc6f285b1cc81a0cb8156d50e134ec9bb45b963d057968b9f9aa440d7c51d8ef46d9fd5766cfe9518e8ab3f10dbd0191d526003c3f4a96c332e44163021ed15f56d13fd01a24b8ab2da966f75ffe89cb85d1938bc7977e26f6554329ea5bd4b45b8e697e1b7f86ff6a2268e536c6ee0f4074114fb201fbcf96b2ee9f1e03847ab5e9c29bfa4e29a3fb63c139187f8a0db73a54de6296af64165aeaca922f45377b71306ba13ff185cfee1b0347bfe44b426e75aea6368e2d5be0b66b5af1be25aa6dc27cf198deaa1a08f4cefab958e487316e31da482f997bd4bf1a7dd3dd675e8b05c7957b62f8d1ceeb97576e9c5ee5fef4af5caa2e37ac5671e8e2c2db7406609cef3a84d681b09693d41a92a61759f8629a45a28afbe9cb85956cfc24f90f59bec72d5a087b0a5db548ec5fbef20da5ca57d8ad01deed6d67dd4fe3f410640c6c218b459543d952729e9afa7b672c785295a7a28e6999fa4417b315271830f080a033cb876a8f73affbc27e4fd048e5d57f91e39f69eed48b90747044fa0c03665c70462c0e2d7b2149d08d9423d371e2c6bc171ccd09202b6a576eca21e820e7a4d8d34e3c101f1143eff1a239b8559c9c42be9a01a817744f3c47008bd73458c3c4ae98604001db09817634e0875982a60e176aa655431d525dce71182ee83817648ad2962eb939df8e243bdf75262ab460844af4b4cfff9c7ca8fb9aa271cd1f448b2bf888aecdc0d43a32c3a356cbf658e6a7349b6e270359ed7cc4cfa2377a48173f36bdef05a0835f384f9fa33e97daf547a65af8eb2eee20326240a220c8bee8b75b7583121f30073e21321969f6d81c5733bb6a86d47ba344a9a61366603d402fb3c41b87b208a33077c3fe0562d62f33169365bdccb4d74ed1e93eb8843af787e688c02b3311980607e2ec5a1aea46b0e1acb63143f252fe0a3fb55ac691f7f38ac4f7072ed20b857cfed9b7c661c3b1800d916c5843b7177f0f7e5218fe4b700e3ad903a29c5cffd71e868d26135ba2a6fb0bd3254e242dfaf360424ce77ee1523b30e558e18c0a1192947cb2517fc3af37ad6b77a162087e3d0600793c3ad9c2ae57efa221838892d810de67de7c2160604dcd628616fb9d65f8e36e8470968949749904bb777a35b7c1d6782c2606111326199ef5591cac853fd62d01d2753f082048aa3f6162539ae6b3484c0a96be348ab7497edda94ddb6137fbe23d1c01637368f1ef53a327f6be347c4d4c106d3ab0b7b17e419a9848c2dfee820b6cce008479462dc532b129ec7fa98dc50baf74e46ff0f93b4dcddb700aa66b390000cfd7572f457b72ffdc225de2fcc3b863967d51c5b8987d6f0a3509a790793b2d1748d90dd257da2e577d35825733613567ea69dc3bb3b4b981b7b1470ed5cb3a068f2e3294ecc1ef933075ab38fe65f8d4603478c89b3204b913b349fa6f138eaec19fdead913c5161d26ef34f7ba406ee85cba49e90c682af15182587960ef5a6b068ccb4682a8523c01e7c36669c25b805ca7eaec68604c85c9178ee6788602d1308fad7164e7b9553d5d00f5e03476a4b5c932ca7f3ec5cea96b1a598c19d44cece2da3fd46d5023e3f0fad19051e12a0acda96af3fc73182b7f1a9769f0d5b52edb8b8b0ba796499fa5faac9b566e13b54cb25c16e412eb77ed5b060093887c25d4ab72d9cb047493b496772943888f7d05d51e9f8d79e07bc2b18a068259c0dabaef22e5ff5fe3afae6bad1def03ca133dbdbfbd4f5c38bdf57459bc4ac1237814b77d6fd9023b112e04bede6e61a0bd0e64c2c7a43b1d72e701ed99a5e823d7a1a466b8d51b29d92094c6ac98abb573d65fc4a9fa531e18d7da7fc8f0a77b0a652efac9652b689652c3fe66b3a10de52d63b8b6becc60524f7d770172070c1db382d845262bf1b573f9a9809a68b528d8ad79e4fee880449dcc38754f0abc74765b292aecd4ad83e6537749e6c3ba5565bcbcf6ab1436f9c44c3a31512b079b631267016e9f2fa1a85beca0f99f4c355d5cb0ae75db02954cfaff92d6ca0fd4dcda17393f6839ac5563e8cd6291528db807c2220176e33bf02b0c41d91db2416644eff54d21a8ac5d23fab39c11bebed8e2724d55aeb934511e5204dade1b601fc026181029ba6fe55d33249711dd4feeaa733d359f38d60d0994464709978a99c5ab4e47b253d44acc23aaf08844840eb1ed32386f14896764aa7d42c88d9401ebdf3babf0253b1808c60439fdc1af6ab360d1514c03370f6e03050ab4bc78ace943ee30467352aa5e53cf4a13f2886d7d0fdb6696371ffa10e373d13a8ad300a2794a4a23192576bea7dabb87d70cc4a5d7107ad41af9b6874625c3820120a287bf5f114a0de7cf1b5b1e3aab0f31a740fd27b95b410439f4b537d7d2570b2d9ad419ffa4d01f3c82f95d1738cd9fb309d55bb3bffeae20fe509a8d31f92bfacc080cfc36313146ca402d494b41336e3990f6e67835c384aa13fe01b4fe2ef56c7226c31d17c646f07469cef683b4baa566347fd2a9d58d14bb26eedd69bca795b384272bfd5dec4455686ef6759342b1e3c7283019c8054eee773e57a46455c1b76e0f9bfac593f1da9de424a57919527775274e87ff56d688a7e39a9060d0b43f1519d744a7d43459768dbe0bfb19f95620a480ee266da44fb09dcce923bbc547da5b502c4bb5c731fd53e9283b65bbc66e009625e22960863f79b8666bf4d399934aca99592ea4e78fb438d55e9b40a7ff9510c6a2123256316d216f382683d15388dace50caa8fa0af00067f9283422ae46ca7b7e16b8f2dc0444e54af4f8ad15caef3fd1d84df189c0c7dc0f9a4970ebeef4729053459d5e8ed854f96e7c804cdb1828071f94686401b5d00d2acecee6864700bc3db5ca080a7e88f4c788c843b31ce71b051c58fe6e29292b2405a1e83eab6cd5bae5ebdc5b6eabc71e13bc7cfb1c403f60745dcd89bf5342875609cabda7c87f0693e711bb7c3dde5993bf8e3f1e8bbdf2c30e838a3c8e49626791204ca708f1b4c1e4ea6c47361accb927a457f9e2a8b478353b27d1e8558c244a47fff36377aca4731c7081ccb753b71b42abb709682faa280def31ce0c09610fb26562c54ffe99673eb4e5b36455e81899a5298d72adc4b04a740adbb511a02f8c33e289fb6729f21e982e0ff18ea9212617b4d66efae3d2a3db7eae4cf16d2e11b6685de08e5e45a25d2578074db77a008ea4989df9b1aaf8a148e17715b6c6129bf5a02e968f3b042c0f61e48fa7af2f19733e0617b334d6b2f2c5aa56451b8e7333f42d1a79d0a1c64b6993fa796f16444dcac988d6c6c4e15b99ef56ee6d71db60d4933f20efba7ccddcc52be0a8796cb8bbbf17b4f51d9916791652d2ddf8418d4fab8864160dd721a483b2f2be5678658cfdec61497cd60a629d6f566bbcdd0312eb61dc33658ee4cb39b5e5aeb4345ca74ab587eea8d61d576de62446d95c1776320988a40a8aa3c3183b839ad82683fb66ae1525eab49e42df389449cc04ed66db8b81d6988007c72f80b2e7eb796e14a570bd9102d97b6d88c4bf6ee4875f0a9bb2b3c2e0b270d73b3faea235618f752e1d37bdf76ad003ea7dc3802be250b415cab20a97b385267f733f8ab257f479b78f2faac5409980e12859aca763d49eeae6ab3b76b9cdbb8d6d25d1c25116cde963d4a75a23ad2c3639ce63ceea4d8c27a195a41c7c6e7dad9c699d2d07fea0dd543306e8b41a06dfdc86649b5729d4e95c89dc80ef4c67b454fe00dfc4e971230393f01948ab7d4ee16000681bdbfb0dff27fc22b09120c62152dda6ca995b61257016698935b2720088fd22a199827b63e5b3f6b75f91318b8e5bdf9d823cbffb2570b45ccd42567ace0ec95f910d0c2bf6e48267e502cd577cef0394392a836e0ef6ce66422dcb423256237e98d53238a7bd6272d25a902d26449bd454fd92b26cafbaa889481ed0b82f3c37c5522f251910a45c2cd34652f6056026e285c94def785f1ffbb8b073022b5922b06cd109313204d6c7b782962bad6aec1b4f1a1fa2b65172c995da7c2549c90fa2701fb87664a5557a5c9b633291a810af5054f535f11d33331130ed7b74ad86dabe1048a54cf070d67d26eb0013a782e78e8ab14e3abc3c4e07b87f55b55a55200428f41dacba28e375ca155b4a09ae90911a0de2c42eece1da2668e45b8a3cbeec922236207a48137d56f92396e4eccea224479ffb0451e39b1d5939ca914b07d55e0f9620939a27fe0e42be5c44a4387b7f0ee7a2fc8f06adce23ba9c29f2c60b43bbe44bb9e59307de2bbe1a69dce240bcec6d19f7ad36c1fbe534ad6b34948ece13144d4191348e4c1e5fc16a438014f4d1d9e1bd09b70c0b6772b74bef66b3bd4ad2c8e22ce6e9581da62708b63c501016ac9c85ed7612255155e733c75804283557cb83fac6c4b46fd986f55587a07dfe6193ee26c307a5cf3c86b557cd42687d801cb70c60bc67c9181795cf0f25b23cfa2aed478c25cdcdd11477e4b6678a034665a8f561a0f8cd6c314bba7eb27d0c39d62ea0a9eefefd442834cfd676f69612505f25208035104f21fce30a1bf014364005958e15d87ad5bfa73d5ea0a957f76d1af94ef1aecf90b28c36ba7db3b2b85ccc8bfa8dad4d27c325acd03314069601a0363de11d18c8aecbec09ba3bdd185b70e53e7c8ecc2d4f439024d84c3b6dfd2163a3c45931714fe6b48581345e086b1a7fc767cc7b9f053019cf9c330e0b85471b591379355ae0f36f92fce970a702b21e6ca35cacccccbfe5da3d9cbc9fb1aa742509f6a0d8553ce01983c0beed26a9da9fe43631fe8ca81b02afde042cf05c5e87940e8b07883e148adc11b5c784325fa3250a2d8b528ecfd8f7ae6909630f598765a34cd4a89523abee7af6de52fc3431cb3d0a371d47dff4bc17261bc5aa3d4c0baf83afab5ee090422e71be0c0b147e950b20a4e9c875c02786fbd0ff804fcb1f0dabdba2d67437d8467245702ae3f5b472e600d9a206c483ea3e8794e68b4e30c0ed37510a84ac245af2cbdeff53034afa52eb3b15e3e998260733876f4aa463b3b2bad488a1a1fb444fe9ca99c2908a11367a59e97bb244bb5b8292f01cbd0d2360c44479216e6f6dfaf7c4d8aded508e34d654179555f08035fa0a629631df81de02ef11ef3b568b33bf031011c108270bc4287c227470355a8e5cde77a98b73f218c9c937d5b0faf9372b482d25081f08be0003397abe11806ad7501dd6721b19e8c70057313c0e17c65bdd369e2a3717b1203ea2978030ef6d5f0a60a1420c11b21bcf7733ca3cf33c755e7c84b7047cef1839aeb0b2371035db2529d84eeddbeb4ee901a99d6416f7b3a74d6a4fb1e069c601fe606f6cb2c50e59d7934ff95e225f91556abf630fe085922d0f78b1f05741b6c25d7480f1a1993008117470b74a6aa02d9b46fb8870732e21f24cd2097ef66734e8ef638b6be8d44f46e300be20f50e36f3d0701bcfffb11b5c00cf55081aa2a8095d86d8d29469ef46ef26b2afcd3c0c619162fa1a1b36552cbca8b78e7a047f4648e152dd9fe4e71906901f61eae3367be19afdbfd71b1a2b94f6dc0c4d99d4678cb1176db59ba896eb08fd66cb598889bf2f9a8c2493adf3c43c7cfd4bc6b668047b75bc6ea24d274851d39a33aa195786f9dbcf1e36aa97c088bdec389579b234f8163aa1b1b4633e791063c57bc132a6b4d88ffc30c847d2ecc49661fb0b53836ae100ba099275e7f11b6a50b441a7b240bc2991067569490486dab4b2dfbfe5c1d94ba0264c25f33b8e8b621499c814138764b649f4517d68b144f4fa98263d7ef8096cceef2735d91f07edac441a884b7f97ca50af0efd2c7a1eab6e9808946b289e3ad64ff18892ba8425937228dd449de645f5f5e189f56a36e7e36e7c1fd9b4825de98b415098d7183c687365ddf94c9ca7388c875df7d0b61d8844e9ff9d64bec8eba6970b214bf45058aa3d0b2351ead2c8d2a571190f00164b682331f022e2b7a4cd7b0dd3e62bfc11bad3d1301e3becba6d4cd3a05ed3c72a67f9bb804bd3b5e797b4e67c0cabb93a03f9aa27c170e812c4bcd61955ac1b78a85239277e0762a3b691440f7f39cff49b685d63cacb88c5dd01b5e654b1fa172538ee06d129ec35e534f65a98019c9166eba976dafdbf084c12e00f283ccefd4806524f3aa20ebc1bef285e138cfe9e4c3796b58dd5b900abb07f6ad3507bfffd0e77537886c47f555f81b28d265112d65d9a7da6d68779c0444d18f44c0e8443a22cdad5d82824a76a48d49c11fd476463965c37faa0f6d3e0c0df15d284d830ebee8bd14dc4c7541e707d4629a9c207b02db1ba3f2e32a9b93b44c7182cd4694d6f3153a1ef257420004896cad3299aeb66b65e260d936ebebabd49093f40ee3fbe4fde72b602b01c753d0361c1bd09f2473a6f3198f0fb93cee753b3c88f53a319b21f878916bbe1d5ded2a8ef008efbe75a3a0500574c3485f4555ee8e43a5cb23fd913551861c02726068f98e49008a26b280b557a71ab4dfd2ba3bc6f839071318992dc1153f7d6984a39c7f07bf3abf5fdafabba49004f8341285b8a21ee7266509ea47fb943a1a5765478387856f06446dbdc10ec89fc398e8d41d0e19b6b42edee920c2b4b95c0d7dc8cb5a30b4cefb495e9b6f56357aee7014954b506db21deb87f0ececf418ab358b6d4575808c868f00453544a516144de53d384ef523f991ec7e713ad8e7a0d5454d191d5b05baedb9fefa6dc74df4e9693ffd7d4f70e6a25b9e57090906dd94bad388bd22ad3453d1726d9da9d372ec8436e91047302971b8b17442280be2b0f876d2d57572cd77108899429d8b25e2afb461aa790c35de2ab8873c9a14cb49890e877ac6c85e084bd1393df9b9d498ea1576c7ab79046bff51b6e30af27d3bbdd1a905314845c7be720b2c7b1206115b9631723659ef4b3ca04e6f9389e430c081b17a8c9b18ca1e18192473f23bad22e9bddb9a83be3a5528e1f9178a4d0b5be7f0c18bfa5ca48f826c43fabc621fc43e58fb3757bafcb6573eb976b7091d71eff5b24c7a4a2d033f72d63b8188ccb87dace6ba444f6aaf1046af94791628e2b70d8d5ed9b3947e515fdb65f51aa254188b25f5ce3e9ca32742147219ec61077d5d02d41967a0a1e1e0e9d2a75d7cf2aa8e6cc13c963c2a469f95ec9ee0010d0c4a4bb5bd15dfdec8b1dacb8045df8e1b986761ab4f6af51fcb627e1849f68ceb19297996eedb6f1a608504cd51f90bec90379e3e002fa66143900d6021207e9f47165bf1ea13b72ad96d595f79632f1092453fe996901cf645b60793e764cc985b698e1f383fa936dcc6e8d327cfb3cc30b247aae6486e059b8fe719d9d37aa9d1a0d9ba9dde4669df9a97b7141947f3268e728218f74c86178fe277ea9906cb951bd18c952416404fcb3541aeb3639b99ab69548de751e3c78c1c64563baa22073c13fe970229a74eb52a601bedfba40955a9dcec7ba53428da3a081194a727fcf31f46032ff84938207044333539f4ae2a43557e8e737009f215c35a9917804c77ecff2070ff7a6c11939fbfda6515fc5e32a2be809a1f43ac7c1b0a43fdc496be9f43fcad48344c3c43330bf11bac9f03c4bd6e2a8a4fcf286ff5fc9239047d0f402e2e6e048e0f151e</script>
-</div>
-<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+            <h1 id="0-Intent"><a href="#0-Intent" class="headerlink" title="0. Intent"></a>0. Intent</h1><ol>
+<li><p><strong>explicit</strong> intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, Target.class);</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Implicit</strong> intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(action); <span class="comment">//documentation有很多Activity action 可以查</span></span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Pass text in <strong>explicit</strong> intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">intent.putExtra(<span class="string">"message"</span>, value); <span class="comment">//Put extra information in intent</span></span><br><span class="line"><span class="comment">//----------------------------------------------------------------------</span></span><br><span class="line">Intent intent = getIntent();</span><br><span class="line">String string = intent.getStringExtra(<span class="string">"message"</span>);</span><br><span class="line"><span class="comment">// int intNum = intent.getIntExtra("name", default_value)</span></span><br><span class="line"><span class="comment">// 如果没有这个name, 那么getIntExtra会返回default_value</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Pass text in <strong>Implicit</strong> intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">intent.setType(<span class="string">"text/plain"</span>); <span class="comment">//Type 和 Activity Action 安卓都会在AndroidManifest.xml自动查找匹配Activity用来给用户选择</span></span><br><span class="line">intent.putExtra(Intent.EXTRA_TEXT, <span class="string">"messageText"</span>);</span><br></pre></td></tr></table></figure>
+<p>更多Activity Action可以在<a href="https://developer.android.com/reference/android/content/Intent" target="_blank" rel="noopener">Intent(Android Documentation)</a>查看。</p>
+<p>直接发送Implicit Intent时，如果安卓没有找到对应Activity，那么会报错。</p>
+<p>为了解决这种情况，我们可以Create Chooser</p>
+</li>
+<li><p><strong>Chooser</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent chosenIntent = Intent.createChooser(intent, <span class="string">"Dialog_Message"</span>);</span><br><span class="line">startActivity(choosenIntent);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Implicit Intent和Chooser的区别</p>
+<ul>
+<li>Implicit Intent<ul>
+<li>在Activity filter中找到匹配Activity，并且用户选择后直接将Intent发给被选择的Activity。</li>
+<li>在Activity filter中<strong>没有</strong>找到匹配的Activity，报错。</li>
+</ul>
+</li>
+<li>Chooser<ul>
+<li>在Activity filter中找到匹配Activity，并且用户选择后，安卓将chosen activity发给原来的Activity。原Activity再将chosen activity的intent给安卓处理。</li>
+<li>在Activity filter中<strong>没有</strong>找到匹配的Activity，Chooser提示没有匹配应用。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="1-Activity-Life-Cycle"><a href="#1-Activity-Life-Cycle" class="headerlink" title="1. Activity Life Cycle"></a>1. Activity Life Cycle</h1><p>onCreate(): activity被创建后第一个被调用的函数。用于配置文件，环境等……</p>
+<p>onStart(): activity被创建后第二个被调用的函数。可以将XML中的View组件都显示到手机上。</p>
+<p>onResume(): 当前Activity获得了focus。</p>
+<p>onPause(): 当前Activity失去了focus。</p>
+<p>onStop(): 当前Activity停止了，（切换到了其他app或者切换到桌面，失去了支配权）</p>
+<p>onDestory(): 当前Activity被摧毁。</p>
+<p>onRestart(): onStop() —&gt; onStart()，Activity又获得了支配权</p>
+<h1 id="2-User-Interface"><a href="#2-User-Interface" class="headerlink" title="2. User Interface"></a>2. User Interface</h1><p>GUI components和Layout(View Group)都属于View, 所以都拥有View的特点。</p>
+<p>那么我们可以对View做哪些操作呢？</p>
+<ol>
+<li>得到View的属性</li>
+<li>大小和位置</li>
+<li>Focus handling</li>
+<li>Event handling和listener</li>
+</ol>
+<p>UI的构成就是由XML结构转化成由ViewGroup为root构成的View的hierarchical tree</p>
+<h1 id="3-Adapter和Listener"><a href="#3-Adapter和Listener" class="headerlink" title="3. Adapter和Listener"></a>3. Adapter和Listener</h1><p>Adapter: 相当于MVC中的C，作用为连接UI和数据的桥梁。在Android中，Adapter以一种RecycleView的方式将数据放到UI的组件当中。</p>
+<p>Listener：用于监听UI中某些事件的发生，例如某个TextView被点击。因为很多GUI component都没有自己实现Listener（比如onClick）。这个时候就需要我们自己创建Listener再将其绑定到GUI component上。</p>
+
         </div>
 
         
