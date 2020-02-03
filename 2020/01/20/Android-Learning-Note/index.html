@@ -198,7 +198,8 @@
         </header>
 
         <div class="post-content">
-            <h1 id="0-Intent"><a href="#0-Intent" class="headerlink" title="0. Intent"></a>0. Intent</h1><ol>
+            <h1 id="0-Intent"><a href="#0-Intent" class="headerlink" title="0. Intent"></a>0. Intent</h1><p>Intent的作用就是Activity之间信息的传播。</p>
+<ol>
 <li><p><strong>explicit</strong> intent</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, Target.class);</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
 </li>
@@ -206,7 +207,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(action); <span class="comment">//documentation有很多Activity action 可以查</span></span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Pass text in <strong>explicit</strong> intent</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">intent.putExtra(<span class="string">"message"</span>, value); <span class="comment">//Put extra information in intent</span></span><br><span class="line"><span class="comment">//----------------------------------------------------------------------</span></span><br><span class="line">Intent intent = getIntent();</span><br><span class="line">String string = intent.getStringExtra(<span class="string">"message"</span>);</span><br><span class="line"><span class="comment">// int intNum = intent.getIntExtra("name", default_value)</span></span><br><span class="line"><span class="comment">// 如果没有这个name, 那么getIntExtra会返回default_value</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">intent.putExtra(<span class="string">"message"</span>, value); <span class="comment">//Put extra information in intent</span></span><br><span class="line"><span class="comment">//----------------------------------------------------------------------</span></span><br><span class="line">Intent intent = getIntent();</span><br><span class="line">String string = intent.getStringExtra(<span class="string">"message"</span>);</span><br><span class="line"><span class="comment">// int intNum = intent.getIntExtra("name", default_value)</span></span><br><span class="line"><span class="comment">// 如果没有这个name, 那么getIntExtra会返回default_value</span></span><br><span class="line">String getString = intent.getExtras.get(<span class="string">"message"</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Pass text in <strong>Implicit</strong> intent</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">intent.setType(<span class="string">"text/plain"</span>); <span class="comment">//Type 和 Activity Action 安卓都会在AndroidManifest.xml自动查找匹配Activity用来给用户选择</span></span><br><span class="line">intent.putExtra(Intent.EXTRA_TEXT, <span class="string">"messageText"</span>);</span><br></pre></td></tr></table></figure>
@@ -249,8 +250,14 @@
 <li>Event handling和listener</li>
 </ol>
 <p>UI的构成就是由XML结构转化成由ViewGroup为root构成的View的hierarchical tree</p>
-<h1 id="3-Adapter和Listener"><a href="#3-Adapter和Listener" class="headerlink" title="3. Adapter和Listener"></a>3. Adapter和Listener</h1><p>Adapter: 相当于MVC中的C，作用为连接UI和数据的桥梁。在Android中，Adapter以一种RecycleView的方式将数据放到UI的组件当中。</p>
+<h1 id="3-Adapter和Listener"><a href="#3-Adapter和Listener" class="headerlink" title="3. Adapter和Listener"></a>3. Adapter和Listener</h1><p>Adapter: 相当于MVC中的C，作用为连接UI和数据的桥梁。在Android中，Adapter以一种RecycleView的方式将数据放到UI的组件当中。(<strong>这里Adapter相当于一个转接头。比如ArrayAdapter的作用就相当于将Array转接成放置于ListActivity中的TextView列表</strong>) </p>
 <p>Listener：用于监听UI中某些事件的发生，例如某个TextView被点击。因为很多GUI component都没有自己实现Listener（比如onClick）。这个时候就需要我们自己创建Listener再将其绑定到GUI component上。</p>
+<h1 id="4-Fragment"><a href="#4-Fragment" class="headerlink" title="4. Fragment"></a>4. Fragment</h1><p>因为Fragment在早期Android不存在，所以为了兼容性，Android添加getSupportFragmentManager()来获取Fragment的方法。</p>
+<p>为了让Fragement更加flexible, 如果需要fragment里面的method在不同的activity里面有不同的作用，我们可以在fragment里面添加interface来达到“泛用性”这个效果。(<strong>不要在Fragment里面Hard Code</strong>)</p>
+<p>Fragment Transaction: getSupportFragmentManager().beginTranscation()获取。FragmentTransaction常用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FragmentTransation ft = getSupportFragmentManager().beginTransaction();</span><br><span class="line">ft.replace(R.id.frag_container, fragment); <span class="comment">//替换fragment</span></span><br><span class="line">ft.add(R.id.frag_container, fragment); <span class="comment">//添加fragment</span></span><br><span class="line">ft.remove(fragment); <span class="comment">//删除fragment</span></span><br><span class="line">ft.setTransition(transition); <span class="comment">//设置动画</span></span><br><span class="line">ft.addToBackState(<span class="keyword">null</span>) <span class="comment">//添加transaction进入到back stack</span></span><br><span class="line">ft.commit(); <span class="comment">//apply the change</span></span><br></pre></td></tr></table></figure>
+<p>Fragment Life Cycle:</p>
+<p><img src="/2020/01/20/Android-Learning-Note/HeadFirstAndroidP283.png" alt="HeadFirstAndroidP283"></p>
 
         </div>
 
