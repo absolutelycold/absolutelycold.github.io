@@ -251,14 +251,19 @@
 </ol>
 <p>UI的构成就是由XML结构转化成由ViewGroup为root构成的View的hierarchical tree</p>
 <h1 id="3-Adapter和Listener"><a href="#3-Adapter和Listener" class="headerlink" title="3. Adapter和Listener"></a>3. Adapter和Listener</h1><p>Adapter: 相当于MVC中的C，作用为连接UI和数据的桥梁。在Android中，Adapter以一种RecycleView的方式将数据放到UI的组件当中。(<strong>这里Adapter相当于一个转接头。比如ArrayAdapter的作用就相当于将Array转接成放置于ListActivity中的TextView列表</strong>) </p>
-<p>Listener：用于监听UI中某些事件的发生，例如某个TextView被点击。因为很多GUI component都没有自己实现Listener（比如onClick）。这个时候就需要我们自己创建Listener再将其绑定到GUI component上。</p>
+<p>Listener：用于监听UI中某些事件的发生，例如某个TextView被点击。因为很多GUI component都没有自己实现Listener（比如onClick）。这个时候就需要我们自己创建Listener再将其绑定到GUI component上。（Listener包括监听的对象[多个按钮]，和监听的事件[method]）。</p>
 <h1 id="4-Fragment"><a href="#4-Fragment" class="headerlink" title="4. Fragment"></a>4. Fragment</h1><p>因为Fragment在早期Android不存在，所以为了兼容性，Android添加getSupportFragmentManager()来获取Fragment的方法。</p>
 <p>为了让Fragement更加flexible, Fragment必须减少对别的Activity和别的Fragment之间的交流。当需要和外交交流时，应该用interface进行交流。</p>
 <p>Fragment Transaction: getSupportFragmentManager().beginTranscation()获取。FragmentTransaction常用方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FragmentTransation ft = getSupportFragmentManager().beginTransaction();</span><br><span class="line">ft.replace(R.id.frag_container, fragment); <span class="comment">//替换fragment</span></span><br><span class="line">ft.add(R.id.frag_container, fragment); <span class="comment">//添加fragment</span></span><br><span class="line">ft.remove(fragment); <span class="comment">//删除fragment</span></span><br><span class="line">ft.setTransition(transition); <span class="comment">//设置动画</span></span><br><span class="line">ft.addToBackState(<span class="keyword">null</span>) <span class="comment">//添加transaction进入到back stack</span></span><br><span class="line">ft.commit(); <span class="comment">//apply the change</span></span><br></pre></td></tr></table></figure>
 <p>Fragment Life Cycle:</p>
 <p><img src="/2020/01/20/Android-Learning-Note/HeadFirstAndroidP283.png" alt="HeadFirstAndroidP283"></p>
-<h1 id="5-Screen-specified-Resource-File"><a href="#5-Screen-specified-Resource-File" class="headerlink" title="5. Screen-specified Resource File"></a>5. Screen-specified Resource File</h1><p><img src="/2020/01/20/Android-Learning-Note/HeadFirstAndroidP309.png" alt="HeadFirstAndroidP309.png"></p>
+<h1 id="5-Nested-Fragment"><a href="#5-Nested-Fragment" class="headerlink" title="5. Nested Fragment"></a>5. Nested Fragment</h1><p>嵌套的Fragment需要用ChildFragmentTransaction形成嵌套的Transaction从而避免一次保存了多个Transaction导致程序错误。具体方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FragmentTransaction ft = getChildFragmentManager().beginTransaction();</span><br></pre></td></tr></table></figure>
+<p>如果用getFragmentManager，效果相当于没有嵌套Fragment，Fragment仍然隶属于Activity。</p>
+<p>onClick 只对Activity生效。在Fragment中，需要自己创建Listener实现点击函数（View.OnClickListener）。</p>
+<p>Fragment的onCreateView()步骤在Transaction回复以后。</p>
+<h1 id="6-Screen-specified-Resource-File"><a href="#6-Screen-specified-Resource-File" class="headerlink" title="6. Screen-specified Resource File"></a>6. Screen-specified Resource File</h1><p><img src="/2020/01/20/Android-Learning-Note/HeadFirstAndroidP309.png" alt="HeadFirstAndroidP309.png"></p>
 
         </div>
 
