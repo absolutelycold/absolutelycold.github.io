@@ -341,7 +341,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.delete(<span class="string">"DRINK"</span>,</span><br><span class="line">         <span class="string">"NAME = ?"</span>,</span><br><span class="line">         <span class="keyword">new</span> String[] &#123;<span class="string">"Latte"</span>&#125;);</span><br></pre></td></tr></table></figure>
 <p>当我们更新软件版本时需要更新数据库。或者新版本软件有BUG，我们需要将Database回退，我们应该怎么做呢？</p>
 <p>这个时候，我们只需要改变SQLiteOpenHelper的Constructor里面的DATABASE_VERSION即可。DATABASE_VERSIO和SQLiteOpenHelper中的method调用关系如下:</p>
-<p><img src="/2020/01/20/Android-Learning-Note/SQLVersionRelation.png" alt="SQLVersionRelation"></p>
+<p><img src="/2020/01/20/Android-Learning-Note/SQLiteVersionRelation.png" alt="SQLVersionRelation"></p>
 <p>onUpgrade 和 onDowngrade两个method中的oldVersion都是指现已有数据库中的Version号。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// oldVersion = 现有Database版本号</span></span><br><span class="line"><span class="comment">// newVersion = SQLiteOpenHelper中定义的版本号，即安装完后app中database的版本号</span></span><br></pre></td></tr></table></figure>
 <p>之前的insert, update 和 delete都是改变数据库中的Records。接下来就是如何改变Database的Structure了。</p>
