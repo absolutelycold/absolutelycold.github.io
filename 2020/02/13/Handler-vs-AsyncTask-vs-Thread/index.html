@@ -233,11 +233,11 @@
 <li>需要与UI Thread进行交楼</li>
 </ol>
 <p>所以Thread， Handler和AsyncTask的复杂关系应该为:</p>
-<center>Thread < Handler < AsyncTask</center>
-
+<p><center>Thread < Handler < AsyncTask</center></p>
 <h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>Thread最普通，就是创建一个线程而已。</p>
 <p>Handler比Thread功能更多，可以连接两个Thread</p>
 <p>AsyncTask是功能更复杂的thread，可以连接两个thread还可以让thread中code按顺序执行</p>
+<p>AsyncTask和Handler和UI Thread的交流是不同的方式。Handler是建立通道，而AsyncTask是UI Thread直接call AsyncTask里面的onPreExecute(), onProgressUpdate()和onPostExecute()。这导致一些区别，<strong>比如说我们不能加载Network Thread在Handler里面，但是我们可以加载NewtWork Thread在AsyncTask中</strong>。</p>
 
         </div>
 
