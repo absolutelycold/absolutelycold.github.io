@@ -237,7 +237,13 @@
 <h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>Thread最普通，就是创建一个线程而已。</p>
 <p>Handler比Thread功能更多，可以连接两个Thread</p>
 <p>AsyncTask是功能更复杂的thread，可以连接两个thread还可以让thread中code按顺序执行</p>
-<p>AsyncTask和Handler和UI Thread的交流是不同的方式。Handler是建立通道，而AsyncTask是UI Thread直接call AsyncTask里面的onPreExecute(), onProgressUpdate()和onPostExecute()。这导致一些区别，<strong>比如说我们不能加载Network Thread在Handler里面，但是我们可以加载NewtWork Thread在AsyncTask中</strong>。</p>
+<p>AsyncTask和Handler和UI Thread的交流是不同的方式。Handler是建立通道，而AsyncTask是UI Thread直接call AsyncTask里面的onPreExecute(), onProgressUpdate()和onPostExecute()。这导致一些区别，<strong>比如说我们不能加载Network Thread在Handler里面，但是我们可以加载NewtWork Thread在AsyncTask中</strong>，因为NetworkThread不可以在MainThread上Run，否则会抛出<a href="https://developer.android.com/reference/android/os/NetworkOnMainThreadException.html" target="_blank" rel="noopener">NetworkOnMainThreadException</a>。官方介绍和地址如下:</p>
+<blockquote>
+<p>NetworkOnMainThreadException</p>
+<p>The exception that is thrown when an application attempts to perform a networking operation on its main thread.</p>
+<p>This is only thrown for applications targeting the Honeycomb SDK or higher. Applications targeting earlier SDK versions are allowed to do networking on their main event loop threads, but it’s heavily discouraged. See the document <a href="https://developer.android.com/guide/practices/design/responsiveness.html" target="_blank" rel="noopener">Designing for Responsiveness</a>.</p>
+<p>Also see <code>StrictMode</code> <a href="https://developer.android.com/reference/android/os/StrictMode.html" target="_blank" rel="noopener">StrictMode Link</a>.</p>
+</blockquote>
 
         </div>
 
