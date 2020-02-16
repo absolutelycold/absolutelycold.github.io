@@ -252,7 +252,7 @@
 <p>UI的构成就是由XML结构转化成由ViewGroup为root构成的View的hierarchical tree</p>
 <h1 id="3-Adapter和Listener和Handler"><a href="#3-Adapter和Listener和Handler" class="headerlink" title="3. Adapter和Listener和Handler"></a>3. Adapter和Listener和Handler</h1><p>Adapter: 相当于MVC中的C，作用为连接UI和数据的桥梁。在Android中，Adapter以一种RecycleView的方式将数据放到UI的组件当中。(<strong>这里Adapter相当于一个转接头。比如ArrayAdapter的作用就相当于将Array转接成放置于ListActivity中的TextView列表</strong>) </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayAdapter&lt;String&gt; arrayAdapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(context, android.R.layout.simple_list_item_1, arrayList);</span><br></pre></td></tr></table></figure>
-<p>Listener：用于监听UI中某些事件的发生，例如某个TextView被点击。因为很多GUI component都没有自己实现Listener（比如onClick）。这个时候就需要我们自己创建Listener再将其绑定到GUI component上。（Listener包括监听的对象[多个按钮]，和监听的事件[method]）。</p>
+<p>Listener：用于Listen组件（View），不同的Listener有不同的作用，比如onClickListener就是为了Listen某个组件被点击，又如onItemsSelectedListener就是为了Listen多个组件中哪一个组件被选中的作用。Listener也包括对象和主动者。一般组件就是对象，而实现Listener的一方为主动者。</p>
 <p>Handler: 可以理解为用来与Main event thread沟通的独立空间。在main event thread中创建了handler之后，在handler里面的code可以时刻保持与Main event thread的交流。达到改变UI的目的。</p>
 <h1 id="4-Fragment"><a href="#4-Fragment" class="headerlink" title="4. Fragment"></a>4. Fragment</h1><p>因为Fragment在早期Android不存在，所以为了兼容性，Android添加getSupportFragmentManager()来获取Fragment的方法。</p>
 <p>为了让Fragement更加flexible, Fragment必须减少对别的Fragment之间的交流。当需要和外交交流时，<strong>最好将包含此Fragment的Activity作为Listener，来处理Fragment与Fragment之间的交流</strong>。</p>
