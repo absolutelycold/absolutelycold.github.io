@@ -217,7 +217,7 @@
 <li>再次改变这个Value, code finder会找出改变这个value的instruction。</li>
 <li>点击Replace（作用等效于Nop掉这个code）,那么change value 那个按钮的功能就失效了。</li>
 </ol>
-<h1 id="Step6-Pointers指针"><a href="#Step6-Pointers指针" class="headerlink" title="Step6: Pointers指针"></a>Step6: Pointers指针</h1><p>指针可能每次都会变。比如malloc。但是需要改变值就必须要access数值的address，所以肯定会有一个地址专门存放这个pointer。所以我们要找到pointer存放的地址。这样不管pointer变成什么值，我们只要通过存放pointer的地址就可以找到pointer。</p>
+<h1 id="Step6-Pointers指针"><a href="#Step6-Pointers指针" class="headerlink" title="Step6: Pointers指针"></a>Step6: Pointers指针</h1><p>指针的值可能时刻改变。比如重新malloc。但是不管pointer的值怎么变，总有一个最终pointer是static(固定)的。所以不管pointer的值如何变，只要找到最终pointer，就可以修改数值。</p>
 <p>基本知识：</p>
 <p>RAX是64bit的Register， EAX是32bit的Register。</p>
 <p>在64位程序中，instruction中的eax就是rax。</p>
