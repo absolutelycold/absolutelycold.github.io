@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="absolutelycold">
+
+
+    <meta name="subtitle" content="Life, Technology and More">
+
+
+    <meta name="description" content="Knowledge is Bulletproof.">
+
+
+
+<title>Cheat Engine Tutorial | Feng Memo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Feng Memo</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Feng Memo</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Cheat Engine Tutorial</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">absolutelycold</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">February 29, 2020&nbsp;&nbsp;21:54:14</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Step-1：选择进程"><a href="#Step-1：选择进程" class="headerlink" title="Step 1：选择进程"></a>Step 1：选择进程</h1><p>点击左上角”Select a process to open”, 然后选择 “Tutorial i386”。</p>
+<h1 id="Step2-扫描确定的值"><a href="#Step2-扫描确定的值" class="headerlink" title="Step2: 扫描确定的值"></a>Step2: 扫描确定的值</h1><ol>
+<li><p>选择Exact Value Scan</p>
+</li>
+<li><p>因为这里的Health是整数，所以是4bytes。我们使用4bytes搜索health。最后修改为1000即过关。</p>
+</li>
+</ol>
+<h1 id="Step3-无法确定初始值的扫描"><a href="#Step3-无法确定初始值的扫描" class="headerlink" title="Step3: 无法确定初始值的扫描"></a>Step3: 无法确定初始值的扫描</h1><ol>
+<li>请确定你点击了New Scan, 因为新的一关需要新的搜索</li>
+<li>选择Scan Type: Unknown Initial Value</li>
+<li>选择Value Type: 4 bytes 或者 All</li>
+<li>通过多次扣血，Scan Type设置为Decreased Value By,搜索扣除的血值</li>
+<li>定位内存地址，修改为5000，过关</li>
+</ol>
+<h1 id="Step4-浮点数扫描"><a href="#Step4-浮点数扫描" class="headerlink" title="Step4: 浮点数扫描"></a>Step4: 浮点数扫描</h1><ol>
+<li>题目告诉你Health是float类型，Ammo是double类型。</li>
+<li>按照Scan type: exact value scan，Value Type: float/double进行搜索</li>
+</ol>
+<h1 id="Step5-寻找Code"><a href="#Step5-寻找Code" class="headerlink" title="Step5: 寻找Code"></a>Step5: 寻找Code</h1><p>有时候Value的地址是会变动的（原因有可能程序内并没有initialize这个值，这个值可能是中途malloc的）。这个时候就需要找到对应的Code，使得Code失效，最终结果就是我们的数值不受这个code改变了。</p>
+<p>举个例子：有可能血量在每次刷图的时候重新malloc出来，那么之前地址就无效。这个时候找到Code并Nop掉就可以不修改血量达到无敌状态。</p>
+<ol>
+<li>首先搜索到改变的Value的地址</li>
+<li>右键这个地址，选择 Find out what writes to this address。</li>
+<li>再次改变这个Value, code finder会找出改变这个value的instruction。</li>
+<li>点击Replace（作用等效于Nop掉这个code）,那么change value 那个按钮的功能就失效了。</li>
+</ol>
+<h1 id="Step6-Pointers指针"><a href="#Step6-Pointers指针" class="headerlink" title="Step6: Pointers指针"></a>Step6: Pointers指针</h1><p>指针可能每次都会变。比如malloc。但是需要改变值就必须要access数值的address，所以肯定会有一个地址专门存放这个pointer。所以我们要找到pointer存放的地址。这样不管pointer变成什么值，我们只要通过存放pointer的地址就可以找到pointer。</p>
+<p>基本知识：</p>
+<p>RAX是64bit的Register， EAX是32bit的Register。</p>
+<p>在64位程序中，instruction中的eax就是rax。</p>
+<p>在汇编中 mov [rdx],eax 相当于将eax的值放到rdx指针中的值去。</p>
+<p>过关步骤:</p>
+<ol>
+<li>查找到value的地址后，右键Find out what write to the address。再次点击change value，得到instruction</li>
+<li>我这里显示的如下图所示</li>
+</ol>
+<p><img src="/2020/02/29/Cheat-Engine-Tutorial/Step6_0.png" alt="Step6_0.png"></p>
+<p>rdx因为被[]包住了，所以是pointer</p>
+<p>将eax中的值放到rdx这个pointer(也就是014DA240)中,我们继续找是什么地方(/variable)存放了这个pointer。</p>
+<ol>
+<li>我们在search bar左边勾上Hex，Scan type为Exact Value,寻找何处存放了这个pointer</li>
+<li>我搜出的结果为<font color="green">100306AD0</font>, <font color="red">这里绿色代表static,代表不会变动的地址,有可能是一个固定的地址存放了Pointer</font>。这就代表我们找到存放这个pointer的最终归属</li>
+</ol>
+<p>在C++ Code里面对应的代码:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个health相当于值</span></span><br><span class="line"><span class="keyword">int</span> health = <span class="number">100</span>;</span><br><span class="line"><span class="comment">//这个myhealth相当于存放pointer的variable，(myhealth也是pointer): 对应 100306AD0</span></span><br><span class="line"><span class="comment">//&amp;health相当于health的地址，也就是pointer的值：对应:014DA240</span></span><br><span class="line"><span class="keyword">int</span>* myhealth = &amp;health;</span><br><span class="line"></span><br><span class="line"><span class="comment">//每次new之后相当于分配了新地址</span></span><br><span class="line"><span class="comment">//所以每次new之后，pointer的值变了</span></span><br><span class="line"><span class="comment">//但是pointer的地址(myhealth的地址)没有变</span></span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br></pre></td></tr></table></figure>
+<h1 id="Step7-Code-injection-代码注入"><a href="#Step7-Code-injection-代码注入" class="headerlink" title="Step7: Code injection (代码注入)"></a>Step7: Code injection (代码注入)</h1>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>absolutelycold</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://absolutelycold.github.io/2020/02/29/Cheat-Engine-Tutorial/">https://absolutelycold.github.io/2020/02/29/Cheat-Engine-Tutorial/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/HAX/"># HAX</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/02/18/how-to-set-Switch-in-navigation-drawer/">how to set Switch in navigation drawer</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© absolutelycold | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
