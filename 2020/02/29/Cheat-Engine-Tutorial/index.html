@@ -221,7 +221,7 @@
 <p>基本知识：</p>
 <p>RAX是64bit的Register， EAX是32bit的Register。</p>
 <p>在64位程序中，instruction中的eax就是rax。</p>
-<p>在汇编中 mov [rdx],eax 相当于将eax的值放到rdx指针中的值去。</p>
+<p>在汇编中 mov [rdx],eax 相当于将eax的值放到rdx指针所指的值去。</p>
 <p>过关步骤:</p>
 <ol>
 <li>查找到value的地址后，右键Find out what write to the address。再次点击change value，得到instruction</li>
@@ -229,14 +229,25 @@
 </ol>
 <p><img src="/2020/02/29/Cheat-Engine-Tutorial/Step6_0.png" alt="Step6_0.png"></p>
 <p>rdx因为被[]包住了，所以是pointer</p>
-<p>将eax中的值放到rdx这个pointer(也就是014DA240)中,我们继续找是什么地方(/variable)存放了这个pointer。</p>
+<p>将eax中的值放到rdx这个pointer指向的地方(也就是014DA240，也就是pointer的值)中,我们继续找pointer的地址。</p>
 <ol>
-<li>我们在search bar左边勾上Hex，Scan type为Exact Value,寻找何处存放了这个pointer</li>
-<li>我搜出的结果为<font color="green">100306AD0</font>, <font color="red">这里绿色代表static,代表不会变动的地址,有可能是一个固定的地址存放了Pointer</font>。这就代表我们找到存放这个pointer的最终归属</li>
+<li>我们在search bar左边勾上Hex，Scan type为Exact Value,查询pointer的值，以至于查询到pointer的地址。</li>
+<li>我搜出的结果为<font color="green">100306AD0</font>, <font color="red">这里绿色代表static,代表不会变动的地址，也就是pointer的地址</font>。这就代表我们找到存放这个pointer的最终归属</li>
 </ol>
 <p>在C++ Code里面对应的代码:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个health相当于值</span></span><br><span class="line"><span class="keyword">int</span> health = <span class="number">100</span>;</span><br><span class="line"><span class="comment">//这个myhealth相当于存放pointer的variable，(myhealth也是pointer): 对应 100306AD0</span></span><br><span class="line"><span class="comment">//&amp;health相当于health的地址，也就是pointer的值：对应:014DA240</span></span><br><span class="line"><span class="keyword">int</span>* myhealth = &amp;health;</span><br><span class="line"></span><br><span class="line"><span class="comment">//每次new之后相当于分配了新地址</span></span><br><span class="line"><span class="comment">//所以每次new之后，pointer的值变了</span></span><br><span class="line"><span class="comment">//但是pointer的地址(myhealth的地址)没有变</span></span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br><span class="line">myhealth = <span class="keyword">new</span> <span class="keyword">int</span>(health);</span><br></pre></td></tr></table></figure>
-<h1 id="Step7-Code-injection-代码注入"><a href="#Step7-Code-injection-代码注入" class="headerlink" title="Step7: Code injection (代码注入)"></a>Step7: Code injection (代码注入)</h1>
+<h1 id="Step7-Code-injection-代码注入"><a href="#Step7-Code-injection-代码注入" class="headerlink" title="Step7: Code injection (代码注入)"></a>Step7: Code injection (代码注入)</h1><ol>
+<li>首先搜索Health也就是血量值存在的地址</li>
+<li>使用 Find out what write to the address 查询到修改health的instruction</li>
+<li>查询到如图的instruction</li>
+</ol>
+<p><img src="/2020/02/29/Cheat-Engine-Tutorial/Step7_0.png" alt="Step7_0"></p>
+<p> 改变health的instruction为sub [rsi + 000007E0], 01: 其中<code>sub</code> 是减法，<code>rsi</code>是pointer，<code>000007E0</code>是offset，<code>01</code>就是从pointer指向的地方减去1。</p>
+<ol>
+<li>Code injection代码注入。步骤为show in disassembler -&gt; Auto Assemble(Ctrl + A) -&gt; Template -&gt; Code Injection。之后就会出现Code injection的template。我们修改为下图即可</li>
+</ol>
+<p><img src="/2020/02/29/Cheat-Engine-Tutorial/Step7_1.png" alt="Step7_1.png"></p>
+<h1 id="Step8-Multiple-pointers-多重指针"><a href="#Step8-Multiple-pointers-多重指针" class="headerlink" title="Step8: Multiple pointers (多重指针)"></a>Step8: Multiple pointers (多重指针)</h1>
         </div>
 
         
