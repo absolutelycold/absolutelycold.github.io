@@ -298,7 +298,7 @@
 <p>第八关的Template如下，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Address = Value = ?</span><br><span class="line"></span><br><span class="line">base ptr -&gt; address + offset4 = address</span><br><span class="line"></span><br><span class="line">base ptr -&gt; address + offset3 = address</span><br><span class="line"></span><br><span class="line">base ptr -&gt; address + offset2 = address</span><br><span class="line"></span><br><span class="line">static base -&gt; address + offset1 = address</span><br></pre></td></tr></table></figure>
 <p><strong>第八关总结:</strong></p>
-<p>我们可以看到不管pointer有多少个，我们都可以从前一个Stack的base address + offset查询到存放这个pointer的地址。所以我们可以一直通过base address加减offset获取到pointer的地址。举个例子对应第八关</p>
+<p>举个例子对应第八关</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> health = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">100</span>))));</span><br><span class="line"><span class="comment">//其中每一个new的class相当于一个占用了内存中的一个空间，其中的数值在class中的某个member里面，所以要通过class的base address + member的offset来获取地址</span></span><br><span class="line"><span class="comment">//但是我们可以看到health的地址是肯定不会变的。</span></span><br></pre></td></tr></table></figure>
 <h1 id="第九关：Shared-Code-共用的Function"><a href="#第九关：Shared-Code-共用的Function" class="headerlink" title="第九关：Shared Code(共用的Function)"></a>第九关：Shared Code(共用的Function)</h1><p>有时候我们修改code的时候，发现不仅我们自己无敌了，连敌人都无敌了。所以这个时候我们就需要找到是哪个object调用了这个function。</p>
 <p>基本知识:</p>
@@ -360,6 +360,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/01/Cheat-Engine-Tutorial-Game-Hax/">Cheat Engine Tutorial Game Hax</a>
             
             
             <a class="next" rel="next" href="/2020/02/18/how-to-set-Switch-in-navigation-drawer/">how to set Switch in navigation drawer</a>
