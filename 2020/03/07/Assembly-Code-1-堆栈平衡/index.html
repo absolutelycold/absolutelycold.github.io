@@ -149,6 +149,7 @@
 <p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/2.png" alt="2.png"></p>
 <p>这里<code>[a]</code>就是<code>[ebp + 8]</code> 就是在<code>args/parameters</code>里面第<strong>一</strong>个参数,<code>[b]</code> 就是<code>[ebp + C]</code> 就是<code>args/parameters</code>里面第<strong>二</strong>个参数</p>
 <p><code>ebp + 4</code><strong>的值是在是call的下一个地址，因为每次call的时候都会往stack里面放入下一条instruction的address用于return。</strong></p>
+<p><code>ret</code> 这个instruction等价于 pop eip, 然后jmp eip。如果Hacker通过修改程序使得Buffer(缓冲区)写满，正好溢出到这个<code>ebp+4</code>的位置。那么当这个function return的时候就会返回到Hacker的函数里面。这个技术叫做<font color="red">缓冲区溢出</font></p>
 <p>当前function结束之后，就要将stack恢复到调用之前的状态。</p>
 <p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/3.png" alt="3.png"></p>
 <p><code>0038187E - 00381891</code> 就是为了恢复到调用前stack的状态。</p>
@@ -156,10 +157,12 @@
 <p>我们仔细观察后还可以发现eax就是最终return的值。 在Intel白皮书也指出了</p>
 <p><code>eax</code> 只有两个功能: 1, <strong>作为return result</strong> 2. 某些特定opcode的参数，比如<code>stos</code> 就会把<code>eax</code>的值放到<code>edi</code>的地址。</p>
 <p>另外<code>rep</code>会通过<code>ecx</code>的值来进行计数重复次数。</p>
-<p>Conclusion:</p>
+<p><strong>Conclusion:</strong></p>
 <ol>
 <li>堆栈平衡原理, <code>ebp</code>栈底, <code>esp</code>栈顶</li>
 <li><code>eax</code>是一个很重要的Register，通常用来存储返回结果。</li>
+<li><code>call</code>之后会push 下一个instruction的地址到stack里面</li>
+<li>缓冲区溢出到<code>ebp+4</code>的位置会导致跳转到Hacker自己写的函数。</li>
 </ol>
 
         </div>
