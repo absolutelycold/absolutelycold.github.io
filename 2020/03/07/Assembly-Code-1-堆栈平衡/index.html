@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="absolutelycold">
+
+
+    <meta name="subtitle" content="Life, Technology and More">
+
+
+    <meta name="description" content="Knowledge is Bulletproof.">
+
+
+
+<title>Assembly Code 1 : 堆栈平衡 | Feng Memo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Feng Memo</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Feng Memo</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Assembly Code 1 : 堆栈平衡</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">absolutelycold</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 7, 2020&nbsp;&nbsp;18:29:56</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/HAX/">HAX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>写这个系列的Blog相当于重新从底层认识C</p>
+<p>内存中存放了我们运行的program，那么我们的program大体上包括了code(function)和data，当然还有还多library等其它次要的东西。这些数据在运行软件的时候就被CPU加载进Memory里面了。那么内存就被分为了至少两个部分，一个部分是存放数据的，一个地方是存放code的。那么存放参数，局部变量等数据的地方就叫做stack(栈)。每个function被调用的时候就会开辟出自己的一个stack存储自己的data。那么function结束后，会跳回原来的function，那么stack也要回复到调用function前。</p>
+<p>那么这个开辟stack，之后再恢复stack的过程就叫做堆栈平衡。</p>
+<p>直接用Visual Studio的disassembler调试一个function看到底发生了什么吧:</p>
+<p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/0.png" alt="0.png"></p>
+<p>call 函数之前有两个push，push两个参数到当前的stack顶部 这个时候esp会往上移两个4/8 Bytes</p>
+<p>call 之后的 <code>add esp,8</code> 相当于把stack顶部的两个参数当成垃圾不管了</p>
+<p>然后我们进入call看一下:</p>
+<p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/1.png" alt="1.png"></p>
+<p><code>00381850 - 00381878</code> 运行完之后 stack的变化如下:</p>
+<p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/2.png" alt="2.png"></p>
+<p>这里<code>[a]</code>就是<code>[ebp + 8]</code> 就是在<code>args/parameters</code>里面第<strong>一</strong>个参数,<code>[b]</code> 就是<code>[ebp + C]</code> 就是<code>args/parameters</code>里面第<strong>二</strong>个参数</p>
+<p>当前function结束之后，就要将stack恢复到调用之前的状态。</p>
+<p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/3.png" alt="3.png"></p>
+<p><code>0038187E - 00381891</code> 就是为了恢复到调用前stack的状态。</p>
+<p>我们还记得call之后会 (add esp, 4*参数的数量) 来使得stack完全恢复到调用前的状态。</p>
+<p>我们仔细观察后还可以发现eax就是最终return的值。 在Intel白皮书也指出了</p>
+<p><code>eax</code> 只有两个功能: 1, <strong>作为return result</strong> 2. 某些特定opcode的参数，比如<code>stos</code> 就会把<code>eax</code>的值放到<code>edi</code>的地址。</p>
+<p>另外<code>rep</code>会通过<code>ecx</code>的值来进行计数重复次数。</p>
+<p>Conclusion:</p>
+<ol>
+<li>堆栈平衡原理, <code>ebp</code>栈底, <code>esp</code>栈顶</li>
+<li><code>eax</code>是一个很重要的Register，通常用来存储返回结果。</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>absolutelycold</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://absolutelycold.github.io/2020/03/07/Assembly-Code-1-堆栈平衡/">https://absolutelycold.github.io/2020/03/07/Assembly-Code-1-堆栈平衡/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/HAX/"># HAX</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/01/Cheat-Engine-Tutorial-Game-Hax/">Cheat Engine Tutorial Game Hax</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© absolutelycold | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
