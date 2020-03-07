@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheatTable CheatEngineTableVersion="29">
+<CheatTable PornoAvenueTableVersion="29">
   <CheatEntries>
     <CheatEntry>
       <ID>1</ID>
@@ -157,7 +157,7 @@ dealloc(newmem)
     <CheatEntry>
       <ID>8</ID>
       <Description>"Step3-godMode"</Description>
-      <LastState Activated="1"/>
+      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{ Game   : gtutorial-x86_64.exe
   Version: 
@@ -228,7 +228,7 @@ dealloc(newmem)
     </CheatEntry>
     <CheatEntry>
       <ID>10</ID>
-      <Description>"Legicy_detect_bypass"</Description>
+      <Description>"Bypass"</Description>
       <LastState Activated="1"/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{ Game   : gtutorial-x86_64.exe
@@ -241,8 +241,8 @@ dealloc(newmem)
 
 [ENABLE]
 
-aobscanmodule(INJECT,gtutorial-x86_64.exe,7C 1E 41 B8 FF FF FF FF 41 83 C0 01 49 63 C8 41 0F B7 0C 49 31 C8 83 C0) // should be unique
-alloc(newmem,$1000,"gtutorial-x86_64.exe"+38DF0)
+aobscanmodule(INJECT,gtutorial-x86_64.exe,0C 44 39 C2 7F EA 66 90 C3) // should be unique
+alloc(newmem,$1000,"gtutorial-x86_64.exe"+38E0C)
 
 label(code)
 label(return)
@@ -250,205 +250,54 @@ label(return)
 newmem:
 
 code:
-  jmp gtutorial-x86_64.exe+38E10
-  mov r8d,FFFFFFFF
+  jmp gtutorial-x86_64.exe+38DF8
+  nop 
+  ret 
   jmp return
 
-INJECT:
+INJECT+04:
   jmp newmem
-  nop 3
 return:
 registersymbol(INJECT)
 
 [DISABLE]
 
-INJECT:
-  db 7C 1E 41 B8 FF FF FF FF
+INJECT+04:
+  db 7F EA 66 90 C3
 
 unregistersymbol(INJECT)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: "gtutorial-x86_64.exe"+38DF0
+// ORIGINAL CODE - INJECTION POINT: "gtutorial-x86_64.exe"+38E0C
 
-"gtutorial-x86_64.exe"+38DCF: 00 4C 8B 49           -  add [rbx+rcx*4+49],cl
-"gtutorial-x86_64.exe"+38DD3: 58                    -  pop rax
-"gtutorial-x86_64.exe"+38DD4: B8 EF BE AD DE        -  mov eax,DEADBEEF
-"gtutorial-x86_64.exe"+38DD9: 48 63 51 60           -  movsxd  rdx,dword ptr [rcx+60]
-"gtutorial-x86_64.exe"+38DDD: 48 89 D1              -  mov rcx,rdx
-"gtutorial-x86_64.exe"+38DE0: 48 C1 E9 3F           -  shr rcx,3F
-"gtutorial-x86_64.exe"+38DE4: 48 01 CA              -  add rdx,rcx
-"gtutorial-x86_64.exe"+38DE7: 48 D1 FA              -  sar rdx,1
 "gtutorial-x86_64.exe"+38DEA: 48 83 EA 01           -  sub rdx,01
 "gtutorial-x86_64.exe"+38DEE: 85 D2                 -  test edx,edx
-// ---------- INJECTING HERE ----------
 "gtutorial-x86_64.exe"+38DF0: 7C 1E                 -  jl gtutorial-x86_64.exe+38E10
 "gtutorial-x86_64.exe"+38DF2: 41 B8 FF FF FF FF     -  mov r8d,FFFFFFFF
-// ---------- DONE INJECTING  ----------
 "gtutorial-x86_64.exe"+38DF8: 41 83 C0 01           -  add r8d,01
 "gtutorial-x86_64.exe"+38DFC: 49 63 C8              -  movsxd  rcx,r8d
 "gtutorial-x86_64.exe"+38DFF: 41 0F B7 0C 49        -  movzx ecx,word ptr [r9+rcx*2]
 "gtutorial-x86_64.exe"+38E04: 31 C8                 -  xor eax,ecx
 "gtutorial-x86_64.exe"+38E06: 83 C0 0C              -  add eax,0C
 "gtutorial-x86_64.exe"+38E09: 44 39 C2              -  cmp edx,r8d
+// ---------- INJECTING HERE ----------
 "gtutorial-x86_64.exe"+38E0C: 7F EA                 -  jg gtutorial-x86_64.exe+38DF8
 "gtutorial-x86_64.exe"+38E0E: 66 90                 -  nop 
 "gtutorial-x86_64.exe"+38E10: C3                    -  ret 
+// ---------- DONE INJECTING  ----------
 "gtutorial-x86_64.exe"+38E11: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E13: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E15: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E17: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E19: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E1B: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E1D: 00 00                 -  add [rax],al
+"gtutorial-x86_64.exe"+38E1F: 00 4C 8B 49           -  add [rbx+rcx*4+49],cl
+"gtutorial-x86_64.exe"+38E23: 58                    -  pop rax
+"gtutorial-x86_64.exe"+38E24: B8 AD DE ED FE        -  mov eax,FEEDDEAD
 }
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>11</ID>
-      <Description>"Legicy_detect_bypass"</Description>
-      <LastState Activated="1"/>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>{ Game   : gtutorial-x86_64.exe
-  Version: 
-  Date   : 2020-03-01
-  Author : k
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(INJECT,gtutorial-x86_64.exe,7C 1A 41 B8 FF FF FF FF) // should be unique
-alloc(newmem,$1000,"gtutorial-x86_64.exe"+38E40)
-
-label(code)
-label(return)
-
-newmem:
-
-code:
-  jmp gtutorial-x86_64.exe+38E5C
-  mov r8d,FFFFFFFF
-  jmp return
-
-INJECT:
-  jmp newmem
-  nop 3
-return:
-registersymbol(INJECT)
-
-[DISABLE]
-
-INJECT:
-  db 7C 1A 41 B8 FF FF FF FF
-
-unregistersymbol(INJECT)
-dealloc(newmem)
-
-{
-// ORIGINAL CODE - INJECTION POINT: "gtutorial-x86_64.exe"+38E40
-
-"gtutorial-x86_64.exe"+38E1F: 00 4C 8B 49        -  add [rbx+rcx*4+49],cl
-"gtutorial-x86_64.exe"+38E23: 58                 -  pop rax
-"gtutorial-x86_64.exe"+38E24: B8 AD DE ED FE     -  mov eax,FEEDDEAD
-"gtutorial-x86_64.exe"+38E29: 48 63 51 60        -  movsxd  rdx,dword ptr [rcx+60]
-"gtutorial-x86_64.exe"+38E2D: 48 89 D1           -  mov rcx,rdx
-"gtutorial-x86_64.exe"+38E30: 48 C1 E9 3F        -  shr rcx,3F
-"gtutorial-x86_64.exe"+38E34: 48 01 CA           -  add rdx,rcx
-"gtutorial-x86_64.exe"+38E37: 48 D1 FA           -  sar rdx,1
-"gtutorial-x86_64.exe"+38E3A: 48 83 EA 01        -  sub rdx,01
-"gtutorial-x86_64.exe"+38E3E: 85 D2              -  test edx,edx
-// ---------- INJECTING HERE ----------
-"gtutorial-x86_64.exe"+38E40: 7C 1A              -  jl gtutorial-x86_64.exe+38E5C
-"gtutorial-x86_64.exe"+38E42: 41 B8 FF FF FF FF  -  mov r8d,FFFFFFFF
-// ---------- DONE INJECTING  ----------
-"gtutorial-x86_64.exe"+38E48: 41 83 C0 01        -  add r8d,01
-"gtutorial-x86_64.exe"+38E4C: 49 63 C8           -  movsxd  rcx,r8d
-"gtutorial-x86_64.exe"+38E4F: 41 0F B7 0C 49     -  movzx ecx,word ptr [r9+rcx*2]
-"gtutorial-x86_64.exe"+38E54: 01 C8              -  add eax,ecx
-"gtutorial-x86_64.exe"+38E56: 44 39 C2           -  cmp edx,r8d
-"gtutorial-x86_64.exe"+38E59: 7F ED              -  jg gtutorial-x86_64.exe+38E48
-"gtutorial-x86_64.exe"+38E5B: 90                 -  nop 
-"gtutorial-x86_64.exe"+38E5C: C3                 -  ret 
-"gtutorial-x86_64.exe"+38E5D: 00 00              -  add [rax],al
-"gtutorial-x86_64.exe"+38E5F: 00 4C 8B 49        -  add [rbx+rcx*4+49],cl
-}
-</AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>12</ID>
-      <Description>"Legicy_detect_bypass"</Description>
-      <LastState Activated="1"/>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>{ Game   : gtutorial-x86_64.exe
-  Version: 
-  Date   : 2020-03-01
-  Author : k
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(INJECT,gtutorial-x86_64.exe,7C 1E 41 B8 FF FF FF FF) // should be unique
-alloc(newmem,$1000,"gtutorial-x86_64.exe"+38E80)
-
-label(code)
-label(return)
-
-newmem:
-
-code:
-  jmp gtutorial-x86_64.exe+38EA0
-  mov r8d,FFFFFFFF
-  jmp return
-
-INJECT:
-  jmp newmem
-  nop 3
-return:
-registersymbol(INJECT)
-
-[DISABLE]
-
-INJECT:
-  db 7C 1E 41 B8 FF FF FF FF
-
-unregistersymbol(INJECT)
-dealloc(newmem)
-
-{
-// ORIGINAL CODE - INJECTION POINT: "gtutorial-x86_64.exe"+38E80
-
-"gtutorial-x86_64.exe"+38E5F: 00 4C 8B 49              -  add [rbx+rcx*4+49],cl
-"gtutorial-x86_64.exe"+38E63: 58                       -  pop rax
-"gtutorial-x86_64.exe"+38E64: B8 CE CE CE CE           -  mov eax,CECECECE
-"gtutorial-x86_64.exe"+38E69: 48 63 51 60              -  movsxd  rdx,dword ptr [rcx+60]
-"gtutorial-x86_64.exe"+38E6D: 48 89 D1                 -  mov rcx,rdx
-"gtutorial-x86_64.exe"+38E70: 48 C1 E9 3F              -  shr rcx,3F
-"gtutorial-x86_64.exe"+38E74: 48 01 CA                 -  add rdx,rcx
-"gtutorial-x86_64.exe"+38E77: 48 D1 FA                 -  sar rdx,1
-"gtutorial-x86_64.exe"+38E7A: 48 83 EA 01              -  sub rdx,01
-"gtutorial-x86_64.exe"+38E7E: 85 D2                    -  test edx,edx
-// ---------- INJECTING HERE ----------
-"gtutorial-x86_64.exe"+38E80: 7C 1E                    -  jl gtutorial-x86_64.exe+38EA0
-"gtutorial-x86_64.exe"+38E82: 41 B8 FF FF FF FF        -  mov r8d,FFFFFFFF
-// ---------- DONE INJECTING  ----------
-"gtutorial-x86_64.exe"+38E88: 41 83 C0 01              -  add r8d,01
-"gtutorial-x86_64.exe"+38E8C: 49 63 C8                 -  movsxd  rcx,r8d
-"gtutorial-x86_64.exe"+38E8F: 41 0F B7 0C 49           -  movzx ecx,word ptr [r9+rcx*2]
-"gtutorial-x86_64.exe"+38E94: 31 C8                    -  xor eax,ecx
-"gtutorial-x86_64.exe"+38E96: 83 E8 4D                 -  sub eax,4D
-"gtutorial-x86_64.exe"+38E99: 44 39 C2                 -  cmp edx,r8d
-"gtutorial-x86_64.exe"+38E9C: 7F EA                    -  jg gtutorial-x86_64.exe+38E88
-"gtutorial-x86_64.exe"+38E9E: 66 90                    -  nop 
-"gtutorial-x86_64.exe"+38EA0: C3                       -  ret 
-"gtutorial-x86_64.exe"+38EA1: 00 00                    -  add [rax],al
-}
-</AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>9</ID>
-      <Description>"No description"</Description>
-      <ShowAsHex>1</ShowAsHex>
-      <VariableType>Array of byte</VariableType>
-      <ByteLength>8</ByteLength>
-      <Address>"gtutorial-x86_64.exe"+3D1D9</Address>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>

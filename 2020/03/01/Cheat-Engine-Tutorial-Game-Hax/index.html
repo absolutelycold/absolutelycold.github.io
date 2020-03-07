@@ -239,7 +239,14 @@
 <p><img src="/2020/03/01/Cheat-Engine-Tutorial-Game-Hax/Step3_0.gif" alt="Step3_0.gif"></p>
 <p>Bingo,你已经无敌了，相信无敌之后过关对你来说很容易。</p>
 <p>CE Tutorial Game只有三关。CE初级学习结束。</p>
-<h1 id="隐藏关：Bypass-数据检测"><a href="#隐藏关：Bypass-数据检测" class="headerlink" title="隐藏关：Bypass 数据检测"></a>隐藏关：Bypass 数据检测</h1><p>我们可以看到当我们</p>
+<h1 id="隐藏关：Bypass-数据检测"><a href="#隐藏关：Bypass-数据检测" class="headerlink" title="隐藏关：Bypass 数据检测"></a>隐藏关：Bypass 数据检测</h1><p>我们可以看到当我们打开任何一个修改，Tutorial的窗口上都显示 Integrity check error. 所以这个Tutorial是有数据检测的。</p>
+<p>如何过掉这个检测呢？</p>
+<p>首先我们在Memory View中找到你修改的地址，然后右键FInd what acess this address。我们发现所有我们修改的指令都被3个Instruction一直access，那么很可能就是在扫描了（另一种可能就是不断刷新UI，UI一直在access这个address）。所以过检测还是得测试一下。我们跳到access这个地址的instruction，如果有cmp很有可能是在对比原数据。</p>
+<p>所以让扫描一直在循环里面就不会跳出循环，让程序一直扫描memory但是就是不结束扫描。</p>
+<p>下面是扫描的instruction:</p>
+<p><img src="/2020/03/01/Cheat-Engine-Tutorial-Game-Hax/Step4_0.png" alt="Step4_0.png"></p>
+<p>很明显这是一个while循环。我们让while条件失效，使得while循环不跳出，如下:</p>
+<p><img src="/2020/03/01/Cheat-Engine-Tutorial-Game-Hax/Step4_1.png" alt="Step4_1.png"></p>
 <p>最终的Script在<a href="./gtutorial-x86_64.CT">此处下载</a></p>
 
         </div>
