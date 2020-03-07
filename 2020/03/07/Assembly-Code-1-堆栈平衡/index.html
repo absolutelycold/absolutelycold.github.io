@@ -148,6 +148,7 @@
 <p><code>00381850 - 00381878</code> 运行完之后 stack的变化如下:</p>
 <p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/2.png" alt="2.png"></p>
 <p>这里<code>[a]</code>就是<code>[ebp + 8]</code> 就是在<code>args/parameters</code>里面第<strong>一</strong>个参数,<code>[b]</code> 就是<code>[ebp + C]</code> 就是<code>args/parameters</code>里面第<strong>二</strong>个参数</p>
+<p><code>ebp + 4</code><strong>的值是在是call的下一个地址，因为每次call的时候都会往stack里面放入下一条instruction的address用于return。</strong></p>
 <p>当前function结束之后，就要将stack恢复到调用之前的状态。</p>
 <p><img src="/2020/03/07/Assembly-Code-1-堆栈平衡/3.png" alt="3.png"></p>
 <p><code>0038187E - 00381891</code> 就是为了恢复到调用前stack的状态。</p>
