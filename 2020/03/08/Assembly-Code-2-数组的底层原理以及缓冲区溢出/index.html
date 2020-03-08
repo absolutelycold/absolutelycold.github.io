@@ -234,7 +234,7 @@
 <h1 id="3-Conclusion"><a href="#3-Conclusion" class="headerlink" title="3. Conclusion"></a>3. Conclusion</h1><ol>
 <li>一维数组是连续存放的，取出值的过程其实是编译器帮我们计算offset取出值的过程。</li>
 <li>多维数组本质上就是一维数组。一样的，取值的过程就是编译器帮我们计算offset再取出值的过程。</li>
-<li>一维数组和多维数组都没有Boundary Detection。所以都有可</li>
+<li>一维数组和多维数组都没有Boundary Detection。所以都有可能造成缓冲区溢出的危险。</li>
 </ol>
 
         </div>
@@ -276,6 +276,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/08/C-的reference-vs-pointer/">C++的reference vs pointer</a>
             
             
             <a class="next" rel="next" href="/2020/03/07/Assembly-Code-1-堆栈平衡/">Assembly Code 1 : 堆栈平衡</a>

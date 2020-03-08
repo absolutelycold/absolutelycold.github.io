@@ -15,7 +15,7 @@
 
 
 
-<title>Handler vs AsyncTask vs Thread | Feng Memo</title>
+<title>C++的reference vs pointer | Feng Memo</title>
 
 
 
@@ -173,7 +173,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Handler vs AsyncTask vs Thread</h1>
+            <h1 class="post-title">C++的reference vs pointer</h1>
             
                 <div class="post-meta">
                     
@@ -182,14 +182,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">February 13, 2020&nbsp;&nbsp;9:24:58</a>
+                        Date: <a href="#">March 8, 2020&nbsp;&nbsp;12:37:00</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Android-Development/">Android Development</a>
+                                <a href="/categories/C-Language/">C Language</a>
                             
                         </span>
                     
@@ -198,51 +198,14 @@
         </header>
 
         <div class="post-content">
-            <blockquote>
-<p>本文参考StackOverflow: <a href="https://stackoverflow.com/questions/6964011/handler-vs-asynctask-vs-thread" target="_blank" rel="noopener">https://stackoverflow.com/questions/6964011/handler-vs-asynctask-vs-thread</a></p>
-</blockquote>
-<h1 id="1-Thread"><a href="#1-Thread" class="headerlink" title="1. Thread"></a>1. Thread</h1><p>线程，就是最基本的定义。一个程序会有多个线程来执行不同的Task。Handler和AsyncTask都属于Thread。在Handler和AsyncTask的底层都是由Thread实现的。</p>
-<h1 id="2-AsyncTask"><a href="#2-AsyncTask" class="headerlink" title="2. AsyncTask"></a>2. AsyncTask</h1><p>先附上官方的定义:</p>
-<blockquote>
-<p>AsyncTask enables proper and easy use of the UI thread. This class allows to perform background operations and publish results on the UI thread without having to manipulate threads and/or handlers</p>
-</blockquote>
-<p>翻译一下:</p>
-<blockquote>
-<p>AsyncTask为UI线程（即Main Event Thread）的使用提供了一个简单的方式。这个类允许Background(后台)任务简单的在不使用thread和handler的情况下对UI线程进行操作。</p>
-</blockquote>
-<p>接触过AsyncTask的朋友对其都不陌生。其中有onPreExecute(), doInBackground(), onPostExecute(),运行我们在不同的阶段对UI和后台线程进行操作。同时也确保了我们可以在三个时间段连续做不同的事情，不需要自己使用thread和handler做线程的schedule。</p>
-<p>其中onPreExecute()和onPostExecute()是被Main Event Thread(即UI thread)调用。所以可以直接与UI thread交流。</p>
-<p><strong>Using Scenario：</strong></p>
-<ol>
-<li>如果你需要在后台执行一些<strong>有顺序</strong>的Code</li>
-<li>需要与UI Thread 进行交流</li>
-</ol>
-<h1 id="3-Handler"><a href="#3-Handler" class="headerlink" title="3. Handler"></a>3. Handler</h1><p>官方定义:</p>
-<blockquote>
-<p>Handler allows you to send and process Message and Runnable objects associated with a thread’s MessageQueue</p>
-</blockquote>
-<p>翻译一下：</p>
-<blockquote>
-<p>Handler允许你发送Message和Runnable Object到一个线程的MessageQueue</p>
-</blockquote>
-<p>用过Handler的都知道Handler里面需要Post Ruannable对象。这个Runnable对象其实就是发送到自创线程的MessageQueue队列中。</p>
-<p>Handler就像是一座桥连接了UI thread和自创Thread。</p>
-<p><strong>Using Scenario:</strong></p>
-<ol>
-<li>需要在后台执行Code</li>
-<li>需要与UI Thread进行交楼</li>
-</ol>
-<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>所以Thread， Handler和AsyncTask的复杂关系应该为:</p>
-<p><center>Thread < Handler < AsyncTask</center><br>Thread最普通，就是创建一个线程而已。</p>
-<p>Handler比Thread功能更多，可以连接两个Thread</p>
-<p>AsyncTask是功能更复杂的thread，可以连接两个thread还可以让thread中code按顺序执行</p>
-<p>AsyncTask和Handler和UI Thread的交流是不同的方式。Handler是建立通道，而AsyncTask是UI Thread直接call AsyncTask里面的onPreExecute(), onProgressUpdate()和onPostExecute()。这导致一些区别，<strong>比如说我们不能加载Network Thread在Handler里面，但是我们可以加载NewtWork Thread在AsyncTask中</strong>，因为NetworkThread不可以在MainThread上Run，否则会抛出<a href="https://developer.android.com/reference/android/os/NetworkOnMainThreadException.html" target="_blank" rel="noopener">NetworkOnMainThreadException</a>。官方介绍和地址如下:</p>
-<blockquote>
-<p>NetworkOnMainThreadException</p>
-<p>The exception that is thrown when an application attempts to perform a networking operation on its main thread.</p>
-<p>This is only thrown for applications targeting the Honeycomb SDK or higher. Applications targeting earlier SDK versions are allowed to do networking on their main event loop threads, but it’s heavily discouraged. See the document <a href="https://developer.android.com/guide/practices/design/responsiveness.html" target="_blank" rel="noopener">Designing for Responsiveness</a>.</p>
-<p>Also see <code>StrictMode</code> <a href="https://developer.android.com/reference/android/os/StrictMode.html" target="_blank" rel="noopener">StrictMode Link</a>.</p>
-</blockquote>
+            <h1 id="1-本质"><a href="#1-本质" class="headerlink" title="1. 本质"></a>1. 本质</h1><p>首先我们从编译器存储的角度来看reference和pointer的区别</p>
+<p><img src="/2020/03/08/C-的reference-vs-pointer/0.png" alt="0.png"></p>
+<p>我们也可看到pointer和reference的值都是<code>ebp-0Ch</code>(即第一个局部变量a的地址)。</p>
+<p>所以reference再底层的存储方式和pointer是一样的，都是存储了变量的地址。</p>
+<p>所以每次给reference赋值的时候，默认取出了变量的地址。</p>
+<h1 id="2-区别"><a href="#2-区别" class="headerlink" title="2. 区别"></a>2. 区别</h1><p>两者区别就在于编译器把他们视作不同的类型，所以有不同的操作。</p>
+<p>reference可以看作是弱化版的pointer，因为reference一旦初始化就不能修改reference里面存储的地址。也就是说reference一旦初始化就从一而终指向初始时的地址，不能修改。</p>
+<p>reference在使用时也自动把pointer指向的值取出来用。不需要自己取出。</p>
 
         </div>
 
@@ -257,7 +220,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://absolutelycold.github.io/2020/02/13/Handler-vs-AsyncTask-vs-Thread/">https://absolutelycold.github.io/2020/02/13/Handler-vs-AsyncTask-vs-Thread/</a></span>
+                        <span><a href="https://absolutelycold.github.io/2020/03/08/C-的reference-vs-pointer/">https://absolutelycold.github.io/2020/03/08/C-的reference-vs-pointer/</a></span>
                     </p>
                 
                 
@@ -271,9 +234,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Thread/"># Thread</a>
-                    
-                        <a href="/tags/Android/"># Android</a>
+                        <a href="/tags/C/"># C</a>
                     
                         
                 </span>
@@ -286,10 +247,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/02/16/Explaination-of-the-Bottomsheet-fragment-generated-from-android-studio/">Explanation of the Bottomsheet fragment generated from android studio</a>
+                <a class="prev" rel="prev" href="/2020/03/08/Assembly-Code-3-C-中Class的本质/">Assembly Code 3 : C++中Class的本质</a>
             
             
-            <a class="next" rel="next" href="/2020/02/12/Android-RecyclerView-Load-More-Endless-Scrolling/">Android RecyclerView Load More, Endless Scrolling</a>
+            <a class="next" rel="next" href="/2020/03/08/Assembly-Code-2-数组的底层原理以及缓冲区溢出/">Assembly Code 2 : 数组的底层原理以及缓冲区溢出</a>
             
         </section>
 

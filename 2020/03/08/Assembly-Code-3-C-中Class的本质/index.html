@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="absolutelycold">
+
+
+    <meta name="subtitle" content="Life, Technology and More">
+
+
+    <meta name="description" content="Knowledge is Bulletproof.">
+
+
+
+<title>Assembly Code 3 : C++中Class的本质 | Feng Memo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Feng Memo</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Feng Memo</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Assembly Code 3 : C++中Class的本质</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">absolutelycold</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 8, 2020&nbsp;&nbsp;15:04:54</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/HAX/">HAX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="1-This指针"><a href="#1-This指针" class="headerlink" title="1. This指针"></a>1. This指针</h1><p>This指针只有在调用class中的method的时候才会被当成参数传进去。假设我们有一个Person类，如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> age = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> height = <span class="number">180</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">WashFace</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = age;</span><br><span class="line">        <span class="keyword">int</span> b = height;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Age: "</span> &lt;&lt; age &lt;&lt; <span class="string">", Height: "</span> &lt;&lt; height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们调用一下washFace()，然后反调试看一下底层到底发生了什么:</p>
+<p><img src="/2020/03/08/Assembly-Code-3-C-中Class的本质/0.png" alt="0.png"></p>
+<p>在washFace()的call之前，我们可以看到编译器把<code>ebp-10</code>的值放到ecx中了，其实现在ecx的值也就相当于第一个参数，有点<code>__fastcall</code>的意思。这个<code>ebp-10</code>很明显就是我们创建Person这个对象的地方，也就是Main中的第一个局部变量的地址。这个局部变量的地址就是<code>this</code>指针。</p>
+<p>我们step in这个function看一看:</p>
+<p><img src="/2020/03/08/Assembly-Code-3-C-中Class的本质/1.png" alt="1.png"></p>
+<p>我们可以看到在填充完缓冲区之后，直接把<code>ecx</code>(即传进来的第一个参数)放到了<code>[ebp-8]</code>，也就是第一个局部变量里面中。那么现在WashFace()这个函数的第一个局部变量就变成了<code>this</code>指针。之后获取成员和改变成员的操作也是通过这个this指针（即Main函数中创建对象的地址）进行修改的。</p>
+<h1 id="2-构造函数"><a href="#2-构造函数" class="headerlink" title="2. 构造函数"></a>2. 构造函数</h1><p>如果没有初始化你的成员，而且直接使用成员，这是很危险的。因为编译器不会给你自动初始化，那些成员现在的值都是stack或者heap中的垃圾。所以定义一个类，你一定要初始化成员。</p>
+<p>假设我们有如下的class:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">    Person(<span class="keyword">int</span> age, <span class="keyword">int</span> height) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;age = age;</span><br><span class="line">        <span class="keyword">this</span>-&gt;height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">WashFace</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = age;</span><br><span class="line">        <span class="keyword">int</span> b = height;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Age: "</span> &lt;&lt; age &lt;&lt; <span class="string">", Height: "</span> &lt;&lt; height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们底层看一下构造函数何时被调用:</p>
+<p><img src="/2020/03/08/Assembly-Code-3-C-中Class的本质/3.png" alt="3.png"></p>
+<p>我们创建的时候直接call了constructor。并且传入了三个参数:this 指针, 12h 和 0BEh。</p>
+<p>我们看一下构造函数内部怎么做的:</p>
+<p><img src="/2020/03/08/Assembly-Code-3-C-中Class的本质/4.png" alt="4.png"></p>
+<p>还是一样的，把this指针里面的地址放到构造函数的第一个局部变量里。构造函数接下来使用this指针对Main中我们创建的对象修改。</p>
+<p>所以本质上，我们修改成员变量都是通过<code>this</code>指针在创建对象的stack里面对成员变量进行修改。</p>
+<p>就拿我们的例子来说，成员变量其实一直都在Main函数的Stack中。这些成员变量本质上其实是Main函数中连续的局部变量。</p>
+<p>同样的，如果我们在Heap中创建对象，那么这个对象的成员其实都在heap中，不管怎么改成员都是通过this指针来修改heap。</p>
+<h1 id="3-析构函数"><a href="#3-析构函数" class="headerlink" title="3. 析构函数"></a>3. 析构函数</h1><p>大家都知道析构函数是在对象被销毁的时候被调用。这种概念很模棱两可，什么时候才是销毁的时候呢？</p>
+<p>我们可以通过底层来看看析构函数到底是什么时候被调用的。</p>
+<p>假设我们有如下的析构函数:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">    Person(<span class="keyword">int</span> age, <span class="keyword">int</span> height) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;age = age;</span><br><span class="line">        <span class="keyword">this</span>-&gt;height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Person() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"I am destoried\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">WashFace</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = age;</span><br><span class="line">        <span class="keyword">int</span> b = height;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Age: "</span> &lt;&lt; age &lt;&lt; <span class="string">", Height: "</span> &lt;&lt; height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们反汇编一下看一下到底在哪调用~Person这个析构函数。</p>
+<p><img src="/2020/03/08/Assembly-Code-3-C-中Class的本质/5.png" alt="5.png"></p>
+<p>我们可以看到，如果我们在main函数里面创建了Person对象，那么Main函数结束时就会马上调用析构函数，并且还是传入this指针。</p>
+<p>所以如果是在某个函数中创建了对象，那么析构函数会在这个函数结束时被调用。</p>
+<p>如果是在全局区创建了对象，那么析构函数会在整个程序关闭的同时被调用。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>absolutelycold</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://absolutelycold.github.io/2020/03/08/Assembly-Code-3-C-中Class的本质/">https://absolutelycold.github.io/2020/03/08/Assembly-Code-3-C-中Class的本质/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/HAX/"># HAX</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/08/C-的reference-vs-pointer/">C++的reference vs pointer</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© absolutelycold | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
