@@ -202,10 +202,11 @@
 <p><img src="/2020/03/08/C-的reference-vs-pointer/0.png" alt="0.png"></p>
 <p>我们也可看到pointer和reference的值都是<code>ebp-0Ch</code>(即第一个局部变量a的地址)。</p>
 <p>所以reference再底层的存储方式和pointer是一样的，都是存储了变量的地址。</p>
-<p>所以每次给reference赋值的时候，默认取出了变量的地址。</p>
+<p><strong>所以每次给reference赋值的时候，默认取出了变量的地址。</strong></p>
 <h1 id="2-区别"><a href="#2-区别" class="headerlink" title="2. 区别"></a>2. 区别</h1><p>两者区别就在于编译器把他们视作不同的类型，所以有不同的操作。</p>
 <p>reference可以看作是弱化版的pointer，因为reference一旦初始化就不能修改reference里面存储的地址。也就是说reference一旦初始化就从一而终指向初始时的地址，不能修改。</p>
-<p>reference在使用时也自动把pointer指向的值取出来用。不需要自己取出。</p>
+<p><strong>reference在使用时也自动把pointer指向的值取出来用。不需要自己取出。</strong></p>
+<p>简单来说reference就是无法改地址的指针。</p>
 
         </div>
 
