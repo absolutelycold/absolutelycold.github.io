@@ -214,6 +214,11 @@
 <p>我们可以直接使用父类的所谓”拷贝构造函数”试一下:</p>
 <p><img src="/2020/03/09/Assembly-Code-5-拷贝构造函数底层实现/3.png" alt="3.png"></p>
 <p>我们可以看到，我们调用了所谓的”拷贝构造函数”，但是<strong>底层汇编语言只是简单的拷贝，并没有为我们开辟一个所谓的”拷贝构造函数”</strong></p>
+<p>那么讲到对象拷贝了，除了拷贝构造函数，还有一种方式为重载”=”操作符。</p>
+<p>其实”=”操作符编译器也帮我们实现了对象的浅拷贝，底层和拷贝构造函数实现是一样的。</p>
+<p>但是如果重载，方式就不一样的，一个是构造函数重载，一个是普通函数重载。</p>
+<p>如果我们使用拷贝构造函数，那么我们overwrite的就是构造函数，要使用构造函数的方式使用父类的构造函数 (“:ParentConstructor(arg1, arg2,…)”)。</p>
+<p>如果我们使用”=” operator，那么我们就相当于overwrite普通的函数，这个时候要用普通函数的方法来使用父类方法(“ParentClass::operator=(arg1)”)。</p>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion:"></a>Conclusion:</h1><p>拷贝构造函数其实就是一个<strong>假函数</strong>，编译器并没有为我们创造一个函数来copy对象。编译器做的只是简单的复制数据。而且是 <strong>浅拷贝</strong>:只简单拷贝数据，不拷贝指针里面的东西。</p>
 <p>如果需要 <strong>深拷贝</strong>，则需要自己去写一个拷贝函数。</p>
 
@@ -256,6 +261,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/11/PE结构细节/">PE结构细节</a>
             
             
             <a class="next" rel="next" href="/2020/03/08/Assembly-Code-4-虚表/">Assembly Code 4 : 虚表</a>

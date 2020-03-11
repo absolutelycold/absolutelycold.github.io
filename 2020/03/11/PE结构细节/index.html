@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="absolutelycold">
+
+
+    <meta name="subtitle" content="Life, Technology and More">
+
+
+    <meta name="description" content="Knowledge is Bulletproof.">
+
+
+
+<title>PE结构细节 | Feng Memo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Feng Memo</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Feng Memo</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">PE结构细节</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">absolutelycold</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 11, 2020&nbsp;&nbsp;22:19:51</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/HAX/">HAX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder>
+    <label for="hbePass">Pa$W0RD</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="4c1ba0afe1e62c509cd58aa492b5d14ced1c6192ef79f29a43d4ffbee9ebba42">c26ad819cbe0a0f28c6e57ec2aa7ecf00049c3e47533da161b986e256e1203fa1b65df347aae37e010ad2cf13b031509e267f2ce9807a75e61a35f1238f4efad7d78f6eb7f681813207204ae1554e8ccc2f90105ebb4448347a7f488b8bd14bc65fb95285f0493ccc2193edcc69e83708368de707608fd1fc10016ec7f05604e367fca5b94d73e6650c69446d82fc61ccb62f1e33ef30aaedf0db73506ad2f5e9f5b4fefc4e529144342662b6bf85a70347404b8ffa5e5ba02f992b0a719cc98d9e724d0dce1093ecea9d0c33037c371ffa0fdc23f036206c05c0da681327e5c168a73b42e2f7b1638e0ec40ee2b7d36fcb9686a273fe4ce66abd663fcd37eb4bac17422cb7012fb09f8ca643e25266d7e743b975a04b5630affdc938eaabeaa64b8469922fb66450ba9087a35d3a5a4e7e1c924ebbb6bf531cecfe9a24119da018924ac364eba7f120b358c9c5ebecdf08d327b1e9184843fc6c91691c048d0fc3cae68f3a9b273e7802e4f679e9b30c8fdecc6b03e7a7206291ee722f4f812142561b3f1b04fdd05a487481f6556045ab0dbceb1b64fdb21a54bd5bcd9b2ddb962788aaf35507f798bb26e9d8faa9c92d3526da425f28f8daf6e71aece01f674b75bf26a0d0434356de61f82b85f1b7ed4a36a9c8674919dc948f5060f6079a6e8f0e11752971e654c091bdba99d9759c70ddb0cef7204fb284c3eed9d3f63c0ea1a74f02b9efde1ddb878b5a12a5a50f47835f2e9756d1d0bf44c7edf61548390ac8bb643a910a4985fad46dd3836a4e755c39c6cc32c0537670a652c02da6bed2186a88755e45957f422e23a29d399fa8e162b1b4bdd1179f54db86df874232222d9adfd003cf3b8e7059a49032161201c7c388a3d37962d0fbf941f3c26b7cbe2af8f1b76ab1c76e3b0ef439d79d27ea341d5cf07dac3eee0f9e493fba1b6fbed94b73efadc703b767770cfdf151c96e8fa829e6ef478c8ef43b409c6f96d8039c51bb13c21e545ab63aa23f90a28c5b40fd21d960c7d42326a3a3eed3643c085d30bfa49111a3c552d85ce81546003fb57993a22268511501cb480063125815155fa200f8fcaff7ca9a2b40e41b7c94fa8660fc3938132335677838f0e14f3cfaee7a9eaec0dc4df10c38d3561146bf74d8a74218217afd758528e437967aaab2524b155b3457e06b4ccf8f5757d2d18c0e431c3c083cc3b95cf735b3c7419c51d3c53dc19fdca00d190b2c4397195deaaca8a19de8e715e2f7ef5cfb770dd61455d10cd6c7a9f62f666351e0f8a8089d403548f344151d4003480bd2110ed7493b4cca596a1f730af5c0a7e90baad0153e8536e8f9b67644aa74e53eb26d879a5c11d53e850f2a6adbca56804f658e56d33be44762e942b7a07ec69592923a0a5690370fb67ebad9c3b7133e2d5f39552335be78ec38cb8dabf4758b56b2b7a7b8788eeb2cfb90bf950504fb32b5acb839c3b042c6c4c27dd6bb29bea640633e68168002602271ed5bd70e5b25d450a7804e8544dd3c3d820dc1f59628413d1ba6a6a907861c7b88ec90314cb4c7f3d7aa4dca1fda206031fc5229b8ecaec127f1c71ba9dc14a98de744c8ed7550bb5c2242dd4338c208b6a381d1423cab21fcee7405751e0067387a6a1ab205ee0ab4b6a028394093d6c186acaf39a322a80093e136ff1c3474e7db608b549d0b83e7543f7ab94aa349b0e63f61488bcc96294fe74319e01250c22c642100624151dbb1434c298c445a2094fbee204f8eb290e93f8d9f98afe5cc6f30f6dbd747690a5af03514a94cc653c8f0b1fe14c561fd394493ff1e322220fe9897d3bce471faa89f2615ea9a5cdc54001216711c375f945549f91941ef296eb360d55169686dde3f44c52eb31254c03449df3f23aa93f9b7b6447c6cc207f906f7e9c9c5450ae319b9273f33662a0e1863a7835c13f3aef5fa7a5a8e2644981d07ba9fc476c6d38f879edc44d300111c7c2a75e335e7d97e8fdd2222ee611a5be93b63d77b1c0a87b851089081c456226864a8c684bb4814168390d9381a3dd90592240a01b5b339b1f16264f36cd1a92569cda99eb0723762a776ee9085e851c10991bee9e2344ed540187bf5cbd901807aa70e35307a2eaa4daeb5e3b47b56568234e7838144ea94d72de296174b303ac2070099c290313dcb1ec7644d80b0fe22e0c21f05206158e109968bca1e2385e13fd0806314f67cff055fb4df70e57dba0a8031a48fa37efb0d879134f21364b0955991912255f84cb1374b5a993b6db770cab04b1b477fe1b7de8e02669671b7f7a551e348cbad46a4b34b08393f399279399423c5572516df71a93c0f6be9f1a371d6189d6ef812b8c8577949149ef4955914cdcc6a07c4142443d093b4b341b164efb2da6c72afd40d790555cd9976eec6b130260bdf37a85bf8563b973c8480120c3a4c4772cd88eeed4566db206b461a82f9fdca1c625df43411d254d3d22e3a02f6f85050cb13e7a619ec2f7fb09558de9807d00944abe7ca9ffd4a0614d4b6990afd3ad3a81995b6101ebcba68505c2201f6cb35b1f074e62e232dc6933ba78e4f888f36f728b129b1b5c383388f6bd07476e92c3ef2de8e7bafca11cfcb4c097af99a976b570352dbee34aa9cbd370d628f070c90a1298d6f01f005fdf0f8db1a5f13f6ec8f19a8c0d92640c3d94c0e85b609110b22e733e5a5c70c9bcd8b434c68ab48be9fa1c407a828f84a6784dbedceb326df930ebbd061109f847743f698939e7c5148f54e9fd151b67553d93586cde4cdd52088f1f2442f55297e3c574d541848f9944c2a0c94c341ca8427c07db6543b8e78620fbedc67b4e94b998efcd507533f86b3686dcda0e2c2b228901f6b2a07c4808f77c4632b872aeb161ee9e7fbed56659b1d110e376168b66c2854011ad1daa9a41612b6e212cb83ee886d1b906e6e10422f4e35d9ff8c32c631c87758561caaf75cf296fce10cd781e0503ecb355c0c1bab4a101783990e87ea669da6e6b45ecbbcbc2c26cb3540cc70f02b2223326ecd6fa8f659ed9839f489ea105111759ccfe4b81aa7b1733287745494b8dff70305eb1a155c03f2fdaebb4231dcc47446d66f547c0372c65a007cb4b444760b2d1c11591c040911563a0a7c93f37abf4fa854e3c599e07cc6ef32f423e6ef96cbe8980c0c834a8c4ade82e85d7e66c5b9ba31c0e0a095c2c09d3816f8a31efb3f6c00ba5c14f9b1c71b61b5123b14601615d993424d144fa397bd64d98375effe501382657296ad6363e80ed4a9129c9f62c9573d0141418c55c7e76a5f429f5eff070a13bc9cd9c12053ab09cd8b0897f3cc3633eecd138e86f1e5eea97c312d3c8f2cc813dd1de03526ef5c6b68f1b6d672defa6672c00aeb2b3eece5f812b57a43b0eca90d42bc206cbab12f0568ab82f44ae5cbf15ce1a834fd260e116441e5a4d3c40dcc8d22ee5e533fa72ad8627a0cc80b652fa771b38d2e557519f0d3337bfe45a6c69f88261c7b681815a6e416cd70ddb482cd1e18ee8be3c3234040125230eb8171108f681fe1461d3c3404d6453942b2b9e8258b860e175248b5cf62e969b583cebb4dc8625d4b067fb6e608362b9b1a0ab01b471fac8328148742fadbb4e6443e57365a119f509e404fde5afeba4ed98820533742af3eebc9b01c42baa20cc7dba989b71d03e929f0cc69c122eae470c1f6b788f78f5ae2469d8049a502383b74e54d1d59f789a6c7e8aa58a57a3c3c27fde10b72637d6cbef391e8bd3866aaf7d028f4f2ea06e1dbc9899f6c3819aff6b27d3941a5aad8bc5a3350a8374ae95b669916b08364334c43f8a9f2b2fd2a2c93fc1f8ed8f78e805ae99cd3230cbc47c42a12537f9b29cd0fbd3fa09ccb84ac6fa799ddbf45f7bc342f03fa7edf99762991b2c99037658c002b63180b3ee0a16ebe6ea93a41239d8a351ec18ec33fbd5605ee1fc26b3274e013649df664c95570603b83c6d2a5728c52145804f0ec659280ca3fee1a8344eba7a1c6ec2e54f6b95d7c3db7720e681d89a70d4aa52675bdd</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>absolutelycold</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://absolutelycold.github.io/2020/03/11/PE结构细节/">https://absolutelycold.github.io/2020/03/11/PE结构细节/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/HAX/"># HAX</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/09/Assembly-Code-5-拷贝构造函数底层实现/">Assembly Code 5 : 拷贝构造函数底层实现</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© absolutelycold | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
