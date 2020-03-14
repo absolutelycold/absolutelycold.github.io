@@ -107,6 +107,68 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -152,6 +214,11 @@
 <p>我们用Dependency Walker查一下生成的dll:</p>
 <p><img src="/2020/03/12/C-Language-static-library-Dll/0.png" alt="0.png"></p>
 <p>我们可以看到ordinal 已经被我们改变，并且Minus这个函数没有名字，无法通过GetProcAddress调用。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion:"></a>Conclusion:</h1><p>Static library 只是简单的copy代码到exe文件里面，写死了。</p>
+<p>Dll 提供一张导出表，给exe用。那么exe需要调用这个dll的时候<strong>只需要</strong>在导出表里写上需要使用的dll名和<strong>函数名</strong>就可以加载并运行dll中的代码。所以就算dll更新了，每次打开exe都会重新加载dll进入内存，那么更新的dll就加载进内存了，只需要通过函数名在dll的导出表里面找地址就又可以使用dll里面的函数了。只要dll中function的名字和参数不变，那么exe依然可以使用dll的更新过的函数。</p>
+<p>动态连接，就是当所有程序(exe, dll…)都加载完毕后，再连接函数，通过IAT连接</p>
+<p>动态链接过程如下:</p>
+<p><img src="/2020/03/12/C-Language-static-library-Dll/1.png" alt="1.png"></p>
 
         </div>
 
@@ -192,6 +259,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/13/Game-Cheat-1-什么是基址？/">Game Cheat 1 : 什么是基址？</a>
             
             
             <a class="next" rel="next" href="/2020/03/11/PE结构细节/">PE结构细节</a>
