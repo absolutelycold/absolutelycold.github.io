@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="absolutelycold">
+
+
+    <meta name="subtitle" content="Life, Technology and More">
+
+
+    <meta name="description" content="Knowledge is Bulletproof.">
+
+
+
+<title>Win32_API 0: 进程 | Feng Memo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Feng Memo</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Feng Memo</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Win32_API 0: 进程</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">absolutelycold</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 16, 2020&nbsp;&nbsp;13:43:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/HAX/">HAX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="1-什么是进程"><a href="#1-什么是进程" class="headerlink" title="1. 什么是进程"></a>1. 什么是进程</h1><p>根据海哥的描述，进程是一个空间的概念。进程就是把PE结构里面的所有信息映射到了内存空间中。</p>
+<p>如果把进程比喻成人的躯体，那么线程就是这个躯体的灵魂。</p>
+<p>鲁迅有一句话说的好: “有的人死了，但却活着。有些人活着，但是却死了。”</p>
+<p>进程就相当于这个活着但是却死了的人。</p>
+<h1 id="2-Windows加载程序流程"><a href="#2-Windows加载程序流程" class="headerlink" title="2. Windows加载程序流程"></a>2. Windows加载程序流程</h1><p>进程的加载知识程序加载的第一步。程序加载的流程分为以下几步</p>
+<ul>
+<li>把PE结构的所有信息加载到内存空间</li>
+<li>在内核里面创建<code>EPROCESS</code>对象（这个对象最主要的作用就是存放Handle表）</li>
+<li>将系统Dll加载到内存空间中 (like ntdll.dll)</li>
+<li>在内核中创建<code>ETHREAD</code>对象（现在只是创建了对象，还没有启动）</li>
+<li>系统启动Thread<ul>
+<li>映射 exe 要使用的dll到内存空间中</li>
+<li>线程开始执行</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-进程在内存中的空间状态"><a href="#3-进程在内存中的空间状态" class="headerlink" title="3. 进程在内存中的空间状态"></a>3. 进程在内存中的空间状态</h1><p><img src="/2020/03/16/Win32-API-0-进程/0.png" alt="0.png"></p>
+<h1 id="4-进程和线程的关系"><a href="#4-进程和线程的关系" class="headerlink" title="4. 进程和线程的关系"></a>4. 进程和线程的关系</h1><ul>
+<li>进程不是凭空出现的，每一个进程都是由父进程创建。操作系统启动时创建的第一个进程是<code>explorer.exe</code>。所以我们打开的程序都是<code>explorer.exe</code>的子进程</li>
+<li>每创建一个进程肯定就会自动创建一个线程，<strong>没有线程的进程是行尸走肉</strong></li>
+</ul>
+<h1 id="5-Win32-API-CreateProcess"><a href="#5-Win32-API-CreateProcess" class="headerlink" title="5. Win32 API: CreateProcess()"></a>5. Win32 API: CreateProcess()</h1><p>直接查MSDN文档，给出以下说明:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CreateProcess</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpApplicationName,                 <span class="comment">// name of executable module</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPTSTR lpCommandLine,                      <span class="comment">// command line string</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpProcessAttributes, <span class="comment">// SD</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpThreadAttributes,  <span class="comment">// SD</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bInheritHandles,                      <span class="comment">// handle inheritance option</span></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD dwCreationFlags,                     <span class="comment">// creation flags</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPVOID lpEnvironment,                      <span class="comment">// new environment block</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpCurrentDirectory,                <span class="comment">// current directory name</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPSTARTUPINFO lpStartupInfo,               <span class="comment">// startup information</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPPROCESS_INFORMATION lpProcessInformation <span class="comment">// process information);</span></span></span></span><br></pre></td></tr></table></figure>
+<p>lpApplicationName: 路径</p>
+<p>lpCommandLine： 命令行参数</p>
+<p>lpProcessAttributes： SecurityAttribute结构体，可以在这个结构体里面设置这个创建的进程是否能被继承</p>
+<p>lpThreadAttributes： SecurityAttribute结构体，可以在这个结构体里面设置这个创建的线程是否能被继承</p>
+<p>bInheritHandles: 是否继承父类的句柄表</p>
+<p>dwCreationFlags: 有很多参数，可以自行查MSDN。最重要的是<code>CREATE_SUSPENDED</code>，这个参数可以让进程创建中线程创建时suspend。当我们调用ResumeThread时系统再贴入dll，然后启动线程</p>
+<p>lpEnvironment： 创建进程的环境，一般给NULL, 环境和父类一样。</p>
+<p>lpCurrentDirectory： 当前工作目录，NULL默认工作目录就是你打开exe时explorer的目录。</p>
+<p>lpStartupInfo： <strong>必须传入， StartupInfo结构体，定义时要把第一个成员添上结构体size</strong></p>
+<p>lpProcessInformation： <strong>必须输入，OUT类型参数，返回创建的这个进程和线程信息, 定义时要把第一个成员添上结构体size</strong></p>
+<p>以下给出CreateProcess的example:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">( VOID )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    STARTUPINFO si;</span><br><span class="line">    PROCESS_INFORMATION pi;</span><br><span class="line"></span><br><span class="line">    ZeroMemory( &amp;si, <span class="keyword">sizeof</span>(si) );</span><br><span class="line">    si.cb = <span class="keyword">sizeof</span>(si);</span><br><span class="line">    ZeroMemory( &amp;pi, <span class="keyword">sizeof</span>(pi) );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Start the child process. </span></span><br><span class="line">    <span class="keyword">if</span>( !CreateProcess( <span class="literal">NULL</span>, <span class="comment">// No module name (use command line). </span></span><br><span class="line">        <span class="string">"MyChildProcess"</span>, <span class="comment">// Command line. </span></span><br><span class="line">        <span class="literal">NULL</span>,             <span class="comment">// Process handle not inheritable. </span></span><br><span class="line">        <span class="literal">NULL</span>,             <span class="comment">// Thread handle not inheritable. </span></span><br><span class="line">        FALSE,            <span class="comment">// Set handle inheritance to FALSE. </span></span><br><span class="line">        <span class="number">0</span>,                <span class="comment">// No creation flags. </span></span><br><span class="line">        <span class="literal">NULL</span>,             <span class="comment">// Use parent's environment block. </span></span><br><span class="line">        <span class="literal">NULL</span>,             <span class="comment">// Use parent's starting directory. </span></span><br><span class="line">        &amp;si,              <span class="comment">// Pointer to STARTUPINFO structure.</span></span><br><span class="line">        &amp;pi )             <span class="comment">// Pointer to PROCESS_INFORMATION structure.</span></span><br><span class="line">    ) </span><br><span class="line">    &#123;</span><br><span class="line">        ErrorExit( <span class="string">"CreateProcess failed."</span> );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait until child process exits.</span></span><br><span class="line">    WaitForSingleObject( pi.hProcess, INFINITE );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Close process and thread handles. </span></span><br><span class="line">    CloseHandle( pi.hProcess );</span><br><span class="line">    CloseHandle( pi.hThread );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到结束了CreateProcess之后会close 进程和线程的Handle。</p>
+<p>这里的closeHandle其实是在减去内核中此进程/线程内核对象<code>EPROCESS</code>/<code>ETHREAD</code>中的Handle计数器。当计数器为0时内核会自动清除这个对象和对象占用的内存。但是进程和线程是个例外，线程需要terminate。</p>
+<p>进程也是歌例外。只要存在线程，就算是进程的<code>EPROCESS</code>内核对象计数为0，依然不会被系统清除，只有进程里面的所有线程都terminate之后，进程才会跟着被清除。</p>
+<h1 id="6-Process-Information"><a href="#6-Process-Information" class="headerlink" title="6. Process Information"></a>6. Process Information</h1><p>我们在Create Process的时候，会传入一个输出型参数<code>PROCESS_INFORMATION</code> 。这个结构体如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">PROCESS_INFORMATION</span> &#123;</span> </span><br><span class="line">    HANDLE hProcess; <span class="comment">//Process Handle</span></span><br><span class="line">    HANDLE hThread;  <span class="comment">//Thread Handl</span></span><br><span class="line">    DWORD dwProcessId; <span class="comment">// Process Id</span></span><br><span class="line">    DWORD dwThreadId;  <span class="comment">// Thread Id</span></span><br><span class="line">&#125; PROCESS_INFORMATION;</span><br></pre></td></tr></table></figure>
+<p>那么这里我们就要区分什么是进程Handle,什么是进程id</p>
+<p>id属于的范围为全局的，保存在内核中一张全局ID表中。 句柄是局部的，只存在于<code>EPROCESS</code>/<code>ETHREAD</code>中。</p>
+<h1 id="7-进程其它API"><a href="#7-进程其它API" class="headerlink" title="7. 进程其它API"></a>7. 进程其它API</h1><ul>
+<li>GetProcessImageFileName: 使用Pid获取FileName</li>
+<li>OpenProcess: 使用Pid开启进程</li>
+<li>CreateToolhelp32Snapshot: 获取当前系统中线程/进程/Module/Heap等的快照，可以用来扫描进程</li>
+<li>EnumProcess：列出所有Process Id</li>
+</ul>
+<p>以下是使用CreateToolhelp32Snapshot 和 Enum 扫描进程的代码</p>
+<p>首先是使用CreateToolhelp32Snapshot 扫描进程:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ScanSnapShot</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    HANDLE hProcessSnap = <span class="literal">NULL</span>;</span><br><span class="line">    PROCESSENTRY32 processEntry = &#123; <span class="number">0</span> &#125;; <span class="comment">//Used for storing the information of process</span></span><br><span class="line">    </span><br><span class="line">    processEntry.dwSize = <span class="keyword">sizeof</span>(PROCESSENTRY32);</span><br><span class="line"></span><br><span class="line">    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (hProcessSnap == INVALID_HANDLE_VALUE)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Create SnapShot Error:%d\n"</span>, GetLastError());</span><br><span class="line">        <span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Process32First(hProcessSnap, &amp;processEntry))</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">        &#123;</span><br><span class="line">            TCHAR processName[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">            HANDLE processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processEntry.th32ProcessID);</span><br><span class="line">            DWORD rLength = GetProcessImageFileName(processHandle, processName, <span class="number">256</span>);</span><br><span class="line">            <span class="comment">//printf("Process id: %d\n", processEntry.th32ProcessID);</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (rLength != <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"Process id: %d\n"</span>, processEntry.th32ProcessID);</span><br><span class="line">                _tprintf(TEXT(<span class="string">"Process Name: %s\n"</span>), processName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//printf("GetModuleFileNameEx error: %d\n", GetLastError());</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            CloseHandle(processHandle);</span><br><span class="line">        &#125; <span class="keyword">while</span> (Process32Next(hProcessSnap, &amp;processEntry));</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CloseHandle(hProcessSnap);</span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面的使用EnumProcess扫描进程:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ScanProcess</span><span class="params">(DWORD* processIdList, DWORD sizeOfList, DWORD* numOfProcess)</span> </span>&#123;</span><br><span class="line">    ZeroMemory(processIdList, sizeOfList * <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">if</span> (!EnumProcesses(processIdList, sizeOfList, numOfProcess)) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Enum Process Error: %d\n"</span>, GetLastError());</span><br><span class="line">        <span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    DWORD* processList = <span class="keyword">new</span> DWORD[<span class="number">4096</span>];</span><br><span class="line">    DWORD numberOfBytes;</span><br><span class="line"></span><br><span class="line">    ScanProcess(processList, <span class="number">4096</span>, &amp;numberOfBytes);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Number of process: %d\n"</span>, numberOfBytes / <span class="keyword">sizeof</span>(DWORD));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (numberOfBytes / <span class="keyword">sizeof</span>(DWORD)); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        TCHAR name[<span class="number">256</span>];</span><br><span class="line">        HANDLE hProcess = OpenProcess(processList[i], FALSE, processList[i]);</span><br><span class="line">        <span class="keyword">if</span> (GetProcessImageFileName(hProcess, name, <span class="number">256</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Process Id: %d\n"</span>, processList[i]);</span><br><span class="line">            _tprintf(TEXT(<span class="string">"Process Name: %s\n"</span>), name);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        CloseHandle(hProcess);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">delete</span>[] processList;</span><br><span class="line"></span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印出来结果如下:</p>
+<p><img src="/2020/03/16/Win32-API-0-进程/1.png" alt="1.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>absolutelycold</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://absolutelycold.github.io/2020/03/16/Win32-API-0-进程/">https://absolutelycold.github.io/2020/03/16/Win32-API-0-进程/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/HAX/"># HAX</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/13/Game-Cheat-1-什么是基址？/">Game Cheat 1 : 什么是基址？</a>
+            
+        </section>
+		
+		<br>
+		<br>
+		<br>
+		
+		
+			
+			<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'absolutelycold'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+		
+	
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© absolutelycold | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
