@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="absolutelycold">
+
+
+    <meta name="subtitle" content="Life, Technology and More">
+
+
+    <meta name="description" content="Knowledge is Bulletproof.">
+
+
+
+<title>Java Thread: Sleep() vs Wait() | Feng Memo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Feng Memo</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Feng Memo</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Java Thread: Sleep() vs Wait()</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">absolutelycold</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 1, 2021&nbsp;&nbsp;13:40:50</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/JAVA-Language/">JAVA Language</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>区别1： sleep() 可以放在任意method的内部，每当有一个thread走到sleep()的位置，这个线程会马上变为阻塞状态。比如同时有两个线程都同时遇到了sleep()，那两个thread<strong>同时</strong>都会马上变成阻塞状态，直到sleep时间过去之后才会变成wait状态，等待操作系统分配CPU时间戳。所以Sleep()操作是线程级别的，不需要与其它对象协同，可以直接放到Thread类中。</p>
+<p>wait()也是让一个线程变成阻塞状态，但是这个阻塞必须要一个额外的锁来协同，阻塞的线程会放到这个锁的waiting queue之中。然后释放这个锁。如果当前线程没有拥有锁，那么这个线程调用wait()时会抛出异常。</p>
+<p>所以调用某个线程调用wait时，<font color="red">必须放在synchronized 内部</font>，这样才能保证这个线程获得了一把锁。</p>
+<p>在Java中任何对象(Object)都可以成为一个Monitor, 这个Monitor由锁(lock), 等待队列(waiting queue), 入口队列(entry queue)组成。锁(lock)就是可以分配的资源，只有一个线程能拿到这个锁，这个线程就是Owner, 其它没有拿到锁的线程只能先进入入口队列(entry queue)中等待锁的释放。如下图所示:</p>
+<p><img src="https://pic4.zhimg.com/80/v2-bcffa7e873ed8f070ee18d3206022a87_720w.jpg" alt="img"></p>
+<p>wait() 就是将锁的owner放入wait queue. notify()就是把wait queue中阻塞的线程放到entry queue中。</p>
+<p>wait() 和 notify() 要放在同一把锁的synchronization块中，因为wait() 和 notify() 不能同时被两个线程调用，wait()和notify()之间是有一定顺序的，一般是先wait()之后再notify(). 所以需要synchronized同步块来限制一次只有一个线程能适应wait()或者notify();</p>
+<p>区别2：如果sleep在synchronized块之内，那么sleep的线程是<strong>不会释放锁资源</strong>的。其它线程仍然无法进入synchronized块之中。这个线程必须跑完synchronized块才会释放锁资源。<br>wait() 则会<strong>马上释放锁资源</strong>，所以wait()之后其它的线程就可以马上synchronized块之中了。</p>
+<p>以下是一个example:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultiThread</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread1</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;		</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="comment">//由于 Thread1和下面Thread2内部run方法要用同一对象作为监视器，如果用this则Thread1和Threa2的this不是同一对象</span></span><br><span class="line">			<span class="comment">//所以用MultiThread.class这个字节码对象，当前虚拟机里引用这个变量时指向的都是同一个对象</span></span><br><span class="line">			<span class="keyword">synchronized</span>(MultiThread.class)&#123;</span><br><span class="line">				System.out.println(<span class="string">"enter thread1 ..."</span>);</span><br><span class="line">				System.out.println(<span class="string">"thread1 is waiting"</span>);</span><br><span class="line">				</span><br><span class="line">				<span class="keyword">try</span>&#123;</span><br><span class="line">					<span class="comment">//释放锁有两种方式：(1)程序自然离开监视器的范围，即离开synchronized关键字管辖的代码范围</span></span><br><span class="line">					<span class="comment">//(2)在synchronized关键字管辖的代码内部调用监视器对象的wait()方法。这里使用wait方法</span></span><br><span class="line">					MultiThread.class.wait();</span><br><span class="line">				&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">				System.out.println(<span class="string">"thread1 is going on ..."</span>);</span><br><span class="line">				System.out.println(<span class="string">"thread1 is being over!"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;	</span><br><span class="line">			<span class="comment">//notify方法并不释放锁，即使thread2调用了下面的sleep方法休息10ms，但thread1仍然不会执行</span></span><br><span class="line">			<span class="comment">//因为thread2没有释放锁，所以Thread1得不到锁而无法执行</span></span><br><span class="line">			<span class="keyword">synchronized</span>(MultiThread.class)&#123;</span><br><span class="line">				System.out.println(<span class="string">"enter thread2 ..."</span>);</span><br><span class="line">				System.out.println(<span class="string">"thread2 notify other thread can release wait status ..."</span>);</span><br><span class="line">				MultiThread.class.notify();</span><br><span class="line">				System.out.println(<span class="string">"thread2 is sleeping ten millisecond ..."</span>);</span><br><span class="line">				</span><br><span class="line">				<span class="keyword">try</span>&#123;</span><br><span class="line">					Thread.sleep(<span class="number">10</span>);</span><br><span class="line">				&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">				System.out.println(<span class="string">"thread2 is going on ..."</span>);</span><br><span class="line">				System.out.println(<span class="string">"thread2 is being over!"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> Thread(<span class="keyword">new</span> Thread1()).start();</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			Thread.sleep(<span class="number">10</span>);</span><br><span class="line">		&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">		<span class="keyword">new</span> Thread(<span class="keyword">new</span> Thread2()).start();</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码的输出结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">enter thread1 ...</span><br><span class="line">thread1 is waiting</span><br><span class="line">enter thread2 ...</span><br><span class="line">thread2 notify other thread can release wait status ... // 这里虽然notify了thread1，但thread2没有释放锁资源， thread1唤醒之后仍然无法往前走动</span><br><span class="line">thread2 is sleeping ten millisecond ...</span><br><span class="line">thread2 is going on ...</span><br><span class="line">thread2 is being over! //当thread2走出synchronized块后，释放锁资源，thread1这时候可以往后运行了。</span><br><span class="line">thread1 is going on ...</span><br><span class="line">thread1 is being over!</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><a href="https://blog.csdn.net/u012050154/article/details/50903326" target="_blank" rel="noopener">https://blog.csdn.net/u012050154/article/details/50903326</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/76625784" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/76625784</a></p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>absolutelycold</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://absolutelycold.github.io/2021/03/01/Java-Thread-Sleep-vs-Wait/">https://absolutelycold.github.io/2021/03/01/Java-Thread-Sleep-vs-Wait/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/thread/"># thread</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/03/19/Win32-API-归类邪恶的API/">Win32_API: 归类邪恶的API</a>
+            
+        </section>
+		
+		<br>
+		<br>
+		<br>
+		
+		
+			
+			<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'absolutelycold'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+		
+	
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© absolutelycold | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
